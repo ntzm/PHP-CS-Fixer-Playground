@@ -34,6 +34,8 @@ use function PhpCsFixerPlayground\escape as e;
     </style>
 </head>
 <body>
+    <h1>PHP-CS-Fixer Playground</h1>
+    <a href="https://github.com/ntzm/PHP-CS-Fixer-Playground/">GitHub</a>
     <div class="container">
         <div>
             <form id="form">
