@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
+use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\Fixer;
 
 if ($_SERVER['REQUEST_URI'] !== '/' && strpos($_SERVER['REQUEST_URI'], '/?') !== 0) {
     return false;
 }
 
+require __DIR__.'/../vendor/autoload.php';
+
 if (isset($_GET['code']) && is_string($_GET['code'])) {
-    require __DIR__.'/../vendor/autoload.php';
 
     $code = $_GET['code'];
 
@@ -23,5 +25,7 @@ if (isset($_GET['code']) && is_string($_GET['code'])) {
 } else {
     $code = "<?php\n\n";
 }
+
+$fixers = FixerFactory::create()->registerBuiltInFixers()->getFixers();
 
 require __DIR__.'/../templates/index.php';

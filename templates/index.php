@@ -1,3 +1,6 @@
+<?php
+use function PhpCsFixerPlayground\escape as e;
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -34,8 +37,17 @@
     <div class="container">
         <div>
             <form id="form">
-                <textarea name="code" id="code" cols="30" rows="10"><?= htmlentities($code) ?></textarea>
+                <textarea name="code" id="code" cols="30" rows="10"><?= e($code) ?></textarea>
                 <button>Run</button>
+
+                <ul>
+                    <?php foreach ($fixers as $fixer): ?>
+                        <label>
+                            <input type="checkbox" name="fixers[]" value="<?= e($fixer->getName()) ?>"> <?= e($fixer->getName()) ?>
+                        </label>
+                        <br>
+                    <?php endforeach ?>
+                </ul>
             </form>
         </div>
         <div>
