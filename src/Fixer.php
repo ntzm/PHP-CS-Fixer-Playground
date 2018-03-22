@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground;
 
+use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerFactory;
-use PhpCsFixer\RuleSet;
 use PhpCsFixer\Tokenizer\Tokens;
 use Symfony\Component\Finder\Tests\Iterator\MockSplFileInfo;
 
@@ -20,7 +20,6 @@ final class Fixer
 
         $fixers = FixerFactory::create()
             ->registerBuiltInFixers()
-            ->useRuleSet(RuleSet::create(['@Symfony' => true]))
             ->getFixers()
         ;
 
@@ -34,7 +33,12 @@ final class Fixer
             }
 
             if ($fixer instanceof ConfigurableFixerInterface) {
-                $fixer->configure([]);
+                try {
+                    $fixer->configure([]);
+                } catch (InvalidFixerConfigurationException $e) {
+                    // TODO
+                    continue;
+                }
             }
 
             $fixer->fix($file, $tokens);
