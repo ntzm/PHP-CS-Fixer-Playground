@@ -11,13 +11,11 @@ if (isset($_GET['code']) && is_string($_GET['code'])) {
 
 	$code = $_GET['code'];
 
-	$file = new MockSplFileInfo([
-		'contents' => $code,
-	]);
+	$file = new MockSplFileInfo([]);
 
 	$tokens = Tokens::fromCode($code);
 
-	$fixers = (new FixerFactory())
+	$fixers = FixerFactory::create()
 		->registerBuiltInFixers()
 		->useRuleSet(RuleSet::create(['@Symfony' => true]))
 		->getFixers()
@@ -25,7 +23,7 @@ if (isset($_GET['code']) && is_string($_GET['code'])) {
 
 	foreach ($fixers as $fixer) {
 		if ($fixer instanceof ConfigurableFixerInterface) {
-			$fixer->configure();
+			$fixer->configure([]);
 		}
 
 		$fixer->fix($file, $tokens);
