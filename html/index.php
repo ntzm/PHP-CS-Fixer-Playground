@@ -6,10 +6,6 @@ use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\Fixer;
 
-if ($_SERVER['REQUEST_URI'] !== '/' && strpos($_SERVER['REQUEST_URI'], '/?') !== 0) {
-    return false;
-}
-
 require __DIR__.'/../vendor/autoload.php';
 
 $availableFixers = FixerFactory::create()->registerBuiltInFixers()->getFixers();
