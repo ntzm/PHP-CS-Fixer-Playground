@@ -1,5 +1,6 @@
 <?php
 use function PhpCsFixerPlayground\escape as e;
+use function PhpCsFixerPlayground\format;
 ?>
 <!doctype html>
 <html lang="en">
@@ -53,10 +54,10 @@ use function PhpCsFixerPlayground\escape as e;
                             <input type="checkbox" name="fixers[]" value="<?= e($name) ?>"<?= $checked ? ' checked' : '' ?>> <?= e($name) ?>
                         </label>
                         <br>
-                        <span><?= e($fixer->getDefinition()->getSummary()) ?></span>
+                        <span><?= format(e($fixer->getDefinition()->getSummary())) ?></span>
                         <?php if ($fixer->isRisky()): ?>
                             <br>
-                            <strong>Risky rule: <?= e($fixer->getDefinition()->getRiskyDescription()) ?></strong>
+                            <strong>Risky rule: <?= format(e($fixer->getDefinition()->getRiskyDescription())) ?></strong>
                         <?php endif ?>
                         <br>
                     <?php endforeach ?>
