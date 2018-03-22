@@ -45,13 +45,19 @@ use function PhpCsFixerPlayground\escape as e;
                 <ul>
                     <?php foreach ($availableFixers as $fixer): ?>
                         <?php
-                        /** @var PhpCsFixer\Fixer\FixerInterface $fixer */
+                        /** @var PhpCsFixer\Fixer\DefinedFixerInterface $fixer */
                         $name = $fixer->getName();
                         $checked = in_array($name, $fixers, true);
                         ?>
                         <label>
                             <input type="checkbox" name="fixers[]" value="<?= e($name) ?>"<?= $checked ? ' checked' : '' ?>> <?= e($name) ?>
                         </label>
+                        <br>
+                        <span><?= e($fixer->getDefinition()->getSummary()) ?></span>
+                        <?php if ($fixer->isRisky()): ?>
+                            <br>
+                            <strong>Risky rule: <?= e($fixer->getDefinition()->getRiskyDescription()) ?></strong>
+                        <?php endif ?>
                         <br>
                     <?php endforeach ?>
                 </ul>
