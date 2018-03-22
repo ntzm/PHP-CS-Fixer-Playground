@@ -1,0 +1,14 @@
+{
+    "name": "ntzm/php-cs-fixer-playground",
+    "type": "project",
+    "require": {
+        "friendsofphp/php-cs-fixer": "^2.11"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nat Zimmermann",
+            "email": "nat@ntzm.io"
+        }
+    ]
+}
