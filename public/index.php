@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
+use PhpCsFixerPlayground\Fixer;
+
 if ($_SERVER['REQUEST_URI'] !== '/') {
     return false;
 }
-
-use PhpCsFixerPlayground\Fixer;
 
 if (isset($_GET['code']) && is_string($_GET['code'])) {
     require __DIR__.'/../vendor/autoload.php';
