@@ -31,7 +31,7 @@ if (isset($_GET['code']) && is_string($_GET['code'])) {
 		$fixer->fix($file, $tokens);
 	}
 
-	$result = $tokens->generateCode();
+	$result = highlight_string($tokens->generateCode(), true);
 } else {
 	$code = "<?php\n\n";
 }
@@ -78,7 +78,7 @@ if (isset($_GET['code']) && is_string($_GET['code'])) {
 			</form>
 		</div>
 		<div>
-			<pre id="result"><?= isset($result) ? htmlentities($result) : '' ?></pre>
+			<pre id="result"><?= $result ?? '' ?></pre>
 		</div>
 	</div>
 </body>
