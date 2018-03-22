@@ -6,14 +6,12 @@ COPY composer.* ./
 
 RUN composer install --prefer-dist
 
-FROM php:7.2
+FROM php:7.2-apache
 
-WORKDIR /app
+WORKDIR /var/www/
 
 EXPOSE 8000
 
 COPY --from=build /build/vendor .
 
 COPY . .
-
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public", "index.php"]
