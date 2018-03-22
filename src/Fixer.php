@@ -29,11 +29,20 @@ final class Fixer
                 continue;
             }
 
+            if (!$fixer->supports($file)) {
+                continue;
+            }
+
             if ($fixer instanceof ConfigurableFixerInterface) {
                 $fixer->configure([]);
             }
 
             $fixer->fix($file, $tokens);
+
+            if ($tokens->isChanged()) {
+                $tokens->clearEmptyTokens();
+                $tokens->clearChanged();
+            }
         }
 
         return $tokens->generateCode();
