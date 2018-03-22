@@ -15,8 +15,14 @@ if (isset($_GET['code']) && is_string($_GET['code'])) {
 
     $code = $_GET['code'];
 
+    if (isset($_GET['fixers']) && is_array($_GET['fixers'])) {
+        $fixers = array_filter($_GET['fixers'], 'is_string');
+    } else {
+        $fixers = [];
+    }
+
     try {
-        $fixed = (new Fixer())->fix($code);
+        $fixed = (new Fixer())->fix($code, $fixers);
 
         $result = highlight_string($fixed, true);
     } catch (ParseError $e) {

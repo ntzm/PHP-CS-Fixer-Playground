@@ -7,21 +7,28 @@ namespace PhpCsFixerPlayground;
 use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerFactory;
+use PhpCsFixer\RuleSet;
 use PhpCsFixer\Tokenizer\Tokens;
 use Symfony\Component\Finder\Tests\Iterator\MockSplFileInfo;
 
 final class Fixer
 {
-    public function fix(string $code): string
+    public function fix(string $code, array $fixerNames): string
     {
         $file = new MockSplFileInfo([]);
 
         $tokens = Tokens::fromCode($code);
 
+        $rules = [];
+
+        foreach ($fixerNames as $name) {
+            $rules[$name] = true;
+        }
+
         $fixers = FixerFactory::create()
             ->registerBuiltInFixers()
-            ->getFixers()
-        ;
+            ->useRuleSet(new RuleSet($rules))
+            ->getFixers();
 
         foreach ($fixers as $fixer) {
             if (!$fixer->isCandidate($tokens)) {
