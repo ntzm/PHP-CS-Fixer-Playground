@@ -25,6 +25,10 @@ final class Fixer
         ;
 
         foreach ($fixers as $fixer) {
+            if (!$fixer->isCandidate($tokens)) {
+                continue;
+            }
+
             if ($fixer instanceof ConfigurableFixerInterface) {
                 $fixer->configure([]);
             }
