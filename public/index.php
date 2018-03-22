@@ -1,35 +1,19 @@
 <?php
 
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-use PhpCsFixer\FixerFactory;
-use PhpCsFixer\RuleSet;
-use PhpCsFixer\Tokenizer\Tokens;
-use Symfony\Component\Finder\Tests\Iterator\MockSplFileInfo;
+use PhpCsFixerPlayground\Fixer;
 
 if (isset($_GET['code']) && is_string($_GET['code'])) {
 	require __DIR__.'/../vendor/autoload.php';
 
 	$code = $_GET['code'];
 
-	$file = new MockSplFileInfo([]);
+	try {
+		$fixed = (new Fixer())->fix($code);
 
-	$tokens = Tokens::fromCode($code);
-
-	$fixers = FixerFactory::create()
-		->registerBuiltInFixers()
-		->useRuleSet(RuleSet::create(['@Symfony' => true]))
-		->getFixers()
-	;
-
-	foreach ($fixers as $fixer) {
-		if ($fixer instanceof ConfigurableFixerInterface) {
-			$fixer->configure([]);
-		}
-
-		$fixer->fix($file, $tokens);
+		$result = highlight_string($fixed, true);
+	} catch (ParseError $e) {
+		$result = htmlentities($e->getMessage());
 	}
-
-	$result = highlight_string($tokens->generateCode(), true);
 } else {
 	$code = "<?php\n\n";
 }
