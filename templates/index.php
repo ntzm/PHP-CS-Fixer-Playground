@@ -41,9 +41,14 @@ use function PhpCsFixerPlayground\escape as e;
                 <button>Run</button>
 
                 <ul>
-                    <?php foreach ($fixers as $fixer): ?>
+                    <?php foreach ($availableFixers as $fixer): ?>
+                        <?php
+                        /** @var PhpCsFixer\Fixer\FixerInterface $fixer */
+                        $name = $fixer->getName();
+                        $checked = in_array($name, $fixers, true);
+                        ?>
                         <label>
-                            <input type="checkbox" name="fixers[]" value="<?= e($fixer->getName()) ?>"> <?= e($fixer->getName()) ?>
+                            <input type="checkbox" name="fixers[]" value="<?= e($name) ?>"<?= $checked ? ' checked' : '' ?>> <?= e($name) ?>
                         </label>
                         <br>
                     <?php endforeach ?>

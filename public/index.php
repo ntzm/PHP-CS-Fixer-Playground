@@ -30,8 +30,9 @@ if (isset($_GET['code']) && is_string($_GET['code'])) {
     }
 } else {
     $code = "<?php\n\n";
+    $fixers = [];
 }
 
-$fixers = FixerFactory::create()->registerBuiltInFixers()->getFixers();
+$availableFixers = FixerFactory::create()->registerBuiltInFixers()->getFixers();
 
 require __DIR__.'/../templates/index.php';
