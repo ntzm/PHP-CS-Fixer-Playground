@@ -10,6 +10,7 @@ use PhpCsFixerPlayground\Handler\CreateRunHandler;
 use PhpCsFixerPlayground\Handler\GetRunHandler;
 use PhpCsFixerPlayground\Handler\HandlerInterface;
 use PhpCsFixerPlayground\Handler\IndexHandler;
+use PhpCsFixerPlayground\RunNotFoundException;
 use PhpCsFixerPlayground\RunRepository;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -44,5 +45,9 @@ switch ($routeInfo[0]) {
         $handler = $routeInfo[1]();
         $vars = $routeInfo[2];
 
-        $handler($request, $vars);
+        try {
+            $handler($request, $vars);
+        } catch (RunNotFoundException $e) {
+            die('404');
+        }
 }
