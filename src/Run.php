@@ -12,18 +12,18 @@ final class Run
 
     private $rules;
 
-    private $id;
+    private $hash;
 
     public function __construct(
         string $code,
         string $result,
         array $rules,
-        int $id = null
+        string $hash = null
     ) {
         $this->code = $code;
         $this->result = $result;
         $this->rules = $rules;
-        $this->id = $id;
+        $this->hash = $hash;
     }
 
     public function getCode(): string
@@ -41,8 +41,8 @@ final class Run
         return $this->rules;
     }
 
-    public function getId(): ?int
+    public function getHash(): ?string
     {
-        return $this->id;
+        return $this->hash;
     }
 }

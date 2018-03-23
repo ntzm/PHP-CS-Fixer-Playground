@@ -13,7 +13,8 @@ WORKDIR /var/www/
 EXPOSE 8000
 
 RUN a2enmod rewrite \
- && chown www-data:www-data .
+ && chown www-data:www-data . \
+ && docker-php-ext-install bcmath
 
 COPY --from=build /build/vendor ./vendor
 

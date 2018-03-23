@@ -5,6 +5,7 @@ declare(strict_types=1);
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
+use Hashids\Hashids;
 use PhpCsFixerPlayground\ConnectionResolver;
 use PhpCsFixerPlayground\Handler\CreateRunHandler;
 use PhpCsFixerPlayground\Handler\GetRunHandler;
@@ -18,19 +19,20 @@ use Symfony\Component\HttpFoundation\Response;
 require __DIR__.'/../vendor/autoload.php';
 
 $request = Request::createFromGlobals();
-$connectionResolver = new ConnectionResolver();
+$connection = (new ConnectionResolver())->resolve();
+$hashids = new Hashids(getenv('HASHIDS_SECRET'), 10);
 
-$dispatcher = simpleDispatcher(function (RouteCollector $r) use ($connectionResolver) {
+$dispatcher = simpleDispatcher(function (RouteCollector $r) use ($connection, $hashids) {
     $r->get('/', function() {
         return new IndexHandler();
     });
 
-    $r->post('/', function () use ($connectionResolver) {
-        return new CreateRunHandler(new RunRepository($connectionResolver->resolve()));
+    $r->post('/', function () use ($connection, $hashids) {
+        return new CreateRunHandler(new RunRepository($connection, $hashids));
     });
 
-    $r->get('/{id:\d+}', function () use ($connectionResolver) {
-        return new GetRunHandler(new RunRepository($connectionResolver->resolve()));
+    $r->get('/{hash:[a-zA-Z0-9]+}', function () use ($connection, $hashids) {
+        return new GetRunHandler(new RunRepository($connection, $hashids));
     });
 });
 

@@ -4,43 +4,47 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground;
 
+use Hashids\HashidsInterface;
 use PDO;
 
 final class RunRepository
 {
     private $db;
 
-    public function __construct(PDO $db)
+    private $hashids;
+
+    public function __construct(PDO $db, HashidsInterface $hashids)
     {
         $this->db = $db;
+        $this->hashids = $hashids;
     }
 
-    public function getById(int $id): Run
+    public function getByHash(string $hash): Run
     {
+        $id = $this->hashids->decode($hash)[0];
+
         $statement = $this->db->prepare('select * from runs where id = :id limit 1');
 
-        $statement->bindValue(':id', $id, PDO::PARAM_INT);
-        $statement->execute();
+        $statement->execute([':id' => $id]);
 
         $data = $statement->fetch(PDO::FETCH_ASSOC);
 
         if (!$data) {
-            throw RunNotFoundException::fromId($id);
+            throw RunNotFoundException::fromHash($hash);
         }
 
         return new Run(
             $data['code'],
             $data['result'],
             json_decode($data['rules']),
-            $id
+            $hash
         );
     }
 
     public function save(Run $run): Run
     {
-        $statement = $this->db->prepare('insert into runs (id, code, result, rules) values (:id, :code, :result, :rules)');
+        $statement = $this->db->prepare('insert into runs (code, result, rules) values (:code, :result, :rules)');
 
-        $statement->bindValue(':id', $run->getId());
         $statement->bindValue(':code', $run->getCode());
         $statement->bindValue(':result', $run->getResult());
         $statement->bindValue(':rules', json_encode($run->getRules()));
@@ -51,7 +55,7 @@ final class RunRepository
             $run->getCode(),
             $run->getResult(),
             $run->getRules(),
-            (int) $this->db->lastInsertId()
+            $this->hashids->encode($this->db->lastInsertId())
         );
     }
 }

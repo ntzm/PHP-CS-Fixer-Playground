@@ -18,7 +18,7 @@ final class GetRunHandler implements HandlerInterface
 
     public function __invoke(Request $request, array $vars): Response
     {
-        $run = $this->runs->getById((int) $vars['id']);
+        $run = $this->runs->getByHash($vars['hash']);
 
         return new Response(
             view($run->getCode(), $run->getRules(), $run->getResult())

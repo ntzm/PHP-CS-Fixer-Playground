@@ -6,10 +6,10 @@ use Exception;
 
 final class RunNotFoundException extends Exception
 {
-    public static function fromId(int $id): self
+    public static function fromHash(string $hash): self
     {
         return new self(
-            sprintf('Cannot find run with ID %d', $id)
+            sprintf('Cannot find run with ID %s', $hash)
         );
     }
 }
