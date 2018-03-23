@@ -12,6 +12,8 @@ WORKDIR /var/www/
 
 EXPOSE 8000
 
+RUN a2enmod rewrite
+
 COPY --from=build /build/vendor .
 
 COPY . .

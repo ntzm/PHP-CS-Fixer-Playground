@@ -19,7 +19,7 @@ final class RunRepository
     {
         $statement = $this->db->prepare('select * from runs where id = :id limit 1');
 
-        $statement->bindValue('id', $id);
+        $statement->bindValue(':id', $id);
 
         $data = $statement->fetch(PDO::FETCH_ASSOC);
 
@@ -39,10 +39,10 @@ final class RunRepository
     {
         $statement = $this->db->prepare('insert into runs (id, code, result, rules) values (:id, :code, :result, :rules)');
 
-        $statement->bindValue('id', $run->getId());
-        $statement->bindValue('code', $run->getCode());
-        $statement->bindValue('result', $run->getResult());
-        $statement->bindValue('rules', $run->getRules());
+        $statement->bindValue(':id', $run->getId());
+        $statement->bindValue(':code', $run->getCode());
+        $statement->bindValue(':result', $run->getResult());
+        $statement->bindValue(':rules', $run->getRules());
 
         $statement->execute();
     }

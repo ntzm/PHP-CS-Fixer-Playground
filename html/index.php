@@ -2,39 +2,47 @@
 
 declare(strict_types=1);
 
-use PhpCsFixer\Fixer\FixerInterface;
-use PhpCsFixer\FixerFactory;
-use PhpCsFixerPlayground\Fixer;
+use FastRoute\Dispatcher;
+use FastRoute\RouteCollector;
+use function FastRoute\simpleDispatcher;
+use PhpCsFixerPlayground\ConnectionResolver;
+use PhpCsFixerPlayground\Handler\CreateRunHandler;
+use PhpCsFixerPlayground\Handler\GetRunHandler;
+use PhpCsFixerPlayground\Handler\HandlerInterface;
+use PhpCsFixerPlayground\Handler\IndexHandler;
+use PhpCsFixerPlayground\RunRepository;
+use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../vendor/autoload.php';
 
-$availableFixers = FixerFactory::create()->registerBuiltInFixers()->getFixers();
+$request = Request::createFromGlobals();
+$connectionResolver = new ConnectionResolver();
 
-if (isset($_GET['code']) && is_string($_GET['code'])) {
-    $code = $_GET['code'];
+$dispatcher = simpleDispatcher(function (RouteCollector $r) use ($connectionResolver) {
+    $r->get('/', function() {
+        return new IndexHandler();
+    });
 
-    $availableFixerNames = array_map(function (FixerInterface $fixer): string {
-        return $fixer->getName();
-    }, $availableFixers);
+    $r->post('/', function () use ($connectionResolver) {
+        return new CreateRunHandler(new RunRepository($connectionResolver->resolve()));
+    });
 
-    if (isset($_GET['fixers']) && is_array($_GET['fixers'])) {
-        $fixers = array_filter($_GET['fixers'], function ($fixerName) use ($availableFixerNames): bool {
-            return in_array($fixerName, $availableFixerNames, true);
-        });
-    } else {
-        $fixers = [];
-    }
+    $r->get('/{id:\w+}', function () use ($connectionResolver) {
+        return new GetRunHandler(new RunRepository($connectionResolver->resolve()));
+    });
+});
 
-    try {
-        $fixed = (new Fixer())->fix($code, $fixers);
+$routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
 
-        $result = highlight_string($fixed, true);
-    } catch (ParseError $e) {
-        $result = htmlentities($e->getMessage());
-    }
-} else {
-    $code = "<?php\n\n";
-    $fixers = [];
+switch ($routeInfo[0]) {
+    case Dispatcher::NOT_FOUND:
+        die('404');
+    case Dispatcher::METHOD_NOT_ALLOWED:
+        die('not allowed');
+    case Dispatcher::FOUND:
+        /** @var HandlerInterface $handler */
+        $handler = $routeInfo[1]();
+        $vars = $routeInfo[2];
+
+        $handler($request, $vars);
 }
-
-require __DIR__.'/../templates/index.php';
