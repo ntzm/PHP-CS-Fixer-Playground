@@ -39,7 +39,7 @@ use function PhpCsFixerPlayground\format;
     <a href="https://github.com/ntzm/PHP-CS-Fixer-Playground/">GitHub</a>
     <div class="container">
         <div>
-            <form id="form">
+            <form method="post" action="/" id="form">
                 <textarea name="code" id="code" cols="30" rows="10"><?= e($code) ?></textarea>
                 <button>Run</button>
 
@@ -65,7 +65,7 @@ use function PhpCsFixerPlayground\format;
             </form>
         </div>
         <div>
-            <pre id="result"><?= $result ?? '' ?></pre>
+            <pre id="result"><?= isset($result) ? highlight_string($result, true) : '' ?></pre>
         </div>
     </div>
 </body>

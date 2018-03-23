@@ -15,11 +15,12 @@ final class RunRepository
         $this->db = $db;
     }
 
-    public function getById(string $id): Run
+    public function getById(int $id): Run
     {
         $statement = $this->db->prepare('select * from runs where id = :id limit 1');
 
-        $statement->bindValue(':id', $id);
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
 
         $data = $statement->fetch(PDO::FETCH_ASSOC);
 
@@ -28,22 +29,29 @@ final class RunRepository
         }
 
         return new Run(
-            $id,
             $data['code'],
             $data['result'],
-            $data['rules']
+            json_decode($data['rules']),
+            $id
         );
     }
 
-    public function save(Run $run): void
+    public function save(Run $run): Run
     {
         $statement = $this->db->prepare('insert into runs (id, code, result, rules) values (:id, :code, :result, :rules)');
 
         $statement->bindValue(':id', $run->getId());
         $statement->bindValue(':code', $run->getCode());
         $statement->bindValue(':result', $run->getResult());
-        $statement->bindValue(':rules', $run->getRules());
+        $statement->bindValue(':rules', json_encode($run->getRules()));
 
         $statement->execute();
+
+        return new Run(
+            $run->getCode(),
+            $run->getResult(),
+            $run->getRules(),
+            (int) $this->db->lastInsertId()
+        );
     }
 }

@@ -28,7 +28,7 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($connectionReso
         return new CreateRunHandler(new RunRepository($connectionResolver->resolve()));
     });
 
-    $r->get('/{id:\w+}', function () use ($connectionResolver) {
+    $r->get('/{id:\d+}', function () use ($connectionResolver) {
         return new GetRunHandler(new RunRepository($connectionResolver->resolve()));
     });
 });

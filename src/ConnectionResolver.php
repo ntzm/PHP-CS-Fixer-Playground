@@ -25,7 +25,7 @@ final class ConnectionResolver
             ]
         );
 
-        self::$instance->exec('create table if not exists runs (id varchar(16) primary key, code text not null, result text not null, rules json not null)');
+        self::$instance->exec('create table if not exists runs (id integer primary key autoincrement, code text not null, result text not null, rules json not null)');
 
         return self::$instance;
     }

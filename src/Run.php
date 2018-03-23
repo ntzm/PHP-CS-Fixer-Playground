@@ -6,29 +6,24 @@ namespace PhpCsFixerPlayground;
 
 final class Run
 {
-    private $id;
-
     private $code;
 
     private $result;
 
     private $rules;
 
+    private $id;
+
     public function __construct(
-        string $id,
         string $code,
         string $result,
-        array $rules
+        array $rules,
+        int $id = null
     ) {
-        $this->id = $id;
         $this->code = $code;
         $this->result = $result;
         $this->rules = $rules;
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
+        $this->id = $id;
     }
 
     public function getCode(): string
@@ -44,5 +39,10 @@ final class Run
     public function getRules(): array
     {
         return $this->rules;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 }
