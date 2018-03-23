@@ -13,6 +13,7 @@ use PhpCsFixerPlayground\Handler\IndexHandler;
 use PhpCsFixerPlayground\RunNotFoundException;
 use PhpCsFixerPlayground\RunRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 require __DIR__.'/../vendor/autoload.php';
 
@@ -37,17 +38,17 @@ $routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo(
 
 switch ($routeInfo[0]) {
     case Dispatcher::NOT_FOUND:
-        die('404');
+        Response::create('Not Found', Response::HTTP_NOT_FOUND)->send();
     case Dispatcher::METHOD_NOT_ALLOWED:
-        die('not allowed');
+        Response::create('Method Not Allowed', Response::HTTP_METHOD_NOT_ALLOWED)->send();
     case Dispatcher::FOUND:
         /** @var HandlerInterface $handler */
         $handler = $routeInfo[1]();
         $vars = $routeInfo[2];
 
         try {
-            $handler($request, $vars);
+            $handler($request, $vars)->send();
         } catch (RunNotFoundException $e) {
-            die('404');
+            Response::create('Not Found', Response::HTTP_NOT_FOUND)->send();
         }
 }

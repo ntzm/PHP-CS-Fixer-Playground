@@ -8,7 +8,9 @@ use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\Fixer;
 use PhpCsFixerPlayground\Run;
 use PhpCsFixerPlayground\RunRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class CreateRunHandler implements HandlerInterface
 {
@@ -19,7 +21,7 @@ final class CreateRunHandler implements HandlerInterface
         $this->runs = $runs;
     }
 
-    public function __invoke(Request $request, array $vars)
+    public function __invoke(Request $request, array $vars): Response
     {
         $code = $request->request->get('code');
 
@@ -51,9 +53,8 @@ final class CreateRunHandler implements HandlerInterface
 
         $run = $this->runs->save($run);
 
-        header(
-            sprintf('Location: /%s', $run->getId())
+        return new RedirectResponse(
+            sprintf('/%d', $run->getId())
         );
-        die();
     }
 }

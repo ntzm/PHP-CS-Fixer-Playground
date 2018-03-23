@@ -5,6 +5,7 @@ namespace PhpCsFixerPlayground\Handler;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\RunRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class GetRunHandler implements HandlerInterface
 {
@@ -15,7 +16,7 @@ final class GetRunHandler implements HandlerInterface
         $this->runs = $runs;
     }
 
-    public function __invoke(Request $request, array $vars)
+    public function __invoke(Request $request, array $vars): Response
     {
         $run = $this->runs->getById((int) $vars['id']);
 
@@ -25,6 +26,8 @@ final class GetRunHandler implements HandlerInterface
         $fixers = $run->getRules();
         $result = $run->getResult();
 
-        require __DIR__.'/../../templates/index.php';
+        return new Response(
+            require __DIR__.'/../../templates/index.php'
+        );
     }
 }
