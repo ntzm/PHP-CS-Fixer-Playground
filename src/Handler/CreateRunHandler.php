@@ -6,6 +6,7 @@ use ParseError;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\Fixer;
+use PhpCsFixerPlayground\Run;
 use PhpCsFixerPlayground\RunRepository;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,8 +29,8 @@ final class CreateRunHandler implements HandlerInterface
             return $fixer->getName();
         }, $availableFixers);
 
-        if (isset($_GET['fixers']) && is_array($_GET['fixers'])) {
-            $fixers = array_filter($_GET['fixers'], function ($fixerName) use ($availableFixerNames): bool {
+        if (is_array($requestedFixers = $request->query->get('fixers'))) {
+            $fixers = array_filter($requestedFixers, function ($fixerName) use ($availableFixerNames): bool {
                 return in_array($fixerName, $availableFixerNames, true);
             });
         } else {
@@ -37,11 +38,23 @@ final class CreateRunHandler implements HandlerInterface
         }
 
         try {
-            $fixed = (new Fixer())->fix($code, $fixers);
-
-            $result = highlight_string($fixed, true);
+            $result = (new Fixer())->fix($code, $fixers);
         } catch (ParseError $e) {
-            $result = htmlentities($e->getMessage());
+            $result = $e->getMessage();
         }
+
+        $run = new Run(
+            uniqid('', true),
+            $code,
+            $result,
+            $fixers
+        );
+
+        $this->runs->save($run);
+
+        header(
+            sprintf('Location: /%s', $run->getId())
+        );
+        die();
     }
 }
