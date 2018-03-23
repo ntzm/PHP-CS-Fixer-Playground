@@ -19,10 +19,6 @@ final class ConnectionResolver
             return self::$instance;
         }
 
-        if (!file_exists(self::DATABASE)) {
-            touch(self::DATABASE);
-        }
-
         self::$instance = new PDO(
             sprintf('sqlite:%s', self::DATABASE), null, null, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

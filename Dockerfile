@@ -12,8 +12,9 @@ WORKDIR /var/www/
 
 EXPOSE 8000
 
-RUN a2enmod rewrite
+RUN a2enmod rewrite \
+ && chown www-data:www-data .
 
-COPY --from=build /build/vendor .
+COPY --from=build /build/vendor ./vendor
 
 COPY . .
