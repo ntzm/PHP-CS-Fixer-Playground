@@ -1,4 +1,5 @@
 <?php
+use PhpCsFixer\Console\Application;
 use function PhpCsFixerPlayground\escape as e;
 use function PhpCsFixerPlayground\format;
 ?>
@@ -36,6 +37,7 @@ use function PhpCsFixerPlayground\format;
 </head>
 <body>
     <h1>PHP-CS-Fixer Playground</h1>
+    <small>PHP-CS-Fixer Version: <?= Application::VERSION ?> <?= Application::VERSION_CODENAME ?></small>
     <a href="https://github.com/ntzm/PHP-CS-Fixer-Playground/">GitHub</a>
     <div class="container">
         <div>
