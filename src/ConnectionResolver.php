@@ -24,12 +24,12 @@ final class ConnectionResolver
         }
 
         self::$instance = new PDO(
-            sprintf('sqlite:%s', self::DATABASE)
+            sprintf('sqlite:%s', self::DATABASE), null, null, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            ]
         );
 
         self::$instance->exec('create table if not exists runs (id varchar(16) primary key, code text not null, result text not null, rules json not null)');
-
-        die(var_dump(self::$instance->errorInfo()));
 
         return self::$instance;
     }
