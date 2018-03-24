@@ -7,7 +7,7 @@ use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\Fixer;
 use PhpCsFixerPlayground\Run;
-use PhpCsFixerPlayground\RunRepository;
+use PhpCsFixerPlayground\RunRepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +16,7 @@ final class CreateRunHandler implements HandlerInterface
 {
     private $runs;
 
-    public function __construct(RunRepository $runs)
+    public function __construct(RunRepositoryInterface $runs)
     {
         $this->runs = $runs;
     }

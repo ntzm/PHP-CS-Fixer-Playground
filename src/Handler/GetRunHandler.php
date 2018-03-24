@@ -2,7 +2,7 @@
 
 namespace PhpCsFixerPlayground\Handler;
 
-use PhpCsFixerPlayground\RunRepository;
+use PhpCsFixerPlayground\RunRepositoryInterface;
 use function PhpCsFixerPlayground\view;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +11,7 @@ final class GetRunHandler implements HandlerInterface
 {
     private $runs;
 
-    public function __construct(RunRepository $runs)
+    public function __construct(RunRepositoryInterface $runs)
     {
         $this->runs = $runs;
     }

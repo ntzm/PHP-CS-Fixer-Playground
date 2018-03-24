@@ -7,7 +7,7 @@ namespace PhpCsFixerPlayground;
 use Hashids\HashidsInterface;
 use PDO;
 
-final class RunRepository
+final class RunRepository implements RunRepositoryInterface
 {
     private $db;
 
