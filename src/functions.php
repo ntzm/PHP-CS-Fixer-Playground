@@ -21,5 +21,9 @@ function view(string $code, array $fixers, string $result): string
         ->getFixers()
     ;
 
-    return require __DIR__.'/../templates/index.php';
+    ob_start();
+
+    require __DIR__.'/../templates/index.php';
+
+    return ob_get_clean();
 }
