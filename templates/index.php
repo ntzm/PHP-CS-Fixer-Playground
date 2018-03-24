@@ -36,11 +36,12 @@ use function PhpCsFixerPlayground\format;
                             <?php
                             /** @var PhpCsFixer\Fixer\DefinedFixerInterface $fixer */
                             $name = $fixer->getName();
-                            $checked = in_array($name, $fixers, true);
+                            $checked = isset($fixers[$name]) && $fixers[$name] !== false;
                             ?>
                             <li class="list-group-item<?= $fixer->isRisky() ? ' list-group-item-warning' : '' ?>">
                                 <label>
-                                    <input type="checkbox" name="fixers[]" value="<?= e($name) ?>"<?= $checked ? ' checked' : '' ?>> <?= e($name) ?>
+                                    <input type="hidden" name="fixers[<?= e($name) ?>]" value="false">
+                                    <input type="checkbox" name="fixers[<?= e($name) ?>]" value="true"<?= $checked ? ' checked' : '' ?>> <?= e($name) ?>
                                 </label>
                                 <p><?= format(e($fixer->getDefinition()->getSummary())) ?></p>
                                 <?php if ($fixer->isRisky()): ?>

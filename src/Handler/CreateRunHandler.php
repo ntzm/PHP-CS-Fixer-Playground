@@ -34,9 +34,19 @@ final class CreateRunHandler implements HandlerInterface
         if (is_array($requestedFixers = $request->request->get('fixers'))) {
             $fixers = array_filter($requestedFixers, function ($fixerName) use ($availableFixerNames): bool {
                 return in_array($fixerName, $availableFixerNames, true);
-            });
+            }, ARRAY_FILTER_USE_KEY);
         } else {
             $fixers = [];
+        }
+
+        foreach ($fixers as &$value) {
+            if ($value === 'true') {
+                $value = true;
+            }
+
+            if ($value === 'false') {
+                $value = false;
+            }
         }
 
         try {

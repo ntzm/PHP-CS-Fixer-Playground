@@ -36,7 +36,7 @@ final class RunRepository
         return new Run(
             $data['code'],
             $data['result'],
-            json_decode($data['rules']),
+            json_decode($data['rules'], true),
             $hash
         );
     }

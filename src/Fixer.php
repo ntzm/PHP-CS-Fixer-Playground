@@ -13,17 +13,11 @@ use Symfony\Component\Finder\Tests\Iterator\MockSplFileInfo;
 
 final class Fixer
 {
-    public function fix(string $code, array $fixerNames): string
+    public function fix(string $code, array $rules): string
     {
         $file = new MockSplFileInfo([]);
 
         $tokens = Tokens::fromCode($code);
-
-        $rules = [];
-
-        foreach ($fixerNames as $name) {
-            $rules[$name] = true;
-        }
 
         $fixers = FixerFactory::create()
             ->registerBuiltInFixers()
