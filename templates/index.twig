@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PHP-CS-Fixer Playground</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        #code {
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP-CS-Fixer Playground <span class="badge badge-primary">{{ phpCsFixerVersion }}</span></h1>
+        <a href="https://github.com/ntzm/PHP-CS-Fixer-Playground/">GitHub</a>
+        <div class="row">
+            <div class="col-sm-6">
+                <form method="post" action="/">
+                    <div class="form-group">
+                        <textarea class="form-control" name="code" id="code" cols="30" rows="10">{{ code }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary">Run</button>
+                    </div>
+                    <ul class="list-group">
+                        {% for fixer in availableFixers %}
+                            {% set checked = fixers[fixer.name] != false %}
+                            <li class="list-group-item{{ fixer.risky ? ' list-group-item-warning' : '' }}">
+                                <label>
+                                    <input type="hidden" name="fixers[{{ fixer.name }}]" value="false">
+                                    <input type="checkbox" name="fixers[{{ fixer.name }}]" value="true"{{ checked ? ' checked' : '' }}> {{ fixer.name }}
+                                </label>
+                                <p>{{ fixer.definition.summary|format }}</p>
+                                {% if fixer.risky %}
+                                    <p><strong>Risky rule: {{ fixer.definition.riskyDescription|format }}</strong></p>
+                                {% endif %}
+                                {% if fixer is instanceof('PhpCsFixer\\Fixer\\ConfigurationDefinitionFixerInterface') %}
+                                    {% for option in fixer.configurationDefinition.options %}
+                                        <div class="form-group">
+                                            <label>{{ option.name }}</label>
+                                            <p>{{ option.description|format }}</p>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <pre>{{ result }}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
