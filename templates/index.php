@@ -10,64 +10,53 @@ use function PhpCsFixerPlayground\format;
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>PHP-CS-Fixer Playground</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        .container {
-            display: flex;
-            width: 100%;
-        }
-
-        .container > div {
-            flex-grow: 1;
-            flex-basis: 0;
-        }
-
         #code {
             font-family: monospace;
-            width: 100%;
-        }
-
-        #form {
-            width: 100%;
         }
     </style>
 </head>
 <body>
-    <h1>PHP-CS-Fixer Playground</h1>
-    <small>PHP-CS-Fixer Version: <?= Application::VERSION ?> <?= Application::VERSION_CODENAME ?></small>
-    <a href="https://github.com/ntzm/PHP-CS-Fixer-Playground/">GitHub</a>
     <div class="container">
-        <div>
-            <form method="post" action="/" id="form">
-                <textarea name="code" id="code" cols="30" rows="10"><?= e($code) ?></textarea>
-                <button>Run</button>
-
-                <ul>
-                    <?php foreach ($availableFixers as $fixer): ?>
-                        <?php
-                        /** @var PhpCsFixer\Fixer\DefinedFixerInterface $fixer */
-                        $name = $fixer->getName();
-                        $checked = in_array($name, $fixers, true);
-                        ?>
-                        <label>
-                            <input type="checkbox" name="fixers[]" value="<?= e($name) ?>"<?= $checked ? ' checked' : '' ?>> <?= e($name) ?>
-                        </label>
-                        <br>
-                        <span><?= format(e($fixer->getDefinition()->getSummary())) ?></span>
-                        <?php if ($fixer->isRisky()): ?>
-                            <br>
-                            <strong>Risky rule: <?= format(e($fixer->getDefinition()->getRiskyDescription())) ?></strong>
-                        <?php endif ?>
-                        <br>
-                    <?php endforeach ?>
-                </ul>
-            </form>
-        </div>
-        <div>
-            <pre id="result"><?= isset($result) ? highlight_string($result, true) : '' ?></pre>
+        <h1>PHP-CS-Fixer Playground <span class="badge badge-primary"><?= Application::VERSION ?></span></h1>
+        <a href="https://github.com/ntzm/PHP-CS-Fixer-Playground/">GitHub</a>
+        <div class="row">
+            <div class="col-sm-6">
+                <form method="post" action="/">
+                    <div class="form-group">
+                        <textarea class="form-control" name="code" id="code" cols="30" rows="10"><?= e($code) ?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary">Run</button>
+                    </div>
+                    <ul class="list-group">
+                        <?php foreach ($availableFixers as $fixer): ?>
+                            <?php
+                            /** @var PhpCsFixer\Fixer\DefinedFixerInterface $fixer */
+                            $name = $fixer->getName();
+                            $checked = in_array($name, $fixers, true);
+                            ?>
+                            <li class="list-group-item<?= $fixer->isRisky() ? ' list-group-item-warning' : '' ?>">
+                                <label>
+                                    <input type="checkbox" name="fixers[]" value="<?= e($name) ?>"<?= $checked ? ' checked' : '' ?>> <?= e($name) ?>
+                                </label>
+                                <p><?= format(e($fixer->getDefinition()->getSummary())) ?></p>
+                                <?php if ($fixer->isRisky()): ?>
+                                    <p><strong>Risky rule: <?= format(e($fixer->getDefinition()->getRiskyDescription())) ?></strong></p>
+                                <?php endif ?>
+                            </li>
+                        <?php endforeach ?>
+                    </ul>
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <pre><?= $result ? e($result) : '' ?></pre>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
