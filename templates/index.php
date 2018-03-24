@@ -1,5 +1,6 @@
 <?php
 use PhpCsFixer\Console\Application;
+use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use function PhpCsFixerPlayground\escape as e;
 use function PhpCsFixerPlayground\format;
 ?>
@@ -44,6 +45,14 @@ use function PhpCsFixerPlayground\format;
                                 <p><?= format(e($fixer->getDefinition()->getSummary())) ?></p>
                                 <?php if ($fixer->isRisky()): ?>
                                     <p><strong>Risky rule: <?= format(e($fixer->getDefinition()->getRiskyDescription())) ?></strong></p>
+                                <?php endif ?>
+                                <?php if ($fixer instanceof ConfigurationDefinitionFixerInterface): ?>
+                                    <?php foreach ($fixer->getConfigurationDefinition()->getOptions() as $option): ?>
+                                        <div class="form-group">
+                                            <label><?= e($option->getName()) ?></label>
+                                            <p><?= format(e($option->getDescription())) ?></p>
+                                        </div>
+                                    <?php endforeach ?>
                                 <?php endif ?>
                             </li>
                         <?php endforeach ?>
