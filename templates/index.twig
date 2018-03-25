@@ -36,10 +36,13 @@
                                 {% set itemClasses = itemClasses|merge(['list-group-item-warning']) %}
                             {% endif %}
                             <li class="{{ itemClasses|join(' ') }}" id="{{ fixer.name }}">
-                                <label>
-                                    <input type="hidden" name="fixers[{{ fixer.name }}]" value="false">
-                                    <input type="checkbox" name="fixers[{{ fixer.name }}]" value="true"{{ checked ? ' checked' : '' }}> {{ fixer.name }}
-                                </label>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <label>
+                                        <input type="hidden" name="fixers[{{ fixer.name }}]" value="false">
+                                        <input type="checkbox" name="fixers[{{ fixer.name }}]" value="true"{{ checked ? ' checked' : '' }}> <code>{{ fixer.name }}</code>
+                                    </label>
+                                    <a href="#{{ fixer.name }}">#</a>
+                                </div>
                                 <p>{{ fixer.definition.summary|format }}</p>
                                 {% if deprecated %}
                                     <p>
@@ -59,7 +62,7 @@
                                 {% if fixer is instanceof('PhpCsFixer\\Fixer\\ConfigurationDefinitionFixerInterface') %}
                                     {% for option in fixer.configurationDefinition.options %}
                                         <div class="form-group">
-                                            <label>{{ option.name }}</label>
+                                            <label><code>{{ option.name }}</code></label>
                                             <p>{{ option.description|format }}</p>
                                         </div>
                                     {% endfor %}
