@@ -5,43 +5,21 @@ declare(strict_types=1);
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
-use Hashids\Hashids;
-use Hashids\HashidsInterface;
-use League\Container\Container;
-use League\Container\ReflectionContainer;
-use PhpCsFixerPlayground\ConnectionResolver;
+use PhpCsFixerPlayground\Container;
 use PhpCsFixerPlayground\Handler\CreateRunHandler;
 use PhpCsFixerPlayground\Handler\GetRunHandler;
 use PhpCsFixerPlayground\Handler\HandlerInterface;
 use PhpCsFixerPlayground\Handler\IndexHandler;
 use PhpCsFixerPlayground\RunNotFoundException;
-use PhpCsFixerPlayground\RunRepository;
-use PhpCsFixerPlayground\RunRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 require __DIR__.'/../vendor/autoload.php';
 
-$request = Request::createFromGlobals();
-
 $container = new Container();
-$container->delegate(new ReflectionContainer());
 
-$container->add(
-    HashidsInterface::class,
-    new Hashids(getenv('HASHIDS_SECRET'), 10)
-);
-
-$container->add(
-    PDO::class,
-    (new ConnectionResolver())->resolve()
-);
-
-$container
-    ->add(RunRepositoryInterface::class, RunRepository::class)
-    ->withArgument(PDO::class)
-    ->withArgument(HashidsInterface::class)
-;
+/** @var Request $request */
+$request = $container->get(Request::class);
 
 $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($container): void {
     $r->get('/', function() use ($container): IndexHandler {
@@ -70,7 +48,7 @@ switch ($routeInfo[0]) {
         $vars = $routeInfo[2];
 
         try {
-            $handler($request, $vars)->send();
+            $handler($vars)->send();
         } catch (RunNotFoundException $e) {
             Response::create('Not Found', Response::HTTP_NOT_FOUND)->send();
         }

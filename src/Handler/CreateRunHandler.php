@@ -16,14 +16,17 @@ final class CreateRunHandler implements HandlerInterface
 {
     private $runs;
 
-    public function __construct(RunRepositoryInterface $runs)
+    private $request;
+
+    public function __construct(RunRepositoryInterface $runs, Request $request)
     {
         $this->runs = $runs;
+        $this->request = $request;
     }
 
-    public function __invoke(Request $request, array $vars): Response
+    public function __invoke(array $vars): Response
     {
-        $code = $request->request->get('code');
+        $code = $this->request->request->get('code');
 
         $availableFixers = FixerFactory::create()->registerBuiltInFixers()->getFixers();
 
@@ -31,7 +34,7 @@ final class CreateRunHandler implements HandlerInterface
             return $fixer->getName();
         }, $availableFixers);
 
-        if (is_array($requestedFixers = $request->request->get('fixers'))) {
+        if (is_array($requestedFixers = $this->request->request->get('fixers'))) {
             $fixers = array_filter($requestedFixers, function ($fixerName) use ($availableFixerNames): bool {
                 return in_array($fixerName, $availableFixerNames, true);
             }, ARRAY_FILTER_USE_KEY);
