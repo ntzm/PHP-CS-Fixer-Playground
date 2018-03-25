@@ -35,7 +35,7 @@
                             {% elseif fixer.risky %}
                                 {% set itemClasses = itemClasses|merge(['list-group-item-warning']) %}
                             {% endif %}
-                            <li class="{{ itemClasses|join(' ') }}">
+                            <li class="{{ itemClasses|join(' ') }}" id="{{ fixer.name }}">
                                 <label>
                                     <input type="hidden" name="fixers[{{ fixer.name }}]" value="false">
                                     <input type="checkbox" name="fixers[{{ fixer.name }}]" value="true"{{ checked ? ' checked' : '' }}> {{ fixer.name }}
@@ -46,7 +46,7 @@
                                         <strong>
                                             Deprecated rule:
                                             {% if fixer.successorsNames %}
-                                                use {{ fixer.successorsNames|join(', ') }} instead
+                                                use {{ fixer.successorsNames|link_rules }} instead
                                             {% else %}
                                                 will be removed in next major version
                                             {% endif %}

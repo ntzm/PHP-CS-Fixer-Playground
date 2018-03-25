@@ -22,6 +22,12 @@ function view(string $code, array $fixers, string $result): string
         return preg_replace('/`(.+?)`/', '<code>$1</code>', $string);
     }, ['pre_escape' => 'html', 'is_safe' => ['html']]));
 
+    $twig->addFilter(new Twig_Filter('link_rules', function (array $rules): string {
+        return implode(', ', array_map(function (string $rule): string {
+            return sprintf('<a href="#%s"><code>%s</code></a>', $rule, $rule);
+        }, $rules));
+    }, ['is_safe' => ['html']]));
+
     $phpCsFixerVersion = Application::VERSION;
 
     $availableFixers = FixerFactory::create()
