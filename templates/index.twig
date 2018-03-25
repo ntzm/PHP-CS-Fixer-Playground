@@ -28,12 +28,31 @@
                     <ul class="list-group">
                         {% for fixer in availableFixers %}
                             {% set checked = fixers[fixer.name] != false %}
-                            <li class="list-group-item{{ fixer.risky ? ' list-group-item-warning' : '' }}">
+                            {% set deprecated = fixer is instanceof('PhpCsFixer\\Fixer\\DeprecatedFixerInterface') %}
+                            {% set itemClasses = ['list-group-item'] %}
+                            {% if deprecated %}
+                                {% set itemClasses = itemClasses|merge(['list-group-item-danger']) %}
+                            {% elseif fixer.risky %}
+                                {% set itemClasses = itemClasses|merge(['list-group-item-warning']) %}
+                            {% endif %}
+                            <li class="{{ itemClasses|join(' ') }}">
                                 <label>
                                     <input type="hidden" name="fixers[{{ fixer.name }}]" value="false">
                                     <input type="checkbox" name="fixers[{{ fixer.name }}]" value="true"{{ checked ? ' checked' : '' }}> {{ fixer.name }}
                                 </label>
                                 <p>{{ fixer.definition.summary|format }}</p>
+                                {% if deprecated %}
+                                    <p>
+                                        <strong>
+                                            Deprecated rule:
+                                            {% if fixer.successorsNames %}
+                                                use {{ fixer.successorsNames|join(', ') }} instead
+                                            {% else %}
+                                                will be removed in next major version
+                                            {% endif %}
+                                        </strong>
+                                    </p>
+                                {% endif %}
                                 {% if fixer.risky %}
                                     <p><strong>Risky rule: {{ fixer.definition.riskyDescription|format }}</strong></p>
                                 {% endif %}
