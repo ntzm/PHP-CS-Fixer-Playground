@@ -52,7 +52,7 @@ final class Container
                 ]
             );
 
-            $db->exec('create table if not exists runs (id integer primary key autoincrement, code text not null, result text not null, rules json not null)');
+            $db->exec('create table if not exists runs (id integer primary key autoincrement, code text not null, rules json not null)');
 
             return $db;
         });

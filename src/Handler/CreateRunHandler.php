@@ -2,10 +2,8 @@
 
 namespace PhpCsFixerPlayground\Handler;
 
-use ParseError;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
-use PhpCsFixerPlayground\Fixer;
 use PhpCsFixerPlayground\Run;
 use PhpCsFixerPlayground\RunRepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -52,17 +50,7 @@ final class CreateRunHandler implements HandlerInterface
             }
         }
 
-        try {
-            $result = (new Fixer())->fix($code, $fixers);
-        } catch (ParseError $e) {
-            $result = $e->getMessage();
-        }
-
-        $run = new Run(
-            $code,
-            $result,
-            $fixers
-        );
+        $run = new Run($code, $fixers);
 
         $run = $this->runs->save($run);
 
