@@ -10,6 +10,6 @@ final class IndexHandler implements HandlerInterface
 {
     public function __invoke(Request $request, array $vars): Response
     {
-        return new Response(view("<?php\n\n", [], ''));
+        return new Response(view("<?php\n\n", [], "<?php\n\n"));
     }
 }
