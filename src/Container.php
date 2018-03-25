@@ -7,7 +7,12 @@ use Hashids\HashidsInterface;
 use League\Container\Container as BaseContainer;
 use League\Container\ReflectionContainer;
 use PDO;
+use SebastianBergmann\Diff\Differ;
 use Symfony\Component\HttpFoundation\Request;
+use Twig_Environment;
+use Twig_Filter;
+use Twig_Loader_Filesystem;
+use Twig_Test;
 
 final class Container
 {
@@ -22,6 +27,8 @@ final class Container
         $this->registerHashids();
         $this->registerPdo();
         $this->registerRunRepository();
+        $this->registerTwigEnvironment();
+        $this->registerViewFactory();
     }
 
     public function get(string $alias): object
@@ -64,6 +71,39 @@ final class Container
             ->add(RunRepositoryInterface::class, RunRepository::class)
             ->withArgument(PDO::class)
             ->withArgument(HashidsInterface::class)
+        ;
+    }
+
+    private function registerTwigEnvironment(): void
+    {
+        $this->base->add(Twig_Environment::class, function (): Twig_Environment {
+            $loader = new Twig_Loader_Filesystem(__DIR__.'/../templates');
+            $twig = new Twig_Environment($loader);
+
+            $twig->addTest(new Twig_Test('instanceof', function (object $instance, string $class): bool {
+                return $instance instanceof $class;
+            }));
+
+            $twig->addFilter(new Twig_Filter('format', function (string $string): string {
+                return preg_replace('/`(.+?)`/', '<code>$1</code>', $string);
+            }, ['pre_escape' => 'html', 'is_safe' => ['html']]));
+
+            $twig->addFilter(new Twig_Filter('link_rules', function (array $rules): string {
+                return implode(', ', array_map(function (string $rule): string {
+                    return sprintf('<a href="#%s"><code>%s</code></a>', $rule, $rule);
+                }, $rules));
+            }, ['pre_escape' => 'html', 'is_safe' => ['html']]));
+
+            return $twig;
+        });
+    }
+
+    private function registerViewFactory(): void
+    {
+        $this->base
+            ->add(ViewFactoryInterface::class, ViewFactory::class)
+            ->withArgument(Twig_Environment::class)
+            ->withArgument(Differ::class)
         ;
     }
 }
