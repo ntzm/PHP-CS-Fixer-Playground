@@ -1,0 +1,18 @@
+<?php
+
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+return Config::create()
+    ->setRiskyAllowed(true)
+    ->setRules([
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
+        '@PHP71Migration' => true,
+        '@PHP71Migration:risky' => true,
+        'yoda_style' => false,
+    ])
+    ->setFinder(
+        Finder::create()->in(__DIR__)
+    )
+;
