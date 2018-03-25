@@ -34,11 +34,11 @@ final class RouteHandler
 
     private function handleNotFound(): Response
     {
-        return Response::create('Not Found', Response::HTTP_NOT_FOUND);
+        return new Response('Not Found', Response::HTTP_NOT_FOUND);
     }
 
     private function handleMethodNotAllowed(): Response
     {
-        return Response::create('Method Not Allowed', Response::HTTP_METHOD_NOT_ALLOWED);
+        return new Response('Method Not Allowed', Response::HTTP_METHOD_NOT_ALLOWED);
     }
 }
