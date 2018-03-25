@@ -26,7 +26,7 @@ function view(string $code, array $fixers, string $result): string
         return implode(', ', array_map(function (string $rule): string {
             return sprintf('<a href="#%s"><code>%s</code></a>', $rule, $rule);
         }, $rules));
-    }, ['is_safe' => ['html']]));
+    }, ['pre_escape' => 'html', 'is_safe' => ['html']]));
 
     $phpCsFixerVersion = Application::VERSION;
 
