@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Tests;
 
 use Hashids\HashidsInterface;
-use Mockery;
 use PDO;
 use PDOStatement;
 use PhpCsFixerPlayground\Run;
@@ -20,19 +19,19 @@ final class RunRepositoryTest extends TestCase
 {
     public function testGetByHash(): void
     {
-        $statement = Mockery::mock(PDOStatement::class);
-        $statement->expects('execute')->once();
-        $statement->expects('fetch')->andReturn([
+        $statement = $this->createMock(PDOStatement::class);
+        $statement->method('execute');
+        $statement->method('fetch')->willReturn([
             'id' => 5,
             'code' => '<?php echo "hi";',
             'rules' => '{"single_quote": true}',
         ]);
 
-        $pdo = Mockery::mock(PDO::class);
-        $pdo->expects('prepare')->once()->andReturn($statement);
+        $pdo = $this->createMock(PDO::class);
+        $pdo->method('prepare')->willReturn($statement);
 
-        $hashids = Mockery::mock(HashidsInterface::class);
-        $hashids->expects('decode')->withArgs(['foo'])->andReturn([5]);
+        $hashids = $this->createMock(HashidsInterface::class);
+        $hashids->method('decode')->with('foo')->willReturn([5]);
 
         $runs = new RunRepository($pdo, $hashids);
 
@@ -45,15 +44,15 @@ final class RunRepositoryTest extends TestCase
 
     public function testGetByHashNonExistent(): void
     {
-        $statement = Mockery::mock(PDOStatement::class);
-        $statement->expects('execute')->once();
-        $statement->expects('fetch')->andReturn(false);
+        $statement = $this->createMock(PDOStatement::class);
+        $statement->method('execute');
+        $statement->method('fetch')->willReturn(false);
 
-        $pdo = Mockery::mock(PDO::class);
-        $pdo->expects('prepare')->once()->andReturn($statement);
+        $pdo = $this->createMock(PDO::class);
+        $pdo->method('prepare')->willReturn($statement);
 
-        $hashids = Mockery::mock(HashidsInterface::class);
-        $hashids->expects('decode')->withArgs(['foo'])->andReturn([5]);
+        $hashids = $this->createMock(HashidsInterface::class);
+        $hashids->method('decode')->with('foo')->willReturn([5]);
 
         $runs = new RunRepository($pdo, $hashids);
 
@@ -65,16 +64,16 @@ final class RunRepositoryTest extends TestCase
 
     public function testSave(): void
     {
-        $statement = Mockery::mock(PDOStatement::class);
-        $statement->expects('bindValue')->twice();
-        $statement->expects('execute')->once();
+        $statement = $this->createMock(PDOStatement::class);
+        $statement->method('bindValue');
+        $statement->method('execute');
 
-        $pdo = Mockery::mock(PDO::class);
-        $pdo->expects('prepare')->once()->andReturn($statement);
-        $pdo->expects('lastInsertId')->andReturn('5');
+        $pdo = $this->createMock(PDO::class);
+        $pdo->method('prepare')->willReturn($statement);
+        $pdo->method('lastInsertId')->willReturn('5');
 
-        $hashids = Mockery::mock(HashidsInterface::class);
-        $hashids->expects('encode')->withArgs(['5'])->andReturn('foo');
+        $hashids = $this->createMock(HashidsInterface::class);
+        $hashids->method('encode')->with('5')->willReturn('foo');
 
         $runs = new RunRepository($pdo, $hashids);
 

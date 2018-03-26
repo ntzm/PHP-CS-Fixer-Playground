@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Tests;
 
 use FastRoute\Dispatcher;
-use Mockery;
 use PhpCsFixerPlayground\Handler\HandlerInterface;
 use PhpCsFixerPlayground\RouteHandler;
 use PhpCsFixerPlayground\RunNotFoundException;
@@ -43,11 +42,11 @@ final class RouteHandlerTest extends TestCase
 
         $response = new Response('Foo Bar');
 
-        $handler = Mockery::mock(HandlerInterface::class);
+        $handler = $this->createMock(HandlerInterface::class);
         $handler
-            ->expects('__invoke')
-            ->withArgs([['foo' => 'bar']])
-            ->andReturn($response)
+            ->method('__invoke')
+            ->with(['foo' => 'bar'])
+            ->willReturn($response)
         ;
 
         $actualResponse = $routeHandler->handle([Dispatcher::FOUND, $handler, ['foo' => 'bar']]);
@@ -58,10 +57,10 @@ final class RouteHandlerTest extends TestCase
     {
         $routeHandler = new RouteHandler();
 
-        $handler = Mockery::mock(HandlerInterface::class);
+        $handler = $this->createMock(HandlerInterface::class);
         $handler
-            ->expects('__invoke')
-            ->andThrow(RunNotFoundException::fromHash('foo'))
+            ->method('__invoke')
+            ->willThrowException(RunNotFoundException::fromHash('foo'))
         ;
 
         $response = $routeHandler->handle([Dispatcher::FOUND, $handler, []]);
