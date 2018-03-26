@@ -9,6 +9,7 @@ use Hashids\HashidsInterface;
 use League\Container\Container as BaseContainer;
 use League\Container\ReflectionContainer;
 use PDO;
+use PhpCsFixer\FixerFactory;
 use SebastianBergmann\Diff\Differ;
 use Symfony\Component\HttpFoundation\Request;
 use Twig_Environment;
@@ -106,6 +107,7 @@ final class Container
             ->add(ViewFactoryInterface::class, ViewFactory::class)
             ->withArgument(Twig_Environment::class)
             ->withArgument(Differ::class)
+            ->withArgument(FixerFactory::class)
         ;
     }
 }

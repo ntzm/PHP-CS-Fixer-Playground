@@ -15,17 +15,20 @@ final class ViewFactory implements ViewFactoryInterface
 
     private $differ;
 
-    public function __construct(Twig_Environment $twig, Differ $differ)
+    private $fixerFactory;
+
+    public function __construct(Twig_Environment $twig, Differ $differ, FixerFactory $fixerFactory)
     {
         $this->twig = $twig;
         $this->differ = $differ;
+        $this->fixerFactory = $fixerFactory;
     }
 
     public function make(string $code, array $fixers, string $result): string
     {
         $phpCsFixerVersion = Application::VERSION;
 
-        $availableFixers = FixerFactory::create()
+        $availableFixers = $this->fixerFactory
             ->registerBuiltInFixers()
             ->getFixers()
         ;
