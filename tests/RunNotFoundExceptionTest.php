@@ -12,11 +12,11 @@ use PHPUnit\Framework\TestCase;
  */
 final class RunNotFoundExceptionTest extends TestCase
 {
-	public function testFromHash(): void
-	{
-		$this->expectException(RunNotFoundException::class);
-		$this->expectExceptionMessage('Cannot find run with hash foo');
+    public function testFromHash(): void
+    {
+        $this->expectException(RunNotFoundException::class);
+        $this->expectExceptionMessage('Cannot find run with hash foo');
 
-		throw RunNotFoundException::fromHash('foo');
-	}
+        throw RunNotFoundException::fromHash('foo');
+    }
 }
