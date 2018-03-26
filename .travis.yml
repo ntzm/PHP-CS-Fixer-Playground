@@ -18,3 +18,4 @@ install:
 script:
   - vendor/bin/phpunit
   - vendor/bin/php-cs-fixer --diff --dry-run -v fix
+  - vendor/bin/phpstan -c phpstan.neon -l 7 analyse html src tests
