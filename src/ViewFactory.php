@@ -7,7 +7,7 @@ namespace PhpCsFixerPlayground;
 use PhpCsFixer\Console\Application;
 use PhpCsFixer\FixerFactory;
 use SebastianBergmann\Diff\Differ;
-use Twig_Environment;
+use Twig\Environment;
 
 final class ViewFactory implements ViewFactoryInterface
 {
@@ -17,7 +17,7 @@ final class ViewFactory implements ViewFactoryInterface
 
     private $fixerFactory;
 
-    public function __construct(Twig_Environment $twig, Differ $differ, FixerFactory $fixerFactory)
+    public function __construct(Environment $twig, Differ $differ, FixerFactory $fixerFactory)
     {
         $this->twig = $twig;
         $this->differ = $differ;

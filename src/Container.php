@@ -12,10 +12,8 @@ use PDO;
 use PhpCsFixer\FixerFactory;
 use SebastianBergmann\Diff\Differ;
 use Symfony\Component\HttpFoundation\Request;
-use Twig_Environment;
-use Twig_Filter;
-use Twig_Loader_Filesystem;
-use Twig_Test;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 final class Container
 {
@@ -79,23 +77,11 @@ final class Container
 
     private function registerTwigEnvironment(): void
     {
-        $this->base->add(Twig_Environment::class, function (): Twig_Environment {
-            $loader = new Twig_Loader_Filesystem(__DIR__.'/../templates');
-            $twig = new Twig_Environment($loader);
+        $this->base->add(Environment::class, function (): Environment {
+            $loader = new FilesystemLoader(__DIR__.'/../templates');
+            $twig = new Environment($loader);
 
-            $twig->addTest(new Twig_Test('instanceof', function (object $instance, string $class): bool {
-                return $instance instanceof $class;
-            }));
-
-            $twig->addFilter(new Twig_Filter('format', function (string $string): string {
-                return preg_replace('/`(.+?)`/', '<code>$1</code>', $string);
-            }, ['pre_escape' => 'html', 'is_safe' => ['html']]));
-
-            $twig->addFilter(new Twig_Filter('link_rules', function (array $rules): string {
-                return implode(', ', array_map(function (string $rule): string {
-                    return sprintf('<a href="#%s"><code>%s</code></a>', $rule, $rule);
-                }, $rules));
-            }, ['pre_escape' => 'html', 'is_safe' => ['html']]));
+            $twig->addExtension(new TwigExtension());
 
             return $twig;
         });
@@ -105,7 +91,7 @@ final class Container
     {
         $this->base
             ->add(ViewFactoryInterface::class, ViewFactory::class)
-            ->withArgument(Twig_Environment::class)
+            ->withArgument(Environment::class)
             ->withArgument(Differ::class)
             ->withArgument(FixerFactory::class)
         ;
