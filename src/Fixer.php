@@ -11,18 +11,26 @@ use PhpCsFixer\RuleSet;
 use PhpCsFixer\Tokenizer\Tokens;
 use Symfony\Component\Finder\Tests\Iterator\MockSplFileInfo;
 
-final class Fixer
+final class Fixer implements FixerInterface
 {
+    private $fixerFactory;
+
+    public function __construct(FixerFactory $fixerFactory)
+    {
+        $this->fixerFactory = $fixerFactory;
+    }
+
     public function fix(string $code, array $rules): string
     {
         $file = new MockSplFileInfo([]);
 
         $tokens = Tokens::fromCode($code);
 
-        $fixers = FixerFactory::create()
+        $fixers = $this->fixerFactory
             ->registerBuiltInFixers()
             ->useRuleSet(new RuleSet($rules))
-            ->getFixers();
+            ->getFixers()
+        ;
 
         foreach ($fixers as $fixer) {
             if (!$fixer->isCandidate($tokens)) {

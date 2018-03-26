@@ -30,6 +30,7 @@ final class Container
         $this->registerRunRepository();
         $this->registerTwigEnvironment();
         $this->registerViewFactory();
+        $this->registerFixer();
     }
 
     public function get(string $alias): object
@@ -93,6 +94,14 @@ final class Container
             ->add(ViewFactoryInterface::class, ViewFactory::class)
             ->withArgument(Environment::class)
             ->withArgument(Differ::class)
+            ->withArgument(FixerFactory::class)
+        ;
+    }
+
+    private function registerFixer(): void
+    {
+        $this->base
+            ->add(FixerInterface::class, Fixer::class)
             ->withArgument(FixerFactory::class)
         ;
     }
