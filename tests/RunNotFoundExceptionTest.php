@@ -7,6 +7,9 @@ namespace PhpCsFixerPlayground\Tests;
 use PhpCsFixerPlayground\RunNotFoundException;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \PhpCsFixerPlayground\RunNotFoundException
+ */
 final class RunNotFoundExceptionTest extends TestCase
 {
 	public function testFromHash(): void

@@ -7,6 +7,9 @@ namespace PhpCsFixerPlayground\Tests;
 use PhpCsFixer\Tests\TestCase;
 use PhpCsFixerPlayground\Run;
 
+/**
+ * @covers \PhpCsFixerPlayground\Run
+ */
 final class RunTest extends TestCase
 {
     public function testGetCode(): void

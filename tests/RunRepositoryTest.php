@@ -13,6 +13,9 @@ use PhpCsFixerPlayground\RunNotFoundException;
 use PhpCsFixerPlayground\RunRepository;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \PhpCsFixerPlayground\RunRepository
+ */
 final class RunRepositoryTest extends TestCase
 {
     public function testGetByHash(): void
