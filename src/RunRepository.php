@@ -23,7 +23,9 @@ final class RunRepository implements RunRepositoryInterface
     {
         $id = $this->hashids->decode($hash)[0];
 
-        $statement = $this->db->prepare('select * from runs where id = :id limit 1');
+        $statement = $this->db->prepare(
+            'select * from runs where id = :id limit 1'
+        );
 
         $statement->execute([':id' => $id]);
 
@@ -42,7 +44,9 @@ final class RunRepository implements RunRepositoryInterface
 
     public function save(Run $run): Run
     {
-        $statement = $this->db->prepare('insert into runs (code, rules) values (:code, :rules)');
+        $statement = $this->db->prepare(
+            'insert into runs (code, rules) values (:code, :rules)'
+        );
 
         $statement->bindValue(':code', $run->getCode());
         $statement->bindValue(':rules', json_encode($run->getRules()));

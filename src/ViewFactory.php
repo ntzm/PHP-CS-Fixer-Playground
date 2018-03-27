@@ -17,8 +17,11 @@ final class ViewFactory implements ViewFactoryInterface
 
     private $fixerFactory;
 
-    public function __construct(Environment $twig, Differ $differ, FixerFactory $fixerFactory)
-    {
+    public function __construct(
+        Environment $twig,
+        Differ $differ,
+        FixerFactory $fixerFactory
+    ) {
         $this->twig = $twig;
         $this->differ = $differ;
         $this->fixerFactory = $fixerFactory;
@@ -26,18 +29,21 @@ final class ViewFactory implements ViewFactoryInterface
 
     public function make(string $code, array $fixers, string $result): string
     {
-        $phpCsFixerVersion = Application::VERSION;
-
         $availableFixers = $this->fixerFactory
             ->registerBuiltInFixers()
             ->getFixers()
         ;
 
-        $diff = $this->differ->diff($code, $result);
-
         return $this->twig->render(
             'index.twig',
-            compact('code', 'fixers', 'result', 'availableFixers', 'phpCsFixerVersion', 'diff')
+            [
+                'code' => $code,
+                'fixers' => $fixers,
+                'result' => $result,
+                'availableFixers' => $availableFixers,
+                'phpCsFixerVersion' => Application::VERSION,
+                'diff' => $this->differ->diff($code, $result),
+            ]
         );
     }
 }

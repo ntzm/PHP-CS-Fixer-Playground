@@ -20,8 +20,11 @@ final class CreateRunHandler implements HandlerInterface
 
     private $fixerFactory;
 
-    public function __construct(RunRepositoryInterface $runs, Request $request, FixerFactory $fixerFactory)
-    {
+    public function __construct(
+        RunRepositoryInterface $runs,
+        Request $request,
+        FixerFactory $fixerFactory
+    ) {
         $this->runs = $runs;
         $this->request = $request;
         $this->fixerFactory = $fixerFactory;
@@ -36,14 +39,23 @@ final class CreateRunHandler implements HandlerInterface
             ->getFixers()
         ;
 
-        $availableFixerNames = array_map(function (FixerInterface $fixer): string {
-            return $fixer->getName();
-        }, $availableFixers);
+        $availableFixerNames = array_map(
+            function (FixerInterface $fixer): string {
+                return $fixer->getName();
+            },
+            $availableFixers
+        );
 
-        if (is_array($requestedFixers = $this->request->request->get('fixers'))) {
-            $fixers = array_filter($requestedFixers, function ($fixerName) use ($availableFixerNames): bool {
-                return in_array($fixerName, $availableFixerNames, true);
-            }, ARRAY_FILTER_USE_KEY);
+        $requestedFixers = $this->request->request->get('fixers');
+
+        if (is_array($requestedFixers)) {
+            $fixers = array_filter(
+                $requestedFixers,
+                function ($fixerName) use ($availableFixerNames): bool {
+                    return in_array($fixerName, $availableFixerNames, true);
+                },
+                ARRAY_FILTER_USE_KEY
+            );
         } else {
             $fixers = [];
         }
