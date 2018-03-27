@@ -69,7 +69,9 @@ final class Container
 create table if not exists runs (
   id integer primary key autoincrement,
   code text not null,
-  rules json not null
+  rules json not null,
+  indent varchar(4) not null,
+  line_ending varchar(2) not null
 )
                 ');
 

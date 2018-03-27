@@ -9,6 +9,7 @@ use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixer\RuleSet;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\WhitespacesFixerConfig;
 use Symfony\Component\Finder\Tests\Iterator\MockSplFileInfo;
 
 final class Fixer implements FixerInterface
@@ -20,14 +21,21 @@ final class Fixer implements FixerInterface
         $this->fixerFactory = $fixerFactory;
     }
 
-    public function fix(string $code, array $rules): string
-    {
+    public function fix(
+        string $code,
+        array $rules,
+        string $indent,
+        string $lineEnding
+    ): string {
         $file = new MockSplFileInfo([]);
 
         $tokens = Tokens::fromCode($code);
 
         $fixers = $this->fixerFactory
             ->registerBuiltInFixers()
+            ->setWhitespacesConfig(
+                new WhitespacesFixerConfig($indent, $lineEnding)
+            )
             ->useRuleSet(new RuleSet($rules))
             ->getFixers()
         ;

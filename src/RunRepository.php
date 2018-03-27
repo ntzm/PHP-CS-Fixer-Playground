@@ -38,24 +38,40 @@ final class RunRepository implements RunRepositoryInterface
         return new Run(
             $data['code'],
             json_decode($data['rules'], true),
+            $data['indent'],
+            $data['line_ending'],
             $hash
         );
     }
 
     public function save(Run $run): Run
     {
-        $statement = $this->db->prepare(
-            'insert into runs (code, rules) values (:code, :rules)'
-        );
+        $statement = $this->db->prepare('
+insert into runs (
+  code,
+  rules,
+  indent,
+  line_ending
+) values (
+  :code,
+  :rules,
+  :indent,
+  :line_ending
+)
+        ');
 
         $statement->bindValue(':code', $run->getCode());
         $statement->bindValue(':rules', json_encode($run->getRules()));
+        $statement->bindValue(':indent', $run->getIndent());
+        $statement->bindValue(':line_ending', $run->getLineEnding());
 
         $statement->execute();
 
         return new Run(
             $run->getCode(),
             $run->getRules(),
+            $run->getIndent(),
+            $run->getLineEnding(),
             $this->hashids->encode($this->db->lastInsertId())
         );
     }

@@ -33,13 +33,24 @@ final class GetRunHandler implements HandlerInterface
         $run = $this->runs->getByHash($vars['hash']);
 
         try {
-            $result = $this->fixer->fix($run->getCode(), $run->getRules());
+            $result = $this->fixer->fix(
+                $run->getCode(),
+                $run->getRules(),
+                $run->getIndent(),
+                $run->getLineEnding()
+            );
         } catch (ParseError $e) {
             $result = $e->getMessage();
         }
 
         return new Response(
-            $this->viewFactory->make($run->getCode(), $run->getRules(), $result)
+            $this->viewFactory->make(
+                $run->getCode(),
+                $run->getRules(),
+                $result,
+                $run->getIndent(),
+                $run->getLineEnding()
+            )
         );
     }
 }

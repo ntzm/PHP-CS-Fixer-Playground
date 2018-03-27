@@ -24,6 +24,8 @@ final class RunRepositoryTest extends TestCase
         $statement->method('fetch')->willReturn([
             'id' => 5,
             'code' => '<?php echo "hi";',
+            'indent' => '    ',
+            'line_ending' => "\n",
             'rules' => '{"single_quote": true}',
         ]);
 
@@ -40,6 +42,8 @@ final class RunRepositoryTest extends TestCase
         $this->assertSame('foo', $run->getHash());
         $this->assertSame('<?php echo "hi";', $run->getCode());
         $this->assertSame(['single_quote' => true], $run->getRules());
+        $this->assertSame('    ', $run->getIndent());
+        $this->assertSame("\n", $run->getLineEnding());
     }
 
     public function testGetByHashNonExistent(): void
@@ -77,7 +81,7 @@ final class RunRepositoryTest extends TestCase
 
         $runs = new RunRepository($pdo, $hashids);
 
-        $inputRun = new Run('<?php echo "hi";', ['single_quote' => true]);
+        $inputRun = new Run('<?php echo "hi";', ['single_quote' => true], '    ', "\n");
 
         $outputRun = $runs->save($inputRun);
 
@@ -86,5 +90,7 @@ final class RunRepositoryTest extends TestCase
         $this->assertSame('<?php echo "hi";', $outputRun->getCode());
         $this->assertSame(['single_quote' => true], $outputRun->getRules());
         $this->assertSame('foo', $outputRun->getHash());
+        $this->assertSame('    ', $outputRun->getIndent());
+        $this->assertSame("\n", $outputRun->getLineEnding());
     }
 }

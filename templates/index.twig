@@ -26,6 +26,27 @@
                     <div class="form-group">
                         <button class="btn btn-primary">Run</button>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="indent">Indentation</label>
+                                <select class="form-control" name="indent" id="indent">
+                                    <option value="    "{{ indent == '    ' ? ' selected' : '' }}>4 Spaces</option>
+                                    <option value="  "{{ indent == '  ' ? ' selected' : '' }}>2 Spaces</option>
+                                    <option value="	"{{ indent == '	' ? ' selected' : '' }}>Tabs</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="line-ending">Line Ending</label>
+                                <select class="form-control" name="line_ending" id="line-ending">
+                                    <option value="{{ '\n' }}"{{ lineEnding == '\n' ? ' selected' : '' }}>\n</option>
+                                    <option value="{{ '\r\n' }}"{{ lineEnding == '\r\n' ? ' selected' : '' }}>\r\n</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <ul class="list-group">
                         {% for fixer in availableFixers %}
                             {% set checked = fixers[fixer.name] != false %}

@@ -70,7 +70,10 @@ final class CreateRunHandler implements HandlerInterface
             }
         }
 
-        $run = new Run($code, $fixers);
+        $indent = $this->request->request->get('indent');
+        $lineEnding = $this->request->request->get('line_ending');
+
+        $run = new Run($code, $fixers, $indent, $lineEnding);
 
         $run = $this->runs->save($run);
 

@@ -18,8 +18,10 @@ final class IndexHandler implements HandlerInterface
 
     public function __invoke(array $vars): Response
     {
+        $code = "<?php\n\n";
+
         return new Response(
-            $this->viewFactory->make("<?php\n\n", [], "<?php\n\n")
+            $this->viewFactory->make($code, [], $code, '    ', "\n")
         );
     }
 }
