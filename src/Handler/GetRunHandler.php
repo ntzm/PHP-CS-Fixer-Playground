@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Handler;
 
-use ParseError;
 use PhpCsFixerPlayground\FixerInterface;
 use PhpCsFixerPlayground\RunRepositoryInterface;
 use PhpCsFixerPlayground\ViewFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 final class GetRunHandler implements HandlerInterface
 {
@@ -39,7 +39,7 @@ final class GetRunHandler implements HandlerInterface
                 $run->getIndent(),
                 $run->getRealLineEnding()
             );
-        } catch (ParseError $e) {
+        } catch (Throwable $e) {
             $result = $e->getMessage();
         }
 
