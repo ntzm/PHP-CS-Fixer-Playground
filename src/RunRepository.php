@@ -60,12 +60,12 @@ insert into runs (
 )
         ');
 
-        $statement->bindValue(':code', $run->getCode());
-        $statement->bindValue(':rules', json_encode($run->getRules()));
-        $statement->bindValue(':indent', $run->getIndent());
-        $statement->bindValue(':line_ending', $run->getLineEnding());
-
-        $statement->execute();
+        $statement->execute([
+            ':code' => $run->getCode(),
+            ':rules' => json_encode($run->getRules()),
+            ':indent' => $run->getIndent(),
+            ':line_ending' => $run->getLineEnding(),
+        ]);
 
         return new Run(
             $run->getCode(),

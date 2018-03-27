@@ -20,7 +20,6 @@ final class RunRepositoryTest extends TestCase
     public function testGetByHash(): void
     {
         $statement = $this->createMock(PDOStatement::class);
-        $statement->method('execute');
         $statement->method('fetch')->willReturn([
             'id' => 5,
             'code' => '<?php echo "hi";',
@@ -49,7 +48,6 @@ final class RunRepositoryTest extends TestCase
     public function testGetByHashNonExistent(): void
     {
         $statement = $this->createMock(PDOStatement::class);
-        $statement->method('execute');
         $statement->method('fetch')->willReturn(false);
 
         $pdo = $this->createMock(PDO::class);
