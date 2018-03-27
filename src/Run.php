@@ -50,6 +50,17 @@ final class Run
         return $this->lineEnding;
     }
 
+    public function getRealLineEnding(): string
+    {
+        if ($this->lineEnding === '\n') {
+            return "\n";
+        }
+
+        if ($this->lineEnding === '\r\n') {
+            return "\r\n";
+        }
+    }
+
     public function getHash(): ?string
     {
         return $this->hash;

@@ -37,7 +37,7 @@ final class GetRunHandler implements HandlerInterface
                 $run->getCode(),
                 $run->getRules(),
                 $run->getIndent(),
-                $run->getLineEnding()
+                $run->getRealLineEnding()
             );
         } catch (ParseError $e) {
             $result = $e->getMessage();

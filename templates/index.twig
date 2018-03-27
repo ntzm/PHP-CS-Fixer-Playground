@@ -41,8 +41,8 @@
                             <div class="form-group">
                                 <label for="line-ending">Line Ending</label>
                                 <select class="form-control" name="line_ending" id="line-ending">
-                                    <option value="{{ '\n' }}"{{ lineEnding == '\n' ? ' selected' : '' }}>\n</option>
-                                    <option value="{{ '\r\n' }}"{{ lineEnding == '\r\n' ? ' selected' : '' }}>\r\n</option>
+                                    <option value="\n"{{ lineEnding == '\\n' ? ' selected' : '' }}>\n</option>
+                                    <option value="\r\n"{{ lineEnding == '\\r\\n' ? ' selected' : '' }}>\r\n</option>
                                 </select>
                             </div>
                         </div>
