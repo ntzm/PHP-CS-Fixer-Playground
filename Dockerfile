@@ -4,7 +4,7 @@ WORKDIR /build
 
 COPY composer.* ./
 
-RUN composer install --prefer-dist
+RUN composer install --prefer-dist --no-dev
 
 FROM php:7.2-apache
 
