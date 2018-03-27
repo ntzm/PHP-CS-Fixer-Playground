@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>PHP-CS-Fixer Playground</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/themes/prism.min.css" integrity="sha256-6RI2bGiVbA9GqCSAFm96msi4ap50++uo5NYUQ+o7AXk=" crossorigin="anonymous">
     <style>
         #code {
             font-family: monospace;
@@ -76,17 +77,21 @@
                 <div class="card mb-3">
                     <div class="card-header">Result</div>
                     <div class="card-body">
-                        <pre>{{ result }}</pre>
+                        <pre><code class="language-php">{{ result }}</code></pre>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-header">Diff</div>
                     <div class="card-body">
-                        <pre>{{ diff }}</pre>
+                        <pre><code class="language-diff">{{ diff }}</code></pre>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/prism.min.js" integrity="sha256-AqXn2u4UOZ36/xOhOEYrMIqgHrq1p8m88HJO+oPzPiM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-php.min.js" integrity="sha256-yQtytnnfraW6dL24hRbZtmTuhb7Y5l8o0wXesz/wIbI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-diff.min.js" integrity="sha256-2j19IpsajXc3FKagWaOLYxCvNv13NmR4mMP749TMBxg=" crossorigin="anonymous"></script>
 </body>
 </html>
