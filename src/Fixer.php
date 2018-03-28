@@ -34,21 +34,10 @@ final class Fixer implements FixerInterface
 
         $tokens = Tokens::fromCode($code);
 
-        $fixers = $this->fixerFactory
-            ->registerBuiltInFixers()
-            ->setWhitespacesConfig(
-                new WhitespacesFixerConfig($indent, $lineEnding)
-            )
-            ->useRuleSet(new RuleSet($rules))
-            ->getFixers()
-        ;
+        $fixers = $this->getFixers($rules, $indent, $lineEnding);
 
         foreach ($fixers as $fixer) {
-            if (!$fixer->isCandidate($tokens)) {
-                continue;
-            }
-
-            if (!$fixer->supports($file)) {
+            if (!$fixer->isCandidate($tokens) || !$fixer->supports($file)) {
                 continue;
             }
 
@@ -70,5 +59,20 @@ final class Fixer implements FixerInterface
         }
 
         return $tokens->generateCode();
+    }
+
+    private function getFixers(
+        array $rules,
+        string $indent,
+        string $lineEnding
+    ): array {
+        return $this->fixerFactory
+            ->registerBuiltInFixers()
+            ->setWhitespacesConfig(
+                new WhitespacesFixerConfig($indent, $lineEnding)
+            )
+            ->useRuleSet(new RuleSet($rules))
+            ->getFixers()
+        ;
     }
 }
