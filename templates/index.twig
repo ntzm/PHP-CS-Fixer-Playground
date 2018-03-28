@@ -104,6 +104,11 @@
                                                     <input class="form-control" type="text" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="{{ fixers[fixer.name][option.name] }}">
                                                 {% endif %}
                                             {% endif %}
+                                            {% if option.allowedTypes == ['bool'] %}
+                                                {% set checked = option.hasDefault and option.default == true %}
+                                                <input type="hidden" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="false">
+                                                <input type="checkbox" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="true"{{ checked ? ' checked' : '' }}> Enabled
+                                            {% endif %}
                                         </div>
                                     {% endfor %}
                                 {% endif %}
