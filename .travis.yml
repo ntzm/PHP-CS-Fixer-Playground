@@ -14,7 +14,7 @@ before_install:
 
 install:
   - travis_retry composer install --prefer-dist --no-interaction --no-suggest
-  - travis_retry composer require global codeclimate/php-test-reporter
+  - travis_retry composer global require codeclimate/php-test-reporter
 
 script:
   - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
