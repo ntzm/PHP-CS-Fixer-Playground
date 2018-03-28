@@ -11,7 +11,7 @@ cache:
 
 env:
   global:
-    - CODECLIMATE_REPO_TOKEN=ccc827c071779278209c2bbab65069429f0a615bf3b7301ce2e371aa56656f43
+    - CC_TEST_REPORTER_ID=ccc827c071779278209c2bbab65069429f0a615bf3b7301ce2e371aa56656f43
 
 before_install:
   - travis_retry composer self-update
