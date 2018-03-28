@@ -9,7 +9,8 @@
         "hashids/hashids": "^3.0",
         "twig/twig": "^2.4",
         "sebastian/diff": "^3.0",
-        "league/container": "^2.4"
+        "league/container": "^2.4",
+        "zendframework/zend-code": "^3.3"
     },
     "license": "MIT",
     "authors": [

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground;
 
+use Zend\Code\Generator\ValueGenerator;
+
 final class ConfigFileGenerator
 {
     private const TEMPLATE = <<<'EOD'
@@ -38,43 +40,27 @@ EOD;
 
     private function formatIndent(string $indent): string
     {
-        return "'$indent'";
+        return sprintf("'%s'", $indent);
     }
 
     private function formatLineEnding(string $lineEnding): string
     {
-        return "'$lineEnding'";
+        return sprintf('"%s"', $lineEnding);
     }
 
     private function formatRules(array $rules): string
     {
-        if (empty($rules)) {
-            return '[]';
-        }
+        $generator = new ValueGenerator($rules, ValueGenerator::TYPE_ARRAY_SHORT);
+        $generator->setIndentation('    ');
+
+        $code = $generator->generate();
 
         $result = '';
 
-        foreach ($rules as $name => $options) {
-            $result .= sprintf(
-                "        '%s' => %s,\n",
-                $name,
-                $this->formatOptions($options)
-            );
+        foreach (explode("\n", $code) as $line) {
+            $result .= sprintf("    %s\n", $line);
         }
 
-        return sprintf("[\n%s]", $result);
-    }
-
-    private function formatOptions($options): string
-    {
-        if ($options === true) {
-            return 'true';
-        }
-
-        if ($options === false) {
-            return 'false';
-        }
-
-        return 'null';
+        return trim($result);
     }
 }
