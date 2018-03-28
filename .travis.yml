@@ -14,9 +14,13 @@ before_install:
 
 install:
   - travis_retry composer install --prefer-dist --no-interaction --no-suggest
+  - travis_retry composer require global codeclimate/php-test-reporter
 
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
   - vendor/bin/php-cs-fixer --diff --dry-run -v fix
   - vendor/bin/phpstan analyse -c phpstan.neon -l 7 html src tests
   - vendor/bin/psalm
+
+after_script:
+  - CODECLIMATE_REPO_TOKEN="ccc827c071779278209c2bbab65069429f0a615bf3b7301ce2e371aa56656f43" test-reporter
