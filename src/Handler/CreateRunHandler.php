@@ -43,31 +43,9 @@ final class CreateRunHandler implements HandlerInterface
     {
         $code = $this->request->request->get('code');
 
-        $availableFixers = $this->fixerFactory
-            ->registerBuiltInFixers()
-            ->getFixers()
-        ;
-
-        $availableFixerNames = array_map(
-            function (FixerInterface $fixer): string {
-                return $fixer->getName();
-            },
-            $availableFixers
+        $fixers = $this->stripInvalidFixers(
+            $this->request->request->get('fixers')
         );
-
-        $requestedFixers = $this->request->request->get('fixers');
-
-        if (is_array($requestedFixers)) {
-            $fixers = array_filter(
-                array_filter($requestedFixers, 'is_string'),
-                function (string $fixerName) use ($availableFixerNames): bool {
-                    return in_array($fixerName, $availableFixerNames, true);
-                },
-                ARRAY_FILTER_USE_KEY
-            );
-        } else {
-            $fixers = [];
-        }
 
         foreach ($fixers as &$value) {
             if ($value === 'true') {
@@ -88,6 +66,38 @@ final class CreateRunHandler implements HandlerInterface
 
         return new RedirectResponse(
             sprintf('/%s', $run->getHash())
+        );
+    }
+
+    private function stripInvalidFixers($fixers): array
+    {
+        if (!is_array($fixers)) {
+            return [];
+        }
+
+        $availableFixerNames = $this->getAvailableFixerNames();
+
+        return array_filter(
+            array_filter($fixers, 'is_string'),
+            function (string $fixerName) use ($availableFixerNames): bool {
+                return in_array($fixerName, $availableFixerNames, true);
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+    }
+
+    private function getAvailableFixerNames(): array
+    {
+        $availableFixers = $this->fixerFactory
+            ->registerBuiltInFixers()
+            ->getFixers()
+        ;
+
+        return array_map(
+            function (FixerInterface $fixer): string {
+                return $fixer->getName();
+            },
+            $availableFixers
         );
     }
 }
