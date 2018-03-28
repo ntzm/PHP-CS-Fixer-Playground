@@ -22,6 +22,7 @@ final class TwigExtensionTest extends TestCase
 
         $this->assertTrue($extension->instanceofTest($instance, stdClass::class));
         $this->assertFalse($extension->instanceofTest($instance, DateTime::class));
+        $this->assertFalse($extension->instanceofTest('foo', DateTime::class));
     }
 
     /**

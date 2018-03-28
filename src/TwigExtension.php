@@ -39,7 +39,7 @@ final class TwigExtension extends AbstractExtension
         ];
     }
 
-    public function instanceofTest(object $instance, string $class): bool
+    public function instanceofTest($instance, string $class): bool
     {
         return $instance instanceof $class;
     }

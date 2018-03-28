@@ -86,6 +86,24 @@
                                         <div class="form-group">
                                             <label><code>{{ option.name }}</code></label>
                                             <p>{{ option.description|format }}</p>
+                                            {% set printableAllowedValues = [] %}
+                                            {% for type in option.allowedValues %}
+                                                {% if type is not instanceof('Closure') %}
+                                                    {% set printableAllowedValues = printableAllowedValues|merge([type]) %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if option.allowedTypes == ['string'] %}
+                                                {% if printableAllowedValues %}
+                                                    <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]">
+                                                        {% for value in printableAllowedValues %}
+                                                            {% set selected = option.hasDefault and option.default == value %}
+                                                            <option value="{{ value }}"{{ selected ? ' selected' : '' }}>{{ value }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                {% else %}
+                                                    <input class="form-control" type="text" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="{{ fixers[fixer.name][option.name] }}">
+                                                {% endif %}
+                                            {% endif %}
                                         </div>
                                     {% endfor %}
                                 {% endif %}
