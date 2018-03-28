@@ -14,10 +14,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class CreateRunHandler implements HandlerInterface
 {
+    /**
+     * @var RunRepositoryInterface
+     */
     private $runs;
 
+    /**
+     * @var Request
+     */
     private $request;
 
+    /**
+     * @var FixerFactory
+     */
     private $fixerFactory;
 
     public function __construct(
@@ -50,8 +59,8 @@ final class CreateRunHandler implements HandlerInterface
 
         if (is_array($requestedFixers)) {
             $fixers = array_filter(
-                $requestedFixers,
-                function ($fixerName) use ($availableFixerNames): bool {
+                array_filter($requestedFixers, 'is_string'),
+                function (string $fixerName) use ($availableFixerNames): bool {
                     return in_array($fixerName, $availableFixerNames, true);
                 },
                 ARRAY_FILTER_USE_KEY

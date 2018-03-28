@@ -9,8 +9,14 @@ use PDO;
 
 final class RunRepository implements RunRepositoryInterface
 {
+    /**
+     * @var PDO
+     */
     private $db;
 
+    /**
+     * @var HashidsInterface
+     */
     private $hashids;
 
     public function __construct(PDO $db, HashidsInterface $hashids)

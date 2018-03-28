@@ -12,10 +12,19 @@ use Throwable;
 
 final class GetRunHandler implements HandlerInterface
 {
+    /**
+     * @var RunRepositoryInterface
+     */
     private $runs;
 
+    /**
+     * @var ViewFactoryInterface
+     */
     private $viewFactory;
 
+    /**
+     * @var FixerInterface
+     */
     private $fixer;
 
     public function __construct(

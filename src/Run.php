@@ -6,14 +6,29 @@ namespace PhpCsFixerPlayground;
 
 final class Run
 {
+    /**
+     * @var string
+     */
     private $code;
 
+    /**
+     * @var array<string, bool>
+     */
     private $rules;
 
+    /**
+     * @var string
+     */
     private $indent;
 
+    /**
+     * @var string
+     */
     private $lineEnding;
 
+    /**
+     * @var string|null
+     */
     private $hash;
 
     public function __construct(
@@ -59,6 +74,8 @@ final class Run
         if ($this->lineEnding === '\r\n') {
             return "\r\n";
         }
+
+        return $this->lineEnding;
     }
 
     public function getHash(): ?string

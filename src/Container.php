@@ -17,6 +17,9 @@ use Twig\Loader\FilesystemLoader;
 
 final class Container
 {
+    /**
+     * @var BaseContainer
+     */
     private $base;
 
     public function __construct()
@@ -50,7 +53,7 @@ final class Container
     {
         $this->base
             ->add(HashidsInterface::class, function (): HashidsInterface {
-                return new Hashids(getenv('HASHIDS_SECRET'), 10);
+                return new Hashids(getenv('HASHIDS_SECRET') ?: '', 10);
             });
     }
 
@@ -60,8 +63,8 @@ final class Container
             ->add(PDO::class, function (): PDO {
                 $db = new PDO(
                     sprintf('sqlite:%s', __DIR__.'/../database.sqlite'),
-                    null,
-                    null,
+                    '',
+                    '',
                     [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
                 );
 

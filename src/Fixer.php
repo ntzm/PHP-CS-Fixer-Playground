@@ -14,6 +14,9 @@ use Symfony\Component\Finder\Tests\Iterator\MockSplFileInfo;
 
 final class Fixer implements FixerInterface
 {
+    /**
+     * @var FixerFactory
+     */
     private $fixerFactory;
 
     public function __construct(FixerFactory $fixerFactory)

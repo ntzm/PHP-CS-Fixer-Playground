@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class IndexHandler implements HandlerInterface
 {
+    /**
+     * @var ViewFactoryInterface
+     */
     private $viewFactory;
 
     public function __construct(ViewFactoryInterface $viewFactory)
