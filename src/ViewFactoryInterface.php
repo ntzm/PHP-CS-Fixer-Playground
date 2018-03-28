@@ -11,6 +11,7 @@ interface ViewFactoryInterface
         array $fixers,
         string $result,
         string $indent,
-        string $lineEnding
+        string $lineEnding,
+        string $generatedConfig
     ): string;
 }

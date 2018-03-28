@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Handler;
 
+use PhpCsFixerPlayground\ConfigFileGeneratorInterface;
 use PhpCsFixerPlayground\FixerInterface;
 use PhpCsFixerPlayground\RunRepositoryInterface;
 use PhpCsFixerPlayground\ViewFactoryInterface;
@@ -27,14 +28,21 @@ final class GetRunHandler implements HandlerInterface
      */
     private $fixer;
 
+    /**
+     * @var ConfigFileGeneratorInterface
+     */
+    private $configFileGenerator;
+
     public function __construct(
         RunRepositoryInterface $runs,
         ViewFactoryInterface $viewFactory,
-        FixerInterface $fixer
+        FixerInterface $fixer,
+        ConfigFileGeneratorInterface $configFileGenerator
     ) {
         $this->runs = $runs;
         $this->viewFactory = $viewFactory;
         $this->fixer = $fixer;
+        $this->configFileGenerator = $configFileGenerator;
     }
 
     public function __invoke(array $vars): Response
@@ -58,7 +66,12 @@ final class GetRunHandler implements HandlerInterface
                 $run->getRules(),
                 $result,
                 $run->getIndent(),
-                $run->getLineEnding()
+                $run->getLineEnding(),
+                $this->configFileGenerator->generate(
+                    $run->getRules(),
+                    $run->getIndent(),
+                    $run->getLineEnding()
+                )
             )
         );
     }

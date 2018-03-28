@@ -6,7 +6,7 @@ namespace PhpCsFixerPlayground;
 
 use Zend\Code\Generator\ValueGenerator;
 
-final class ConfigFileGenerator
+final class ConfigFileGenerator implements ConfigFileGeneratorInterface
 {
     private const TEMPLATE = <<<'EOD'
 <?php

@@ -34,6 +34,7 @@ final class Container
         $this->registerTwigEnvironment();
         $this->registerViewFactory();
         $this->registerFixer();
+        $this->registerConfigFileGenerator();
     }
 
     public function get(string $alias): object
@@ -120,5 +121,13 @@ create table if not exists runs (
             ->add(FixerInterface::class, Fixer::class)
             ->withArgument(FixerFactory::class)
         ;
+    }
+
+    private function registerConfigFileGenerator(): void
+    {
+        $this->base->add(
+            ConfigFileGeneratorInterface::class,
+            ConfigFileGenerator::class
+        );
     }
 }
