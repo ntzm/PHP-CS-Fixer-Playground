@@ -78,11 +78,19 @@ final class CreateRunHandler implements HandlerInterface
         $availableFixerNames = $this->getAvailableFixerNames();
 
         return array_filter(
-            array_filter($fixers, 'is_string', ARRAY_FILTER_USE_KEY),
-            function (string $fixerName) use ($availableFixerNames): bool {
+            $fixers,
+            function ($value, $fixerName) use ($availableFixerNames): bool {
+                if (!is_string($fixerName)) {
+                    return false;
+                }
+
+                if ($value === 'false') {
+                    return false;
+                }
+
                 return in_array($fixerName, $availableFixerNames, true);
             },
-            ARRAY_FILTER_USE_KEY
+            ARRAY_FILTER_USE_BOTH
         );
     }
 
