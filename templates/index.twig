@@ -65,7 +65,7 @@
                                     </label>
                                     <a href="#{{ fixer.name }}">#</a>
                                 </div>
-                                <p>{{ fixer.definition.summary|format }}</p>
+                                <p>{{ fixer.definition.summary|e|format }}</p>
                                 {% if deprecated %}
                                     <p>
                                         <strong>
@@ -79,13 +79,13 @@
                                     </p>
                                 {% endif %}
                                 {% if fixer.risky %}
-                                    <p><strong>Risky rule: {{ fixer.definition.riskyDescription|format }}</strong></p>
+                                    <p><strong>Risky rule: {{ fixer.definition.riskyDescription|e|format }}</strong></p>
                                 {% endif %}
                                 {% if fixer is instanceof('PhpCsFixer\\Fixer\\ConfigurationDefinitionFixerInterface') %}
                                     {% for option in fixer.configurationDefinition.options %}
                                         <div class="form-group">
                                             <label><code>{{ option.name }}</code></label>
-                                            <p>{{ option.description|format }}</p>
+                                            <p>{{ option.description|e|format }}</p>
                                         </div>
                                     {% endfor %}
                                 {% endif %}
