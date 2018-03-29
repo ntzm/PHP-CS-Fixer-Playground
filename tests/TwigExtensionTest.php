@@ -8,12 +8,28 @@ use DateTime;
 use PhpCsFixerPlayground\TwigExtension;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Twig\TwigFilter;
+use Twig\TwigTest;
 
 /**
  * @covers \PhpCsFixerPlayground\TwigExtension
  */
 final class TwigExtensionTest extends TestCase
 {
+    public function testGetFilters(): void
+    {
+        $extension = new TwigExtension();
+
+        $this->assertContainsOnlyInstancesOf(TwigFilter::class, $extension->getFilters());
+    }
+
+    public function testGetTests(): void
+    {
+        $extension = new TwigExtension();
+
+        $this->assertContainsOnlyInstancesOf(TwigTest::class, $extension->getTests());
+    }
+
     public function testInstanceOfTest(): void
     {
         $extension = new TwigExtension();
