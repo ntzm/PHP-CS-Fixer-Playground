@@ -10,6 +10,7 @@ interface ViewFactoryInterface
         string $code,
         array $fixers,
         string $result,
+        array $appliedFixers,
         string $indent,
         string $lineEnding,
         string $generatedConfig

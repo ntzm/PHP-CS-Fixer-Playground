@@ -29,12 +29,14 @@ final class Fixer implements FixerInterface
         array $rules,
         string $indent,
         string $lineEnding
-    ): string {
+    ): FixReport {
         $file = new MockSplFileInfo([]);
 
         $tokens = Tokens::fromCode($code);
 
         $fixers = $this->getFixers($rules, $indent, $lineEnding);
+
+        $appliedFixers = [];
 
         foreach ($fixers as $fixer) {
             if (!$fixer->isCandidate($tokens) || !$fixer->supports($file)) {
@@ -55,10 +57,12 @@ final class Fixer implements FixerInterface
             if ($tokens->isChanged()) {
                 $tokens->clearEmptyTokens();
                 $tokens->clearChanged();
+
+                $appliedFixers[] = $fixer;
             }
         }
 
-        return $tokens->generateCode();
+        return new FixReport($tokens->generateCode(), $appliedFixers);
     }
 
     private function getFixers(

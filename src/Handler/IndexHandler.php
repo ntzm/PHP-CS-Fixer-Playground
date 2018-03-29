@@ -44,6 +44,7 @@ final class IndexHandler implements HandlerInterface
                 $code,
                 [],
                 $code,
+                [],
                 $indent,
                 $lineEnding,
                 $generatedConfig

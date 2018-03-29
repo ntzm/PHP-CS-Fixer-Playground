@@ -102,6 +102,20 @@
                     </div>
                 </div>
                 <div class="card mb-3">
+                    <div class="card-header">Applied fixers</div>
+                    <div class="card-body">
+                        {% if appliedFixers %}
+                            <ul class="mb-0">
+                                {% for fixer in appliedFixers %}
+                                    <li><a href="#{{ fixer.name }}"><code>{{ fixer.name }}</code></a></li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="mb-0">No fixers applied!</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card mb-3">
                     <div class="card-header">Diff</div>
                     <div class="card-body">
                         <pre><code class="language-diff">{{ diff }}</code></pre>

@@ -50,14 +50,18 @@ final class GetRunHandler implements HandlerInterface
         $run = $this->runs->getByHash($vars['hash']);
 
         try {
-            $result = $this->fixer->fix(
+            $report = $this->fixer->fix(
                 $run->getCode(),
                 $run->getRules(),
                 $run->getIndent(),
                 $run->getRealLineEnding()
             );
+
+            $result = $report->getResult();
+            $appliedFixers = $report->getAppliedFixers();
         } catch (Throwable $e) {
             $result = $e->getMessage();
+            $appliedFixers = [];
         }
 
         return new Response(
@@ -65,6 +69,7 @@ final class GetRunHandler implements HandlerInterface
                 $run->getCode(),
                 $run->getRules(),
                 $result,
+                $appliedFixers,
                 $run->getIndent(),
                 $run->getLineEnding(),
                 $this->configFileGenerator->generate(

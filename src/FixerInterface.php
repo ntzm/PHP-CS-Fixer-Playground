@@ -11,5 +11,5 @@ interface FixerInterface
         array $rules,
         string $indent,
         string $lineEnding
-    ): string;
+    ): FixReport;
 }
