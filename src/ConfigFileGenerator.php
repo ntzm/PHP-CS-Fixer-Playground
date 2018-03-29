@@ -40,6 +40,10 @@ EOD;
 
     private function formatIndent(string $indent): string
     {
+        if ($indent === "\t") {
+            return '"\t"';
+        }
+
         return sprintf("'%s'", $indent);
     }
 
