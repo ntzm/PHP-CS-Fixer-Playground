@@ -50,6 +50,10 @@ EOD;
 
     private function formatRules(array $rules): string
     {
+        if ($rules === []) {
+            return '[]';
+        }
+
         $generator = new ValueGenerator($rules, ValueGenerator::TYPE_ARRAY_SHORT);
         $generator->setIndentation('    ');
 
