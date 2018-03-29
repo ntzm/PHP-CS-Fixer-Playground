@@ -7,6 +7,9 @@ namespace PhpCsFixerPlayground\Tests;
 use PhpCsFixerPlayground\ConfigFileGenerator;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \PhpCsFixerPlayground\ConfigFileGenerator
+ */
 final class ConfigFileGeneratorTest extends TestCase
 {
     public function testGenerate(): void

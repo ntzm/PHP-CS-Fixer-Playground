@@ -8,6 +8,9 @@ use PhpCsFixer\Fixer\Alias\NoAliasFunctionsFixer;
 use PhpCsFixerPlayground\FixReport;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \PhpCsFixerPlayground\FixReport
+ */
 final class FixReportTest extends TestCase
 {
     public function testGetResult(): void
