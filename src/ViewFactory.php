@@ -40,8 +40,10 @@ final class ViewFactory implements ViewFactoryInterface
         string $code,
         array $fixers,
         string $result,
+        array $appliedFixers,
         string $indent,
-        string $lineEnding
+        string $lineEnding,
+        string $generatedConfig
     ): string {
         $availableFixers = $this->fixerFactory
             ->registerBuiltInFixers()
@@ -54,8 +56,10 @@ final class ViewFactory implements ViewFactoryInterface
                 'code' => $code,
                 'fixers' => $fixers,
                 'result' => $result,
+                'appliedFixers' => $appliedFixers,
                 'indent' => $indent,
                 'lineEnding' => $lineEnding,
+                'generatedConfig' => $generatedConfig,
                 'availableFixers' => $availableFixers,
                 'phpCsFixerVersion' => Application::VERSION,
                 'diff' => $this->differ->diff($code, $result),

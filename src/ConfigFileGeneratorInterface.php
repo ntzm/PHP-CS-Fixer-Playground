@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground;
 
-interface FixerInterface
+interface ConfigFileGeneratorInterface
 {
-    public function fix(
-        string $code,
+    public function generate(
         array $rules,
         string $indent,
         string $lineEnding
-    ): FixReport;
+    ): string;
 }

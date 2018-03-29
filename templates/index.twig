@@ -65,7 +65,7 @@
                                     </label>
                                     <a href="#{{ fixer.name }}">#</a>
                                 </div>
-                                <p>{{ fixer.definition.summary|format }}</p>
+                                <p>{{ fixer.definition.summary|e|format }}</p>
                                 {% if deprecated %}
                                     <p>
                                         <strong>
@@ -79,13 +79,13 @@
                                     </p>
                                 {% endif %}
                                 {% if fixer.risky %}
-                                    <p><strong>Risky rule: {{ fixer.definition.riskyDescription|format }}</strong></p>
+                                    <p><strong>Risky rule: {{ fixer.definition.riskyDescription|e|format }}</strong></p>
                                 {% endif %}
                                 {% if fixer is instanceof('PhpCsFixer\\Fixer\\ConfigurationDefinitionFixerInterface') %}
                                     {% for option in fixer.configurationDefinition.options %}
                                         <div class="form-group">
                                             <label><code>{{ option.name }}</code></label>
-                                            <p>{{ option.description|format }}</p>
+                                            <p>{{ option.description|e|format }}</p>
                                             {% set printableAllowedValues = [] %}
                                             {% for type in option.allowedValues %}
                                                 {% if type is not instanceof('Closure') %}
@@ -124,10 +124,30 @@
                         <pre><code class="language-php">{{ result }}</code></pre>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card mb-3">
+                    <div class="card-header">Applied fixers</div>
+                    <div class="card-body">
+                        {% if appliedFixers %}
+                            <ul class="mb-0">
+                                {% for fixer in appliedFixers %}
+                                    <li><a href="#{{ fixer.name }}"><code>{{ fixer.name }}</code></a></li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="mb-0">No fixers applied!</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card mb-3">
                     <div class="card-header">Diff</div>
                     <div class="card-body">
                         <pre><code class="language-diff">{{ diff }}</code></pre>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Config</div>
+                    <div class="card-body">
+                        <pre><code class="language-php">{{ generatedConfig }}</code></pre>
                     </div>
                 </div>
             </div>
