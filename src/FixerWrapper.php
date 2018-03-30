@@ -69,6 +69,15 @@ final class FixerWrapper implements FixerInterface
         return $this->fixer instanceof DeprecatedFixerInterface;
     }
 
+    public function getSuccessorsNames(): array
+    {
+        if (!$this->fixer instanceof DeprecatedFixerInterface) {
+            throw new RuntimeException('Fixer not deprecated');
+        }
+
+        return $this->fixer->getSuccessorsNames();
+    }
+
     public function isConfigurable(): bool
     {
         return $this->fixer instanceof ConfigurationDefinitionFixerInterface;
