@@ -76,7 +76,7 @@ final class FixerOptionWrapper implements FixerOptionInterface
         });
     }
 
-    public function getNormalizer()
+    public function getNormalizer(): ?Closure
     {
         return $this->option->getNormalizer();
     }
