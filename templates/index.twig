@@ -104,6 +104,12 @@
                                                 {% set checked = option.hasDefault and option.default == true %}
                                                 <input type="hidden" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="false">
                                                 <input type="checkbox" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="true"{{ checked ? ' checked' : '' }}> Enabled
+                                            {% elseif option.allowedTypes == ['array'] %}
+                                                {% set value = fixers[fixer.name][option.name] ?? [] %}
+                                                {% if not value and option.hasDefault %}
+                                                    {% set value = option.default %}
+                                                {% endif %}
+                                                <textarea class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]" rows="5">{{ value|join('\n') }}</textarea>
                                             {% else %}
                                                 <p>Unsupported types {{ option.allowedTypes|join(', ') }}</p>
                                             {% endif %}
