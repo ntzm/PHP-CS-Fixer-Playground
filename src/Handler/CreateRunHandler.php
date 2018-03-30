@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Handler;
 
 use PhpCsFixer\FixerFactory;
+use PhpCsFixerPlayground\RequestRuleParserInterface;
 use PhpCsFixerPlayground\Run;
 use PhpCsFixerPlayground\RunRepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,21 +29,28 @@ final class CreateRunHandler implements HandlerInterface
      */
     private $fixerFactory;
 
+    /**
+     * @var RequestRuleParserInterface
+     */
+    private $requestRuleParser;
+
     public function __construct(
         RunRepositoryInterface $runs,
         Request $request,
-        FixerFactory $fixerFactory
+        FixerFactory $fixerFactory,
+        RequestRuleParserInterface $requestRuleParser
     ) {
         $this->runs = $runs;
         $this->request = $request;
         $this->fixerFactory = $fixerFactory;
+        $this->requestRuleParser = $requestRuleParser;
     }
 
     public function __invoke(array $vars): Response
     {
         $code = $this->request->request->get('code');
 
-        $rules = $this->parseRules(
+        $rules = $this->requestRuleParser->parse(
             $this->request->request->get('fixers')
         );
 
@@ -56,41 +64,5 @@ final class CreateRunHandler implements HandlerInterface
         return new RedirectResponse(
             sprintf('/%s', $run->getHash())
         );
-    }
-
-    private function parseRules(array $rules): array
-    {
-        $result = [];
-
-        foreach ($rules as $name => $options) {
-            if ($options['_enabled'] !== '_true') {
-                continue;
-            }
-
-            unset($options['_enabled']);
-
-            if (empty($options)) {
-                $result[$name] = true;
-            } else {
-                $result[$name] = $this->parseOptions($options);
-            }
-        }
-
-        return $result;
-    }
-
-    private function parseOptions(array $options): array
-    {
-        foreach ($options as &$option) {
-            if ($option === '_true') {
-                $option = true;
-            } elseif ($option === '_false') {
-                $option = false;
-            } elseif (strpos($option, "\r\n") !== false) {
-                $option = explode("\r\n", $option);
-            }
-        }
-
-        return $options;
     }
 }

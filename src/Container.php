@@ -35,6 +35,7 @@ final class Container
         $this->registerViewFactory();
         $this->registerFixer();
         $this->registerConfigFileGenerator();
+        $this->registerRequestRuleParser();
     }
 
     public function get(string $alias): object
@@ -128,6 +129,14 @@ create table if not exists runs (
         $this->base->add(
             ConfigFileGeneratorInterface::class,
             ConfigFileGenerator::class
+        );
+    }
+
+    private function registerRequestRuleParser(): void
+    {
+        $this->base->add(
+            RequestRuleParserInterface::class,
+            RequestRuleParser::class
         );
     }
 }
