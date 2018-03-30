@@ -50,9 +50,8 @@
                     <ul class="list-group">
                         {% for fixer in availableFixers %}
                             {% set checked = fixers[fixer.name] != false %}
-                            {% set deprecated = fixer is instanceof('PhpCsFixer\\Fixer\\DeprecatedFixerInterface') %}
                             {% set itemClasses = ['list-group-item'] %}
-                            {% if deprecated %}
+                            {% if fixer.deprecated %}
                                 {% set itemClasses = itemClasses|merge(['list-group-item-danger']) %}
                             {% elseif fixer.risky %}
                                 {% set itemClasses = itemClasses|merge(['list-group-item-warning']) %}
@@ -66,7 +65,7 @@
                                     <a href="#{{ fixer.name }}">#</a>
                                 </div>
                                 <p>{{ fixer.definition.summary|e|format }}</p>
-                                {% if deprecated %}
+                                {% if fixer.deprecated %}
                                     <p>
                                         <strong>
                                             Deprecated rule:
@@ -81,8 +80,8 @@
                                 {% if fixer.risky %}
                                     <p><strong>Risky rule: {{ fixer.definition.riskyDescription|e|format }}</strong></p>
                                 {% endif %}
-                                {% if fixer is instanceof('PhpCsFixer\\Fixer\\ConfigurationDefinitionFixerInterface') %}
-                                    {% for option in fixer.configurationDefinition.options %}
+                                {% if fixer.configurable %}
+                                    {% for option in fixer.config.options %}
                                         <div class="form-group">
                                             <label><code>{{ option.name }}</code></label>
                                             <p>{{ option.description|e|format }}</p>

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground;
 
 use PhpCsFixer\Console\Application;
+use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
 use SebastianBergmann\Diff\Differ;
 use Twig\Environment;
@@ -49,6 +50,10 @@ final class ViewFactory implements ViewFactoryInterface
             ->registerBuiltInFixers()
             ->getFixers()
         ;
+
+        $availableFixers = array_map(function (FixerInterface $fixer): SupportFixerWrapper {
+            return new SupportFixerWrapper($fixer);
+        }, $availableFixers);
 
         return $this->twig->render(
             'index.twig',
