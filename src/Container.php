@@ -97,7 +97,7 @@ create table if not exists runs (
         $this->base
             ->add(Environment::class, function (): Environment {
                 $loader = new FilesystemLoader(__DIR__.'/../templates');
-                $twig = new Environment($loader);
+                $twig = new Environment($loader, ['strict_variables' => true]);
 
                 $twig->addExtension(new TwigExtension());
 
