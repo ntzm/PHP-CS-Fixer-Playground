@@ -1,24 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpCsFixerPlayground;
 
 use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
+use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 use RuntimeException;
 use SplFileInfo;
 
-final class SupportFixerWrapper implements DefinedFixerInterface
+final class SupportFixerWrapper implements FixerInterface
 {
     /**
-     * @var DefinedFixerInterface
+     * @var FixerInterface
      */
     private $fixer;
 
-    public function __construct(DefinedFixerInterface $fixer)
+    public function __construct(FixerInterface $fixer)
     {
         $this->fixer = $fixer;
     }
@@ -55,6 +57,10 @@ final class SupportFixerWrapper implements DefinedFixerInterface
 
     public function getDefinition(): FixerDefinitionInterface
     {
+        if (!$this->fixer instanceof DefinedFixerInterface) {
+            throw new RuntimeException('Fixer not defined');
+        }
+
         return $this->fixer->getDefinition();
     }
 
@@ -68,12 +74,14 @@ final class SupportFixerWrapper implements DefinedFixerInterface
         return $this->fixer instanceof ConfigurationDefinitionFixerInterface;
     }
 
-    public function getConfig(): FixerConfigurationResolverInterface
+    public function getConfig(): FixerConfigurationResolverWrapper
     {
         if (!$this->fixer instanceof ConfigurationDefinitionFixerInterface) {
             throw new RuntimeException('Fixer not configurable');
         }
 
-        return $this->fixer->getConfigurationDefinition();
+        return new FixerConfigurationResolverWrapper(
+            $this->fixer->getConfigurationDefinition()
+        );
     }
 }
