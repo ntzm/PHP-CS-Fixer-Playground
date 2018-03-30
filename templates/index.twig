@@ -49,7 +49,7 @@
                     </div>
                     <ul class="list-group">
                         {% for fixer in availableFixers %}
-                            {% set checked = fixers[fixer.name] ?? false %}
+                            {% set enabled = fixers[fixer.name] ?? false %}
                             {% set itemClasses = ['list-group-item'] %}
                             {% if fixer.deprecated %}
                                 {% set itemClasses = itemClasses|merge(['list-group-item-danger']) %}
@@ -59,8 +59,7 @@
                             <li class="{{ itemClasses|join(' ') }}" id="{{ fixer.name }}">
                                 <div class="d-flex w-100 justify-content-between">
                                     <label>
-                                        <input type="hidden" name="fixers[{{ fixer.name }}]" value="false">
-                                        <input type="checkbox" name="fixers[{{ fixer.name }}]" value="true"{{ checked ? ' checked' : '' }}> <code>{{ fixer.name }}</code>
+                                        <input type="checkbox" name="fixers[{{ fixer.name }}][_enabled]" value="_true"{{ enabled ? ' checked' : '' }}> <code>{{ fixer.name }}</code>
                                     </label>
                                     <a href="#{{ fixer.name }}">#</a>
                                 </div>
@@ -102,8 +101,8 @@
                                                 {% endif %}
                                             {% elseif option.allowedTypes == ['bool'] %}
                                                 {% set checked = option.hasDefault and option.default == true %}
-                                                <input type="hidden" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="false">
-                                                <input type="checkbox" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="true"{{ checked ? ' checked' : '' }}> Enabled
+                                                <input type="hidden" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="_false">
+                                                <input type="checkbox" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="_true"{{ checked ? ' checked' : '' }}> Enabled
                                             {% elseif option.allowedTypes == ['array'] %}
                                                 {% set value = fixers[fixer.name][option.name] ?? [] %}
                                                 {% if not value and option.hasDefault %}

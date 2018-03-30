@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Handler;
 
-use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\Run;
 use PhpCsFixerPlayground\RunRepositoryInterface;
@@ -43,24 +42,14 @@ final class CreateRunHandler implements HandlerInterface
     {
         $code = $this->request->request->get('code');
 
-        $fixers = $this->stripInvalidFixers(
+        $rules = $this->parseRules(
             $this->request->request->get('fixers')
         );
-
-        foreach ($fixers as &$value) {
-            if ($value === 'true') {
-                $value = true;
-            }
-
-            if ($value === 'false') {
-                $value = false;
-            }
-        }
 
         $indent = $this->request->request->get('indent');
         $lineEnding = $this->request->request->get('line_ending');
 
-        $run = new Run($code, $fixers, $indent, $lineEnding);
+        $run = new Run($code, $rules, $indent, $lineEnding);
 
         $run = $this->runs->save($run);
 
@@ -69,43 +58,39 @@ final class CreateRunHandler implements HandlerInterface
         );
     }
 
-    private function stripInvalidFixers($fixers): array
+    private function parseRules(array $rules): array
     {
-        if (!is_array($fixers)) {
-            return [];
+        $result = [];
+
+        foreach ($rules as $name => $options) {
+            if ($options['_enabled'] !== '_true') {
+                continue;
+            }
+
+            unset($options['_enabled']);
+
+            if (empty($options)) {
+                $result[$name] = true;
+            } else {
+                $result[$name] = $this->parseOptions($options);
+            }
         }
 
-        $availableFixerNames = $this->getAvailableFixerNames();
-
-        return array_filter(
-            $fixers,
-            function ($value, $fixerName) use ($availableFixerNames): bool {
-                if (!is_string($fixerName)) {
-                    return false;
-                }
-
-                if ($value === 'false') {
-                    return false;
-                }
-
-                return in_array($fixerName, $availableFixerNames, true);
-            },
-            ARRAY_FILTER_USE_BOTH
-        );
+        return $result;
     }
 
-    private function getAvailableFixerNames(): array
+    private function parseOptions(array $options): array
     {
-        $availableFixers = $this->fixerFactory
-            ->registerBuiltInFixers()
-            ->getFixers()
-        ;
+        foreach ($options as &$option) {
+            if ($option === '_true') {
+                $option = true;
+            } elseif ($option === '_false') {
+                $option = false;
+            } elseif (strpos($option, "\r\n") !== false) {
+                $option = explode("\r\n", $option);
+            }
+        }
 
-        return array_map(
-            function (FixerInterface $fixer): string {
-                return $fixer->getName();
-            },
-            $availableFixers
-        );
+        return $options;
     }
 }
