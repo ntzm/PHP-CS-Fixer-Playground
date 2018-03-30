@@ -56,9 +56,9 @@ final class FixerOptionWrapper implements FixerOptionInterface
             return null;
         }
 
-        return array_unique(array_map(function ($value): string {
+        return array_values(array_unique(array_map(function ($value): string {
             return strtolower(gettype($value));
-        }, $allowedValues));
+        }, $allowedValues)));
     }
 
     public function getAllowedValues(): ?array
@@ -74,9 +74,9 @@ final class FixerOptionWrapper implements FixerOptionInterface
             return null;
         }
 
-        return array_filter($allowedValues, function ($value): bool {
+        return array_values(array_filter($allowedValues, function ($value): bool {
             return !$value instanceof Closure;
-        });
+        }));
     }
 
     public function getNormalizer(): ?Closure
