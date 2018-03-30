@@ -49,7 +49,7 @@
                     </div>
                     <ul class="list-group">
                         {% for fixer in availableFixers %}
-                            {% set checked = fixers[fixer.name] != false %}
+                            {% set checked = fixers[fixer.name] ?? false %}
                             {% set itemClasses = ['list-group-item'] %}
                             {% if fixer.deprecated %}
                                 {% set itemClasses = itemClasses|merge(['list-group-item-danger']) %}
@@ -69,7 +69,7 @@
                                     <p>
                                         <strong>
                                             Deprecated rule:
-                                            {% if fixer.successorsNames %}
+                                            {% if fixer.successorsNames is defined %}
                                                 use {{ fixer.successorsNames|link_rules }} instead
                                             {% else %}
                                                 will be removed in next major version
@@ -94,7 +94,7 @@
                                                         {% endfor %}
                                                     </select>
                                                 {% else %}
-                                                    {% set value = fixers[fixer.name][option.name] %}
+                                                    {% set value = fixers[fixer.name][option.name] ?? null %}
                                                     {% if not value and option.hasDefault %}
                                                         {% set value = option.default %}
                                                     {% endif %}
