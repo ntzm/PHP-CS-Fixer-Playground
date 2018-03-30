@@ -81,6 +81,10 @@
                                 {% endif %}
                                 {% if fixer.configurable %}
                                     {% for option in fixer.config.options %}
+                                        {% set value = fixers[fixer.name][option.name] ?? null %}
+                                        {% if not value and option.hasDefault %}
+                                            {% set value = option.default %}
+                                        {% endif %}
                                         <div class="form-group">
                                             <label><code>{{ option.name }}</code></label>
                                             <p>{{ option.description|e|format }}</p>
@@ -93,21 +97,20 @@
                                                         {% endfor %}
                                                     </select>
                                                 {% else %}
-                                                    {% set value = fixers[fixer.name][option.name] ?? null %}
-                                                    {% if not value and option.hasDefault %}
-                                                        {% set value = option.default %}
-                                                    {% endif %}
                                                     <input class="form-control" type="text" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="{{ value }}">
                                                 {% endif %}
                                             {% elseif option.allowedTypes == ['bool'] %}
-                                                {% set checked = option.hasDefault and option.default == true %}
-                                                <input type="hidden" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="_false">
-                                                <input type="checkbox" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="_true"{{ checked ? ' checked' : '' }}> Enabled
+                                                <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]">
+                                                    <option value="_true"{{ value is same as(true) ? ' selected ' : '' }}>True</option>
+                                                    <option value="_false"{{ value is same as(false) ? ' selected' : '' }}>False</option>
+                                                </select>
+                                            {% elseif option.allowedTypes == ['bool', 'null'] %}
+                                                <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]">
+                                                    <option value="_true"{{ value is same as(true) ? ' selected ' : '' }}>True</option>
+                                                    <option value="_false"{{ value is same as(false) ? ' selected' : '' }}>False</option>
+                                                    <option value="_null"{{ value is same as(null) ? ' selected' : '' }}>Null</option>
+                                                </select>
                                             {% elseif option.allowedTypes == ['array'] %}
-                                                {% set value = fixers[fixer.name][option.name] ?? [] %}
-                                                {% if not value and option.hasDefault %}
-                                                    {% set value = option.default %}
-                                                {% endif %}
                                                 <textarea class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]" rows="5">{{ value|join('\n') }}</textarea>
                                             {% else %}
                                                 <p>Unsupported types {{ option.allowedTypes|join(', ') }}</p>

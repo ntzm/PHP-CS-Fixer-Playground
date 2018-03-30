@@ -9,6 +9,7 @@ final class RequestRuleParser implements RequestRuleParserInterface
     private const ENABLED = '_enabled';
     private const TRUE = '_true';
     private const FALSE = '_false';
+    private const NULL = '_null';
 
     public function parse(array $rules): array
     {
@@ -38,6 +39,8 @@ final class RequestRuleParser implements RequestRuleParserInterface
                 $option = true;
             } elseif ($option === self::FALSE) {
                 $option = false;
+            } elseif ($option === self::NULL) {
+                $option = null;
             } elseif (strpos($option, "\r\n") !== false) {
                 $option = explode("\r\n", $option);
             }

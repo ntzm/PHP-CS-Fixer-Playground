@@ -36,11 +36,11 @@ final class FixerOptionWrapperTest extends TestCase
     {
         $option = $this->createMock(FixerOptionInterface::class);
         $option->method('getAllowedTypes')->willReturn(null);
-        $option->method('getAllowedValues')->willReturn(['foo', 'bar', ['baz']]);
+        $option->method('getAllowedValues')->willReturn(['foo', 'bar', ['baz'], true]);
 
         $wrapper = new FixerOptionWrapper($option);
 
-        $this->assertSame(['string', 'array'], $wrapper->getAllowedTypes());
+        $this->assertSame(['array', 'bool', 'string'], $wrapper->getAllowedTypes());
     }
 
     public function getGetAllowedTypesInferredFromNullAllowedValues(): void

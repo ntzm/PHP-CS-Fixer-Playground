@@ -47,6 +47,8 @@ final class FixerOptionWrapper implements FixerOptionInterface
         $allowedTypes = $this->option->getAllowedTypes();
 
         if ($allowedTypes !== null) {
+            sort($allowedTypes);
+
             return $allowedTypes;
         }
 
@@ -56,9 +58,19 @@ final class FixerOptionWrapper implements FixerOptionInterface
             return null;
         }
 
-        return array_values(array_unique(array_map(function ($value): string {
-            return strtolower(gettype($value));
+        $types = array_values(array_unique(array_map(function ($value): string {
+            $type = strtolower(gettype($value));
+
+            if ($type === 'boolean') {
+                return 'bool';
+            }
+
+            return $type;
         }, $allowedValues)));
+
+        sort($types);
+
+        return $types;
     }
 
     public function getAllowedValues(): ?array
