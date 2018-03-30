@@ -13,7 +13,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 use RuntimeException;
 use SplFileInfo;
 
-final class SupportFixerWrapper implements FixerInterface
+final class FixerWrapper implements FixerInterface
 {
     /**
      * @var FixerInterface

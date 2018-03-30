@@ -51,8 +51,8 @@ final class ViewFactory implements ViewFactoryInterface
             ->getFixers()
         ;
 
-        $availableFixers = array_map(function (FixerInterface $fixer): SupportFixerWrapper {
-            return new SupportFixerWrapper($fixer);
+        $availableFixers = array_map(function (FixerInterface $fixer): FixerWrapper {
+            return new FixerWrapper($fixer);
         }, $availableFixers);
 
         return $this->twig->render(
