@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground;
 
+use Closure;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 
 final class FixerOptionWrapper implements FixerOptionInterface
@@ -60,6 +61,19 @@ final class FixerOptionWrapper implements FixerOptionInterface
     public function getAllowedValues()
     {
         return $this->option->getAllowedValues();
+    }
+
+    public function getPrintableAllowedValues(): ?array
+    {
+        $allowedValues = $this->getAllowedValues();
+
+        if ($allowedValues === null) {
+            return null;
+        }
+
+        return array_filter($allowedValues, function ($value): bool {
+            return !$value instanceof Closure;
+        });
     }
 
     public function getNormalizer()

@@ -85,16 +85,10 @@
                                         <div class="form-group">
                                             <label><code>{{ option.name }}</code></label>
                                             <p>{{ option.description|e|format }}</p>
-                                            {% set printableAllowedValues = [] %}
-                                            {% for type in option.allowedValues %}
-                                                {% if type is not instanceof('Closure') %}
-                                                    {% set printableAllowedValues = printableAllowedValues|merge([type]) %}
-                                                {% endif %}
-                                            {% endfor %}
                                             {% if option.allowedTypes == ['string'] %}
-                                                {% if printableAllowedValues %}
+                                                {% if option.printableAllowedValues %}
                                                     <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]">
-                                                        {% for value in printableAllowedValues %}
+                                                        {% for value in option.printableAllowedValues %}
                                                             {% set selected = option.hasDefault and option.default == value %}
                                                             <option value="{{ value }}"{{ selected ? ' selected' : '' }}>{{ value }}</option>
                                                         {% endfor %}
