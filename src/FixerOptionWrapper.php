@@ -39,7 +39,7 @@ final class FixerOptionWrapper implements FixerOptionInterface
         return $this->option->getDefault();
     }
 
-    public function getAllowedTypes()
+    public function getAllowedTypes(): ?array
     {
         $allowedTypes = $this->option->getAllowedTypes();
 
@@ -58,7 +58,7 @@ final class FixerOptionWrapper implements FixerOptionInterface
         }, $allowedValues));
     }
 
-    public function getAllowedValues()
+    public function getAllowedValues(): ?array
     {
         return $this->option->getAllowedValues();
     }
