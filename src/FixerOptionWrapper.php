@@ -40,7 +40,19 @@ final class FixerOptionWrapper implements FixerOptionInterface
 
     public function getAllowedTypes()
     {
-        return $this->option->getAllowedTypes();
+        $allowedTypes = $this->option->getAllowedTypes();
+
+        if ($allowedTypes !== null) {
+            return $allowedTypes;
+        }
+
+        $allowedValues = $this->getAllowedValues();
+
+        if ($allowedValues === null) {
+            return null;
+        }
+
+        return array_unique(array_map('gettype', $allowedValues));
     }
 
     public function getAllowedValues()
