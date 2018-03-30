@@ -52,7 +52,9 @@ final class FixerOptionWrapper implements FixerOptionInterface
             return null;
         }
 
-        return array_unique(array_map('gettype', $allowedValues));
+        return array_unique(array_map(function ($value): string {
+            return strtolower(gettype($value));
+        }, $allowedValues));
     }
 
     public function getAllowedValues()
