@@ -6,7 +6,6 @@ namespace PhpCsFixerPlayground;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use Twig\TwigTest;
 
 final class TwigExtension extends AbstractExtension
 {
@@ -27,21 +26,6 @@ final class TwigExtension extends AbstractExtension
                 ['pre_escape' => 'html', 'is_safe' => ['html']]
             ),
         ];
-    }
-
-    /**
-     * @return TwigTest[]
-     */
-    public function getTests(): array
-    {
-        return [
-            new TwigTest('instanceof', [$this, 'instanceofTest']),
-        ];
-    }
-
-    public function instanceofTest($instance, string $class): bool
-    {
-        return $instance instanceof $class;
     }
 
     public function formatFilter(string $string): string

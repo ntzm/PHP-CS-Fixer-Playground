@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Tests;
 
-use DateTime;
 use PhpCsFixerPlayground\TwigExtension;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 use Twig\TwigFilter;
-use Twig\TwigTest;
 
 /**
  * @covers \PhpCsFixerPlayground\TwigExtension
@@ -21,24 +18,6 @@ final class TwigExtensionTest extends TestCase
         $extension = new TwigExtension();
 
         $this->assertContainsOnlyInstancesOf(TwigFilter::class, $extension->getFilters());
-    }
-
-    public function testGetTests(): void
-    {
-        $extension = new TwigExtension();
-
-        $this->assertContainsOnlyInstancesOf(TwigTest::class, $extension->getTests());
-    }
-
-    public function testInstanceOfTest(): void
-    {
-        $extension = new TwigExtension();
-
-        $instance = new stdClass();
-
-        $this->assertTrue($extension->instanceofTest($instance, stdClass::class));
-        $this->assertFalse($extension->instanceofTest($instance, DateTime::class));
-        $this->assertFalse($extension->instanceofTest('foo', DateTime::class));
     }
 
     /**
