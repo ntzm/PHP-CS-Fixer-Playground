@@ -94,7 +94,11 @@
                                                         {% endfor %}
                                                     </select>
                                                 {% else %}
-                                                    <input class="form-control" type="text" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="{{ fixers[fixer.name][option.name] }}">
+                                                    {% set value = fixers[fixer.name][option.name] %}
+                                                    {% if not value and option.hasDefault %}
+                                                        {% set value = option.default %}
+                                                    {% endif %}
+                                                    <input class="form-control" type="text" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="{{ value }}">
                                                 {% endif %}
                                             {% elseif option.allowedTypes == ['bool'] %}
                                                 {% set checked = option.hasDefault and option.default == true %}
