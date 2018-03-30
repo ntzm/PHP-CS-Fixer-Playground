@@ -39,6 +39,9 @@ final class FixerOptionWrapper implements FixerOptionInterface
         return $this->option->getDefault();
     }
 
+    /**
+     * @return string[]|null
+     */
     public function getAllowedTypes(): ?array
     {
         $allowedTypes = $this->option->getAllowedTypes();
