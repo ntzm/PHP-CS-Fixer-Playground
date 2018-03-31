@@ -7,6 +7,7 @@ namespace PhpCsFixerPlayground;
 use PhpCsFixer\Console\Application;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
+use PhpCsFixerPlayground\Wrapper\FixerWrapper;
 use SebastianBergmann\Diff\Differ;
 use Twig\Environment;
 

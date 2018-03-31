@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Tests;
+namespace PhpCsFixerPlayground\Tests\Wrapper;
 
 use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
@@ -11,14 +11,14 @@ use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixerPlayground\FixerConfigurationResolverWrapper;
-use PhpCsFixerPlayground\FixerWrapper;
+use PhpCsFixerPlayground\Wrapper\FixerConfigurationResolverWrapper;
+use PhpCsFixerPlayground\Wrapper\FixerWrapper;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Symfony\Component\Finder\Tests\Iterator\MockSplFileInfo;
 
 /**
- * @covers \PhpCsFixerPlayground\FixerWrapper
+ * @covers \PhpCsFixerPlayground\Wrapper\FixerWrapper
  */
 final class FixerWrapperTest extends TestCase
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Tests;
+namespace PhpCsFixerPlayground\Tests\Wrapper;
 
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
-use PhpCsFixerPlayground\FixerOptionWrapper;
+use PhpCsFixerPlayground\Wrapper\FixerOptionWrapper;
 use PHPUnit\Framework\TestCase;
 
 final class FixerOptionWrapperTest extends TestCase

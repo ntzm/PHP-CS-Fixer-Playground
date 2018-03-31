@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Tests;
+namespace PhpCsFixerPlayground\Tests\Wrapper;
 
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
-use PhpCsFixerPlayground\FixerConfigurationResolverWrapper;
-use PhpCsFixerPlayground\FixerOptionWrapper;
+use PhpCsFixerPlayground\Wrapper\FixerConfigurationResolverWrapper;
+use PhpCsFixerPlayground\Wrapper\FixerOptionWrapper;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \PhpCsFixerPlayground\FixerConfigurationResolverWrapper
+ * @covers \PhpCsFixerPlayground\Wrapper\FixerConfigurationResolverWrapper
  */
 final class FixerConfigurationResolverWrapperTest extends TestCase
 {
