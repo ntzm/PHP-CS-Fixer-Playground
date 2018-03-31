@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Tests;
+namespace PhpCsFixerPlayground\Tests\Run;
 
 use PhpCsFixer\Tests\TestCase;
-use PhpCsFixerPlayground\Run;
+use PhpCsFixerPlayground\Run\Run;
 
 /**
- * @covers \PhpCsFixerPlayground\Run
+ * @covers \PhpCsFixerPlayground\Run\Run
  */
 final class RunTest extends TestCase
 {

@@ -12,6 +12,8 @@ use PDO;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\Fixer\Fixer;
 use PhpCsFixerPlayground\Fixer\FixerInterface;
+use PhpCsFixerPlayground\Run\RunRepository;
+use PhpCsFixerPlayground\Run\RunRepositoryInterface;
 use PhpCsFixerPlayground\View\TwigExtension;
 use PhpCsFixerPlayground\View\ViewFactory;
 use PhpCsFixerPlayground\View\ViewFactoryInterface;

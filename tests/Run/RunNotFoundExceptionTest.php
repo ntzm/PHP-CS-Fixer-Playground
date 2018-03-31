@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Tests;
+namespace PhpCsFixerPlayground\Tests\Run;
 
-use PhpCsFixerPlayground\RunNotFoundException;
+use PhpCsFixerPlayground\Run\RunNotFoundException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \PhpCsFixerPlayground\RunNotFoundException
+ * @covers \PhpCsFixerPlayground\Run\RunNotFoundException
  */
 final class RunNotFoundExceptionTest extends TestCase
 {

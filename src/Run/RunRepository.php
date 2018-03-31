@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground;
+namespace PhpCsFixerPlayground\Run;
 
 use Hashids\HashidsInterface;
 use PDO;

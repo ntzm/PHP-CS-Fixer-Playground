@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Tests;
+namespace PhpCsFixerPlayground\Tests\Run;
 
 use Hashids\HashidsInterface;
 use PDO;
 use PDOStatement;
-use PhpCsFixerPlayground\Run;
-use PhpCsFixerPlayground\RunNotFoundException;
-use PhpCsFixerPlayground\RunRepository;
+use PhpCsFixerPlayground\Run\Run;
+use PhpCsFixerPlayground\Run\RunNotFoundException;
+use PhpCsFixerPlayground\Run\RunRepository;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \PhpCsFixerPlayground\RunRepository
+ * @covers \PhpCsFixerPlayground\Run\RunRepository
  */
 final class RunRepositoryTest extends TestCase
 {

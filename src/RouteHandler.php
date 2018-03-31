@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground;
 
 use FastRoute\Dispatcher;
+use PhpCsFixerPlayground\Run\RunNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 
 final class RouteHandler

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Handler;
 
 use PhpCsFixerPlayground\RequestRuleParserInterface;
-use PhpCsFixerPlayground\Run;
-use PhpCsFixerPlayground\RunRepositoryInterface;
+use PhpCsFixerPlayground\Run\Run;
+use PhpCsFixerPlayground\Run\RunRepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

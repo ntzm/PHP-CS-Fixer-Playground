@@ -7,7 +7,7 @@ namespace PhpCsFixerPlayground\Tests;
 use FastRoute\Dispatcher;
 use PhpCsFixerPlayground\Handler\HandlerInterface;
 use PhpCsFixerPlayground\RouteHandler;
-use PhpCsFixerPlayground\RunNotFoundException;
+use PhpCsFixerPlayground\Run\RunNotFoundException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
