@@ -25,11 +25,6 @@ final class CreateRunHandler implements HandlerInterface
     private $request;
 
     /**
-     * @var FixerFactory
-     */
-    private $fixerFactory;
-
-    /**
      * @var RequestRuleParserInterface
      */
     private $requestRuleParser;
@@ -37,12 +32,10 @@ final class CreateRunHandler implements HandlerInterface
     public function __construct(
         RunRepositoryInterface $runs,
         Request $request,
-        FixerFactory $fixerFactory,
         RequestRuleParserInterface $requestRuleParser
     ) {
         $this->runs = $runs;
         $this->request = $request;
-        $this->fixerFactory = $fixerFactory;
         $this->requestRuleParser = $requestRuleParser;
     }
 
