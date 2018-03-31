@@ -66,12 +66,9 @@ final class GetRunHandler implements HandlerInterface
 
         return new Response(
             $this->viewFactory->make(
-                $run->getCode(),
-                $run->getRules(),
+                $run,
                 $result,
                 $appliedFixers,
-                $run->getIndent(),
-                $run->getLineEnding(),
                 $this->configFileGenerator->generate(
                     $run->getRules(),
                     $run->getIndent(),

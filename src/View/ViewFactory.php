@@ -7,6 +7,7 @@ namespace PhpCsFixerPlayground\View;
 use PhpCsFixer\Console\Application;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
+use PhpCsFixerPlayground\Run\Run;
 use PhpCsFixerPlayground\Wrapper\FixerWrapper;
 use SebastianBergmann\Diff\Differ;
 use Twig\Environment;
@@ -39,12 +40,9 @@ final class ViewFactory implements ViewFactoryInterface
     }
 
     public function make(
-        string $code,
-        array $fixers,
+        Run $run,
         string $result,
         array $appliedFixers,
-        string $indent,
-        string $lineEnding,
         string $generatedConfig
     ): string {
         $availableFixers = $this->fixerFactory
@@ -59,16 +57,16 @@ final class ViewFactory implements ViewFactoryInterface
         return $this->twig->render(
             'index.twig',
             [
-                'code' => $code,
-                'fixers' => $fixers,
+                'code' => $run->getCode(),
+                'fixers' => $run->getRules(),
+                'indent' => $run->getIndent(),
+                'lineEnding' => $run->getLineEnding(),
                 'result' => $result,
                 'appliedFixers' => $appliedFixers,
-                'indent' => $indent,
-                'lineEnding' => $lineEnding,
                 'generatedConfig' => $generatedConfig,
                 'availableFixers' => $availableFixers,
                 'phpCsFixerVersion' => Application::VERSION,
-                'diff' => $this->differ->diff($code, $result),
+                'diff' => $this->differ->diff($run->getCode(), $result),
             ]
         );
     }

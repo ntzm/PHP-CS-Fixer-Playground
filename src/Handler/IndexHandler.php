@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Handler;
 
 use PhpCsFixerPlayground\ConfigFileGeneratorInterface;
+use PhpCsFixerPlayground\Run\Run;
 use PhpCsFixerPlayground\View\ViewFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -39,14 +40,13 @@ final class IndexHandler implements HandlerInterface
             $lineEnding
         );
 
+        $run = new Run($code, [], $indent, $lineEnding);
+
         return new Response(
             $this->viewFactory->make(
+                $run,
                 $code,
                 [],
-                $code,
-                [],
-                $indent,
-                $lineEnding,
                 $generatedConfig
             )
         );

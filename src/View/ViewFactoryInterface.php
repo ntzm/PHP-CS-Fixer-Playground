@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\View;
 
+use PhpCsFixerPlayground\Run\Run;
+
 interface ViewFactoryInterface
 {
     public function make(
-        string $code,
-        array $fixers,
+        Run $run,
         string $result,
         array $appliedFixers,
-        string $indent,
-        string $lineEnding,
         string $generatedConfig
     ): string;
 }
