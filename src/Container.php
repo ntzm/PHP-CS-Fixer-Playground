@@ -10,6 +10,8 @@ use League\Container\Container as BaseContainer;
 use League\Container\ReflectionContainer;
 use PDO;
 use PhpCsFixer\FixerFactory;
+use PhpCsFixerPlayground\Fixer\Fixer;
+use PhpCsFixerPlayground\Fixer\FixerInterface;
 use PhpCsFixerPlayground\View\TwigExtension;
 use PhpCsFixerPlayground\View\ViewFactory;
 use PhpCsFixerPlayground\View\ViewFactoryInterface;

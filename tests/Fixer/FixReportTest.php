@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Tests;
+namespace PhpCsFixerPlayground\Tests\Fixer;
 
 use PhpCsFixer\Fixer\Alias\NoAliasFunctionsFixer;
-use PhpCsFixerPlayground\FixReport;
+use PhpCsFixerPlayground\Fixer\FixReport;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \PhpCsFixerPlayground\FixReport
+ * @covers \PhpCsFixerPlayground\Fixer\FixReport
  */
 final class FixReportTest extends TestCase
 {
