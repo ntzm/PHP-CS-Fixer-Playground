@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground;
+namespace PhpCsFixerPlayground\View;
 
 use PhpCsFixer\Console\Application;
 use PhpCsFixer\Fixer\FixerInterface;

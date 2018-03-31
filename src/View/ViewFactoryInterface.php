@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground;
+namespace PhpCsFixerPlayground\View;
 
 interface ViewFactoryInterface
 {

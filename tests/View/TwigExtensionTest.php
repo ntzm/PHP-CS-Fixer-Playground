@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Tests;
+namespace PhpCsFixerPlayground\Tests\View;
 
-use PhpCsFixerPlayground\TwigExtension;
+use PhpCsFixerPlayground\View\TwigExtension;
 use PHPUnit\Framework\TestCase;
 use Twig\TwigFilter;
 
 /**
- * @covers \PhpCsFixerPlayground\TwigExtension
+ * @covers \PhpCsFixerPlayground\View\TwigExtension
  */
 final class TwigExtensionTest extends TestCase
 {

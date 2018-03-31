@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground;
+namespace PhpCsFixerPlayground\View;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;

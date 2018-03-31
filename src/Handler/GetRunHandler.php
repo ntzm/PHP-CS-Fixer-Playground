@@ -7,7 +7,7 @@ namespace PhpCsFixerPlayground\Handler;
 use PhpCsFixerPlayground\ConfigFileGeneratorInterface;
 use PhpCsFixerPlayground\FixerInterface;
 use PhpCsFixerPlayground\RunRepositoryInterface;
-use PhpCsFixerPlayground\ViewFactoryInterface;
+use PhpCsFixerPlayground\View\ViewFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 

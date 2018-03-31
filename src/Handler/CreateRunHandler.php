@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Handler;
 
-use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\RequestRuleParserInterface;
 use PhpCsFixerPlayground\Run;
 use PhpCsFixerPlayground\RunRepositoryInterface;
