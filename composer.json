@@ -11,6 +11,7 @@
     ],
     "require": {
         "php": "^7.2",
+        "doctrine/orm": "^2.6",
         "friendsofphp/php-cs-fixer": "^2.11",
         "hashids/hashids": "^3.0",
         "league/container": "^2.4",
