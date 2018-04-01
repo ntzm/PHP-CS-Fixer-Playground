@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Tests\Run;
+namespace PhpCsFixerPlayground\Tests\Entity;
 
 use PhpCsFixer\Tests\TestCase;
-use PhpCsFixerPlayground\Run\Run;
+use PhpCsFixerPlayground\Entity\Run;
 
 /**
- * @covers \PhpCsFixerPlayground\Run\Run
+ * @covers \PhpCsFixerPlayground\Entity\Run
  */
 final class RunTest extends TestCase
 {
@@ -54,17 +54,10 @@ final class RunTest extends TestCase
         $this->assertSame("\n", $run->getRealLineEnding());
     }
 
-    public function testGetHashUnsaved(): void
+    public function testGetIdUnsaved(): void
     {
         $run = new Run('<?php echo "hi";', [], '    ', '\n');
 
-        $this->assertNull($run->getHash());
-    }
-
-    public function testGetHashSaved(): void
-    {
-        $run = new Run('<?php echo "hi";', [], '    ', '\n', 'foobar');
-
-        $this->assertSame('foobar', $run->getHash());
+        $this->assertNull($run->getId());
     }
 }

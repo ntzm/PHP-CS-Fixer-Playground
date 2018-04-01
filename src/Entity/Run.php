@@ -2,47 +2,62 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Run;
+namespace PhpCsFixerPlayground\Entity;
 
-final class Run
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity()
+ */
+class Run
 {
     /**
+     * @var int|null
+     * @ORM\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue()
+     */
+    private $id;
+
+    /**
      * @var string
+     * @ORM\Column(type="text")
      */
     private $code;
 
     /**
      * @var array<string, bool>
+     * @ORM\Column(type="json")
      */
     private $rules;
 
     /**
      * @var string
+     * @ORM\Column(type="string", length=4)
      */
     private $indent;
 
     /**
      * @var string
+     * @ORM\Column(type="string", length=4)
      */
     private $lineEnding;
-
-    /**
-     * @var string|null
-     */
-    private $hash;
 
     public function __construct(
         string $code,
         array $rules,
         string $indent,
-        string $lineEnding,
-        string $hash = null
+        string $lineEnding
     ) {
         $this->code = $code;
         $this->rules = $rules;
         $this->indent = $indent;
         $this->lineEnding = $lineEnding;
-        $this->hash = $hash;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getCode(): string
@@ -76,10 +91,5 @@ final class Run
         }
 
         return $this->lineEnding;
-    }
-
-    public function getHash(): ?string
-    {
-        return $this->hash;
     }
 }

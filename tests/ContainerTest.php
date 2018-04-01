@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Tests;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Hashids\Hashids;
 use Hashids\HashidsInterface;
 use PDO;
@@ -46,13 +48,6 @@ final class ContainerTest extends TestCase
             Hashids::class,
             $container->get(HashidsInterface::class)
         );
-    }
-
-    public function testGetPdo(): void
-    {
-        $container = new Container();
-
-        $this->assertInstanceOf(PDO::class, $container->get(PDO::class));
     }
 
     public function testGetRunRepository(): void
@@ -102,6 +97,16 @@ final class ContainerTest extends TestCase
         $this->assertInstanceOf(
             ConfigFileGenerator::class,
             $container->get(ConfigFileGeneratorInterface::class)
+        );
+    }
+
+    public function testGetEntityManager(): void
+    {
+        $container = new Container();
+
+        $this->assertInstanceOf(
+            EntityManager::class,
+            $container->get(EntityManagerInterface::class)
         );
     }
 }

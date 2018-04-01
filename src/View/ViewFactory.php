@@ -7,7 +7,7 @@ namespace PhpCsFixerPlayground\View;
 use PackageVersions\Versions;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
-use PhpCsFixerPlayground\Run\Run;
+use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\Wrapper\FixerWrapper;
 use SebastianBergmann\Diff\Differ;
 use Twig\Environment;

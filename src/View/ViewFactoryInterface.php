@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\View;
 
-use PhpCsFixerPlayground\Run\Run;
+use PhpCsFixerPlayground\Entity\Run;
 
 interface ViewFactoryInterface
 {

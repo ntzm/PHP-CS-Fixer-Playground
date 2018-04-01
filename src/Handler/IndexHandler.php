@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Handler;
 
 use PhpCsFixerPlayground\ConfigFileGeneratorInterface;
-use PhpCsFixerPlayground\Run\Run;
+use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\View\ViewFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 

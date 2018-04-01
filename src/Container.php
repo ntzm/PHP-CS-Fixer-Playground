@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Hashids\Hashids;
 use Hashids\HashidsInterface;
 use League\Container\Container as BaseContainer;
 use League\Container\ReflectionContainer;
-use PDO;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\Fixer\Fixer;
 use PhpCsFixerPlayground\Fixer\FixerInterface;
@@ -36,13 +36,13 @@ final class Container
 
         $this->registerRequest();
         $this->registerHashids();
-        $this->registerPdo();
         $this->registerRunRepository();
         $this->registerTwigEnvironment();
         $this->registerViewFactory();
         $this->registerFixer();
         $this->registerConfigFileGenerator();
         $this->registerRequestRuleParser();
+        $this->registerEntityManager();
     }
 
     public function get(string $alias): object
@@ -66,36 +66,11 @@ final class Container
             });
     }
 
-    private function registerPdo(): void
-    {
-        $this->base
-            ->add(PDO::class, function (): PDO {
-                $db = new PDO(
-                    sprintf('sqlite:%s', __DIR__.'/../database.sqlite'),
-                    '',
-                    '',
-                    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-                );
-
-                $db->exec('
-create table if not exists runs (
-  id integer primary key autoincrement,
-  code text not null,
-  rules json not null,
-  indent varchar(4) not null,
-  line_ending varchar(2) not null
-)
-                ');
-
-                return $db;
-            });
-    }
-
     private function registerRunRepository(): void
     {
         $this->base
             ->add(RunRepositoryInterface::class, RunRepository::class)
-            ->withArgument(PDO::class)
+            ->withArgument(EntityManagerInterface::class)
             ->withArgument(HashidsInterface::class)
         ;
     }
@@ -144,6 +119,14 @@ create table if not exists runs (
         $this->base->add(
             RequestRuleParserInterface::class,
             RequestRuleParser::class
+        );
+    }
+
+    private function registerEntityManager(): void
+    {
+        $this->base->add(
+            EntityManagerInterface::class,
+            new EntityManagerResolver()
         );
     }
 }
