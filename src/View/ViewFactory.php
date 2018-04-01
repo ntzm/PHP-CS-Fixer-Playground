@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\View;
 
-use PhpCsFixer\Console\Application;
+use PackageVersions\Versions;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\Run\Run;
@@ -54,6 +54,13 @@ final class ViewFactory implements ViewFactoryInterface
             return new FixerWrapper($fixer);
         }, $availableFixers);
 
+        preg_match(
+            '/^v([0-9.]+)@/',
+            Versions::getVersion('friendsofphp/php-cs-fixer'),
+            $matches
+        );
+        $phpCsFixerVersion = $matches[1];
+
         return $this->twig->render(
             'index.twig',
             [
@@ -65,7 +72,7 @@ final class ViewFactory implements ViewFactoryInterface
                 'appliedFixers' => $appliedFixers,
                 'generatedConfig' => $generatedConfig,
                 'availableFixers' => $availableFixers,
-                'phpCsFixerVersion' => Application::VERSION,
+                'phpCsFixerVersion' => $phpCsFixerVersion,
                 'diff' => $this->differ->diff($run->getCode(), $result),
             ]
         );
