@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Fixer;
 
-use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
+use InvalidArgumentException;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixer\RuleSet;
@@ -46,7 +46,7 @@ final class Fixer implements FixerInterface
             if ($fixer instanceof ConfigurableFixerInterface) {
                 try {
                     $fixer->configure([]);
-                } catch (InvalidFixerConfigurationException $e) {
+                } catch (InvalidArgumentException $e) {
                     // TODO
                     continue;
                 }
