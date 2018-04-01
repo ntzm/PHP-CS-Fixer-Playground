@@ -17,8 +17,8 @@ $container = new Container();
 
 $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($container): void {
     $r->get('/', $container->get(IndexHandler::class));
-    $r->post('/', $container->get(CreateRunHandler::class));
-    $r->get('/{hash:[a-zA-Z0-9]+}', $container->get(GetRunHandler::class));
+    $r->post('/run', $container->get(CreateRunHandler::class));
+    $r->get('/run/{hash:[a-zA-Z0-9]+}', $container->get(GetRunHandler::class));
 });
 
 /** @var Request $request */

@@ -63,6 +63,6 @@ final class CreateRunHandler implements HandlerInterface
 
         $hash = $this->hashids->encode($run->getId());
 
-        return new RedirectResponse(sprintf('/%s', $hash));
+        return new RedirectResponse(sprintf('/run/%s', $hash));
     }
 }
