@@ -1,3 +1,4 @@
+/data/
 /vendor/
 /database.sqlite
 /.php_cs.cache

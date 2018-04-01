@@ -13,6 +13,7 @@
         "php": "^7.2",
         "doctrine/orm": "^2.6",
         "friendsofphp/php-cs-fixer": "^2.11",
+        "guzzlehttp/guzzle": "^6.3",
         "hashids/hashids": "^3.0",
         "league/container": "^2.4",
         "nikic/fast-route": "^1.3",

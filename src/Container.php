@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground;
 
 use Doctrine\ORM\EntityManagerInterface;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Hashids\Hashids;
 use Hashids\HashidsInterface;
 use League\Container\Container as BaseContainer;
@@ -43,6 +45,7 @@ final class Container
         $this->registerConfigFileGenerator();
         $this->registerRequestRuleParser();
         $this->registerEntityManager();
+        $this->registerGuzzle();
     }
 
     public function get(string $alias): object
@@ -128,5 +131,10 @@ final class Container
             EntityManagerInterface::class,
             new EntityManagerResolver()
         );
+    }
+
+    private function registerGuzzle(): void
+    {
+        $this->base->add(ClientInterface::class, Client::class);
     }
 }

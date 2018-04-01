@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Hashids\Hashids;
 use Hashids\HashidsInterface;
-use PDO;
 use PhpCsFixerPlayground\ConfigFileGenerator;
 use PhpCsFixerPlayground\ConfigFileGeneratorInterface;
 use PhpCsFixerPlayground\Container;
