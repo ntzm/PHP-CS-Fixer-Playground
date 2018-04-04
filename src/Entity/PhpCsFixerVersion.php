@@ -22,4 +22,9 @@ class PhpCsFixerVersion
     {
         $this->version = $version;
     }
+
+    public function getVersion(): string
+    {
+        return $this->version;
+    }
 }
