@@ -11,6 +11,12 @@ final class RequestRuleParser implements RequestRuleParserInterface
     private const FALSE = '_false';
     private const NULL = '_null';
 
+    private const TYPE_MAP = [
+        self::TRUE => true,
+        self::FALSE => false,
+        self::NULL => null,
+    ];
+
     public function parse(array $rules): array
     {
         $result = [];
@@ -35,12 +41,8 @@ final class RequestRuleParser implements RequestRuleParserInterface
     private function parseOptions(array $options): array
     {
         foreach ($options as &$option) {
-            if ($option === self::TRUE) {
-                $option = true;
-            } elseif ($option === self::FALSE) {
-                $option = false;
-            } elseif ($option === self::NULL) {
-                $option = null;
+            if (isset(self::TYPE_MAP[$option])) {
+                $option = self::TYPE_MAP[$option];
             } elseif (strpos($option, "\r\n") !== false) {
                 $option = explode("\r\n", $option);
             }
