@@ -25,11 +25,31 @@ final class FixerWrapperTest extends TestCase
     public function testWrapsMethods(): void
     {
         $fixer = $this->createMock(FixerInterface::class);
-        $fixer->method('isCandidate')->willReturn(true);
-        $fixer->method('isRisky')->willReturn(true);
-        $fixer->method('getName')->willReturn('foo_bar');
-        $fixer->method('getPriority')->willReturn(5);
-        $fixer->method('supports')->willReturn(true);
+        $fixer
+            ->expects($this->once())
+            ->method('isCandidate')
+            ->willReturn(true)
+        ;
+        $fixer
+            ->expects($this->once())
+            ->method('isRisky')
+            ->willReturn(true)
+        ;
+        $fixer
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn('foo_bar')
+        ;
+        $fixer
+            ->expects($this->once())
+            ->method('getPriority')
+            ->willReturn(5)
+        ;
+        $fixer
+            ->expects($this->once())
+            ->method('supports')
+            ->willReturn(true)
+        ;
 
         $wrapper = new FixerWrapper($fixer);
 
@@ -43,7 +63,11 @@ final class FixerWrapperTest extends TestCase
     public function testDeprecated(): void
     {
         $fixer = $this->createMock(DeprecatedFixerInterface::class);
-        $fixer->method('getSuccessorsNames')->willReturn(['bar_baz']);
+        $fixer
+            ->expects($this->once())
+            ->method('getSuccessorsNames')
+            ->willReturn(['bar_baz'])
+        ;
 
         $wrapper = new FixerWrapper($fixer);
 
@@ -70,7 +94,11 @@ final class FixerWrapperTest extends TestCase
         $configurationDefinition = $this->createMock(FixerConfigurationResolverInterface::class);
 
         $fixer = $this->createMock(ConfigurationDefinitionFixerInterface::class);
-        $fixer->method('getConfigurationDefinition')->willReturn($configurationDefinition);
+        $fixer
+            ->expects($this->once())
+            ->method('getConfigurationDefinition')
+            ->willReturn($configurationDefinition)
+        ;
 
         $wrapper = new FixerWrapper($fixer);
 
@@ -97,7 +125,11 @@ final class FixerWrapperTest extends TestCase
         $definition = $this->createMock(FixerDefinitionInterface::class);
 
         $fixer = $this->createMock(DefinedFixerInterface::class);
-        $fixer->method('getDefinition')->willReturn($definition);
+        $fixer
+            ->expects($this->once())
+            ->method('getDefinition')
+            ->willReturn($definition)
+        ;
 
         $wrapper = new FixerWrapper($fixer);
 

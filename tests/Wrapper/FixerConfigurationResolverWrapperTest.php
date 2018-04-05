@@ -18,10 +18,14 @@ final class FixerConfigurationResolverWrapperTest extends TestCase
     public function testGetOptions(): void
     {
         $resolver = $this->createMock(FixerConfigurationResolverInterface::class);
-        $resolver->method('getOptions')->willReturn([
-            $this->createMock(FixerOptionInterface::class),
-            $this->createMock(FixerOptionInterface::class),
-        ]);
+        $resolver
+            ->expects($this->once())
+            ->method('getOptions')
+            ->willReturn([
+                $this->createMock(FixerOptionInterface::class),
+                $this->createMock(FixerOptionInterface::class),
+            ])
+        ;
 
         $wrapper = new FixerConfigurationResolverWrapper($resolver);
 
@@ -31,7 +35,11 @@ final class FixerConfigurationResolverWrapperTest extends TestCase
     public function testResolve(): void
     {
         $resolver = $this->createMock(FixerConfigurationResolverInterface::class);
-        $resolver->method('resolve')->willReturn(['foo' => 'bar']);
+        $resolver
+            ->expects($this->once())
+            ->method('resolve')
+            ->willReturn(['foo' => 'bar'])
+        ;
 
         $wrapper = new FixerConfigurationResolverWrapper($resolver);
 

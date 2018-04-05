@@ -44,6 +44,7 @@ final class RouteHandlerTest extends TestCase
 
         $handler = $this->createMock(HandlerInterface::class);
         $handler
+            ->expects($this->once())
             ->method('__invoke')
             ->with(['foo' => 'bar'])
             ->willReturn($response)
@@ -59,7 +60,9 @@ final class RouteHandlerTest extends TestCase
 
         $handler = $this->createMock(HandlerInterface::class);
         $handler
+            ->expects($this->once())
             ->method('__invoke')
+            ->with([])
             ->willThrowException(RunNotFoundException::fromHash('foo'))
         ;
 

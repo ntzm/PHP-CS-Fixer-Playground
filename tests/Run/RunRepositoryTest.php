@@ -21,10 +21,20 @@ final class RunRepositoryTest extends TestCase
         $run = new Run('<?php echo "hi";', ['single_quote' => true], '    ', '\n');
 
         $entityManager = $this->createMock(EntityManagerInterface::class);
-        $entityManager->method('find')->with(Run::class, 5)->willReturn($run);
+        $entityManager
+            ->expects($this->once())
+            ->method('find')
+            ->with(Run::class, 5)
+            ->willReturn($run)
+        ;
 
         $hashids = $this->createMock(HashidsInterface::class);
-        $hashids->method('decode')->with('foo')->willReturn([5]);
+        $hashids
+            ->expects($this->once())
+            ->method('decode')
+            ->with('foo')
+            ->willReturn([5])
+        ;
 
         $runs = new RunRepository($entityManager, $hashids);
 
@@ -34,10 +44,20 @@ final class RunRepositoryTest extends TestCase
     public function testGetByHashNonExistent(): void
     {
         $entityManager = $this->createMock(EntityManagerInterface::class);
-        $entityManager->method('find')->with(Run::class, 5)->willReturn(null);
+        $entityManager
+            ->expects($this->once())
+            ->method('find')
+            ->with(Run::class, 5)
+            ->willReturn(null)
+        ;
 
         $hashids = $this->createMock(HashidsInterface::class);
-        $hashids->method('decode')->with('foo')->willReturn([5]);
+        $hashids
+            ->expects($this->once())
+            ->method('decode')
+            ->with('foo')
+            ->willReturn([5])
+        ;
 
         $runs = new RunRepository($entityManager, $hashids);
 
@@ -52,7 +72,12 @@ final class RunRepositoryTest extends TestCase
         $entityManager = $this->createMock(EntityManagerInterface::class);
 
         $hashids = $this->createMock(HashidsInterface::class);
-        $hashids->method('decode')->with('foo')->willReturn([]);
+        $hashids
+            ->expects($this->once())
+            ->method('decode')
+            ->with('foo')
+            ->willReturn([])
+        ;
 
         $runs = new RunRepository($entityManager, $hashids);
 
@@ -67,8 +92,15 @@ final class RunRepositoryTest extends TestCase
         $run = new Run('<?php echo "hi";', ['single_quote' => true], '    ', '\n');
 
         $entityManager = $this->createMock(EntityManagerInterface::class);
-        $entityManager->method('persist')->with($run);
-        $entityManager->method('flush');
+        $entityManager
+            ->expects($this->once())
+            ->method('persist')
+            ->with($run)
+        ;
+        $entityManager
+            ->expects($this->once())
+            ->method('flush')
+        ;
 
         $hashids = $this->createMock(HashidsInterface::class);
 

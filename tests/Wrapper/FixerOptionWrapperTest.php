@@ -13,13 +13,41 @@ final class FixerOptionWrapperTest extends TestCase
     public function testWrapsMethods(): void
     {
         $option = $this->createMock(FixerOptionInterface::class);
-        $option->method('getName')->willReturn('foo');
-        $option->method('getDescription')->willReturn('foo bar');
-        $option->method('hasDefault')->willReturn(true);
-        $option->method('getDefault')->willReturn('baz');
-        $option->method('getAllowedTypes')->willReturn(['string']);
-        $option->method('getAllowedValues')->willReturn(['baz', 'bop']);
-        $option->method('getNormalizer')->willReturn(null);
+        $option
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn('foo')
+        ;
+        $option
+            ->expects($this->once())
+            ->method('getDescription')
+            ->willReturn('foo bar')
+        ;
+        $option
+            ->expects($this->once())
+            ->method('hasDefault')
+            ->willReturn(true)
+        ;
+        $option
+            ->expects($this->once())
+            ->method('getDefault')
+            ->willReturn('baz')
+        ;
+        $option
+            ->expects($this->once())
+            ->method('getAllowedTypes')
+            ->willReturn(['string'])
+        ;
+        $option
+            ->expects($this->once())
+            ->method('getAllowedValues')
+            ->willReturn(['baz', 'bop'])
+        ;
+        $option
+            ->expects($this->once())
+            ->method('getNormalizer')
+            ->willReturn(null)
+        ;
 
         $wrapper = new FixerOptionWrapper($option);
 
@@ -35,8 +63,16 @@ final class FixerOptionWrapperTest extends TestCase
     public function testGetAllowedTypesInferredFromValues(): void
     {
         $option = $this->createMock(FixerOptionInterface::class);
-        $option->method('getAllowedTypes')->willReturn(null);
-        $option->method('getAllowedValues')->willReturn(['foo', 'bar', ['baz'], true]);
+        $option
+            ->expects($this->once())
+            ->method('getAllowedTypes')
+            ->willReturn(null)
+        ;
+        $option
+            ->expects($this->once())
+            ->method('getAllowedValues')
+            ->willReturn(['foo', 'bar', ['baz'], true])
+        ;
 
         $wrapper = new FixerOptionWrapper($option);
 
@@ -46,8 +82,16 @@ final class FixerOptionWrapperTest extends TestCase
     public function getGetAllowedTypesInferredFromNullAllowedValues(): void
     {
         $option = $this->createMock(FixerOptionInterface::class);
-        $option->method('getAllowedTypes')->willReturn(null);
-        $option->method('getAllowedValues')->willReturn(null);
+        $option
+            ->expects($this->once())
+            ->method('getAllowedTypes')
+            ->willReturn(null)
+        ;
+        $option
+            ->expects($this->once())
+            ->method('getAllowedValues')
+            ->willReturn(null)
+        ;
 
         $wrapper = new FixerOptionWrapper($option);
 
@@ -57,12 +101,16 @@ final class FixerOptionWrapperTest extends TestCase
     public function testGetPrintableAllowedValues(): void
     {
         $option = $this->createMock(FixerOptionInterface::class);
-        $option->method('getAllowedValues')->willReturn([
-            'foo',
-            'bar',
-            function (): void {},
-            'baz',
-        ]);
+        $option
+            ->expects($this->once())
+            ->method('getAllowedValues')
+            ->willReturn([
+                'foo',
+                'bar',
+                function (): void {},
+                'baz',
+            ])
+        ;
 
         $wrapper = new FixerOptionWrapper($option);
 
@@ -72,7 +120,11 @@ final class FixerOptionWrapperTest extends TestCase
     public function testGetPrintableAllowedValuesNoAllowedValues(): void
     {
         $option = $this->createMock(FixerOptionInterface::class);
-        $option->method('getAllowedValues')->willReturn(null);
+        $option
+            ->expects($this->once())
+            ->method('getAllowedValues')
+            ->willReturn(null)
+        ;
 
         $wrapper = new FixerOptionWrapper($option);
 
