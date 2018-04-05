@@ -20,19 +20,27 @@ final class VersionRetriever
 
     public function retrieve(): array
     {
-        $response = $this->client->request('get', 'https://api.github.com/repos/friendsofphp/php-cs-fixer/tags', [
-            'headers' => [
-                'Accept' => 'application/vnd.github.v3+json',
-            ],
-        ]);
-
         $result = [];
+        $page = 1;
 
-        $tags = json_decode($response->getBody()->getContents(), true);
+        do {
+            $response = $this->client->request('get', 'https://api.github.com/repos/friendsofphp/php-cs-fixer/tags', [
+                'query' => [
+                    'page' => $page,
+                ],
+                'headers' => [
+                    'Accept' => 'application/vnd.github.v3+json',
+                ],
+            ]);
 
-        foreach ($tags as $tag) {
-            $result[ltrim($tag['name'], 'v')] = $tag['zipball_url'];
-        }
+            $tags = json_decode($response->getBody()->getContents(), true);
+
+            foreach ($tags as $tag) {
+                $result[ltrim($tag['name'], 'v')] = $tag['zipball_url'];
+            }
+
+            ++$page;
+        } while ($tags !== []);
 
         return $result;
     }

@@ -24,6 +24,12 @@ $versionRepository = $container->get(PhpCsFixerVersionRepository::class);
 $versions = $versionRetriever->retrieve();
 
 foreach ($versions as $version => $zipUrl) {
+    if (strpos($version, '2.') !== 0) {
+        echo sprintf('Version %s is not supported'.PHP_EOL, $version);
+
+        continue;
+    }
+
     if ($versionRepository->has($version)) {
         echo sprintf('Version %s already exists'.PHP_EOL, $version);
 
