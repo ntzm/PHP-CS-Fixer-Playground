@@ -28,6 +28,7 @@ final class FixerWrapperTest extends TestCase
         $fixer
             ->expects($this->once())
             ->method('isCandidate')
+            ->with($this->isInstanceOf(Tokens::class))
             ->willReturn(true)
         ;
         $fixer
@@ -48,7 +49,16 @@ final class FixerWrapperTest extends TestCase
         $fixer
             ->expects($this->once())
             ->method('supports')
+            ->with($this->isInstanceOf(MockSplFileInfo::class))
             ->willReturn(true)
+        ;
+        $fixer
+            ->expects($this->once())
+            ->method('fix')
+            ->with(
+                $this->isInstanceOf(MockSplFileInfo::class),
+                $this->isInstanceOf(Tokens::class)
+            )
         ;
 
         $wrapper = new FixerWrapper($fixer);
@@ -58,6 +68,8 @@ final class FixerWrapperTest extends TestCase
         $this->assertSame('foo_bar', $wrapper->getName());
         $this->assertSame(5, $wrapper->getPriority());
         $this->assertTrue($wrapper->supports(new MockSplFileInfo([])));
+
+        $wrapper->fix(new MockSplFileInfo([]), new Tokens());
     }
 
     public function testDeprecated(): void
