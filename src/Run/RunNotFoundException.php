@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Run;
 
-use Exception;
+use PhpCsFixerPlayground\NotFoundException;
 
-final class RunNotFoundException extends Exception
+final class RunNotFoundException extends NotFoundException
 {
     public static function fromHash(string $hash): self
     {
