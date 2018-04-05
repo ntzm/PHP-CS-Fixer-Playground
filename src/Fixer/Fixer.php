@@ -65,6 +65,13 @@ final class Fixer implements FixerInterface
         return new FixReport($tokens->generateCode(), $appliedFixers);
     }
 
+    /**
+     * @param array<string, mixed> $rules
+     * @param string               $indent
+     * @param string               $lineEnding
+     *
+     * @return \PhpCsFixer\Fixer\FixerInterface[]
+     */
     private function getFixers(
         array $rules,
         string $indent,
