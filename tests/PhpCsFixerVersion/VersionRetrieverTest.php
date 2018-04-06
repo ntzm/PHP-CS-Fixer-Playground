@@ -43,6 +43,31 @@ final class VersionRetrieverTest extends TestCase
                     ],
                 ])
             ),
+            new Response(
+                200,
+                [],
+                json_encode([
+                    [
+                        'name' => 'v2.10.1',
+                        'zipball_url' => 'https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/v2.10.1',
+                        'tarball_url' => 'https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/tarball/v2.10.1',
+                        'commit' => [
+                            'sha' => 'ad94441c17b8ef096e517acccdbf3238af8a2da8',
+                            'url' => 'https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/commits/ad94441c17b8ef096e517acccdbf3238af8a2da8',
+                        ],
+                    ],
+                    [
+                        'name' => 'v2.10.0',
+                        'zipball_url' => 'https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/v2.10.0',
+                        'tarball_url' => 'https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/tarball/v2.10.0',
+                        'commit' => [
+                            'sha' => '2ac8defbe07599b79005cca764bfffe7aeac0bf2',
+                            'url' => 'https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/commits/2ac8defbe07599b79005cca764bfffe7aeac0bf2',
+                        ],
+                    ],
+                ])
+            ),
+            new Response(200, [], json_encode([])),
         ]));
 
         $client = new Client(['handler' => $handler]);
@@ -52,6 +77,8 @@ final class VersionRetrieverTest extends TestCase
         $expected = [
             '2.11.1' => 'https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/v2.11.1',
             '2.11.0' => 'https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/v2.11.0',
+            '2.10.1' => 'https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/v2.10.1',
+            '2.10.0' => 'https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/v2.10.0',
         ];
 
         $this->assertSame($expected, $retriever->retrieve());
