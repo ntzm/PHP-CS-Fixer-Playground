@@ -48,16 +48,14 @@ final class CreateRunHandler implements HandlerInterface
 
     public function __invoke(array $vars): Response
     {
-        $code = $this->request->request->get('code');
+        $query = $this->request->request;
 
-        $rules = $this->requestRuleParser->parse(
-            $this->request->request->get('fixers')
+        $run = new Run(
+            $query->get('code'),
+            $this->requestRuleParser->parse($query->get('fixers')),
+            $query->get('indent'),
+            $query->get('line_ending')
         );
-
-        $indent = $this->request->request->get('indent');
-        $lineEnding = $this->request->request->get('line_ending');
-
-        $run = new Run($code, $rules, $indent, $lineEnding);
 
         $this->runs->save($run);
 
