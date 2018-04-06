@@ -127,7 +127,7 @@ final class Container
 
     private function registerEntityManager(): void
     {
-        $this->base->add(
+        $this->base->share(
             EntityManagerInterface::class,
             new EntityManagerResolver()
         );

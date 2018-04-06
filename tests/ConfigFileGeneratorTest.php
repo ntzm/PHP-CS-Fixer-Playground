@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Tests;
 
 use PhpCsFixerPlayground\ConfigFileGenerator;
+use PhpCsFixerPlayground\LineEnding;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -38,6 +39,6 @@ EOD;
 
         $generator = new ConfigFileGenerator();
 
-        $this->assertSame($expected, $generator->generate(['foo' => true, 'bar' => ['baz' => 'bop']], '    ', '\n'));
+        $this->assertSame($expected, $generator->generate(['foo' => true, 'bar' => ['baz' => 'bop']], '    ', LineEnding::fromVisible('\n')));
     }
 }

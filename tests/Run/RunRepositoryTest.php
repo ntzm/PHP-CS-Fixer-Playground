@@ -7,6 +7,7 @@ namespace PhpCsFixerPlayground\Tests\Run;
 use Doctrine\ORM\EntityManagerInterface;
 use Hashids\HashidsInterface;
 use PhpCsFixerPlayground\Entity\Run;
+use PhpCsFixerPlayground\LineEnding;
 use PhpCsFixerPlayground\Run\RunNotFoundException;
 use PhpCsFixerPlayground\Run\RunRepository;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +19,7 @@ final class RunRepositoryTest extends TestCase
 {
     public function testGetByHash(): void
     {
-        $run = new Run('<?php echo "hi";', ['single_quote' => true], '    ', '\n');
+        $run = new Run('<?php echo "hi";', ['single_quote' => true], '    ', LineEnding::fromVisible('\n'));
 
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager
@@ -89,7 +90,7 @@ final class RunRepositoryTest extends TestCase
 
     public function testSave(): void
     {
-        $run = new Run('<?php echo "hi";', ['single_quote' => true], '    ', '\n');
+        $run = new Run('<?php echo "hi";', ['single_quote' => true], '    ', LineEnding::fromVisible('\n'));
 
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager

@@ -6,6 +6,7 @@ namespace PhpCsFixerPlayground\Tests\Entity;
 
 use PhpCsFixer\Tests\TestCase;
 use PhpCsFixerPlayground\Entity\Run;
+use PhpCsFixerPlayground\LineEnding;
 
 /**
  * @covers \PhpCsFixerPlayground\Entity\Run
@@ -14,49 +15,36 @@ final class RunTest extends TestCase
 {
     public function testGetCode(): void
     {
-        $run = new Run('<?php echo "hi";', [], '    ', '\n');
+        $run = new Run('<?php echo "hi";', [], '    ', LineEnding::fromVisible('\n'));
 
         $this->assertSame('<?php echo "hi";', $run->getCode());
     }
 
     public function testGetRules(): void
     {
-        $run = new Run('<?php echo "hi";', ['single_quote'], '    ', '\n');
+        $run = new Run('<?php echo "hi";', ['single_quote'], '    ', LineEnding::fromVisible('\n'));
 
         $this->assertSame(['single_quote'], $run->getRules());
     }
 
     public function testGetIndent(): void
     {
-        $run = new Run('<?php echo "hi";', [], '    ', '\n');
+        $run = new Run('<?php echo "hi";', [], '    ', LineEnding::fromVisible('\n'));
 
         $this->assertSame('    ', $run->getIndent());
     }
 
     public function testGetLineEnding(): void
     {
-        $run = new Run('<?php echo "hi";', [], '    ', '\n');
+        $run = new Run('<?php echo "hi";', [], '    ', LineEnding::fromVisible('\n'));
 
-        $this->assertSame('\n', $run->getLineEnding());
-    }
-
-    public function testGetRealLineEndingRN(): void
-    {
-        $run = new Run('<?php echo "hi";', [], '    ', '\r\n');
-
-        $this->assertSame("\r\n", $run->getRealLineEnding());
-    }
-
-    public function testGetRealLineEndingN(): void
-    {
-        $run = new Run('<?php echo "hi";', [], '    ', '\n');
-
-        $this->assertSame("\n", $run->getRealLineEnding());
+        $this->assertSame('\n', $run->getLineEnding()->getVisible());
+        $this->assertSame("\n", $run->getLineEnding()->getReal());
     }
 
     public function testGetIdUnsaved(): void
     {
-        $run = new Run('<?php echo "hi";', [], '    ', '\n');
+        $run = new Run('<?php echo "hi";', [], '    ', LineEnding::fromVisible('\n'));
 
         $this->assertNull($run->getId());
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Handler;
 
 use Hashids\HashidsInterface;
+use PhpCsFixerPlayground\LineEnding;
 use PhpCsFixerPlayground\RequestRuleParserInterface;
 use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\Run\RunRepositoryInterface;
@@ -54,7 +55,7 @@ final class CreateRunHandler implements HandlerInterface
             $query->get('code'),
             $this->requestRuleParser->parse($query->get('fixers')),
             $query->get('indent'),
-            $query->get('line_ending')
+            LineEnding::fromVisible($query->get('line_ending'))
         );
 
         $this->runs->save($run);

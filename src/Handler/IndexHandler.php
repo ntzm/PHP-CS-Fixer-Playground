@@ -6,6 +6,7 @@ namespace PhpCsFixerPlayground\Handler;
 
 use PhpCsFixerPlayground\ConfigFileGeneratorInterface;
 use PhpCsFixerPlayground\Entity\Run;
+use PhpCsFixerPlayground\LineEnding;
 use PhpCsFixerPlayground\View\ViewFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,7 +34,7 @@ final class IndexHandler implements HandlerInterface
     {
         $code = "<?php\n\n";
         $indent = '    ';
-        $lineEnding = '\n';
+        $lineEnding = new LineEnding("\n");
         $generatedConfig = $this->configFileGenerator->generate(
             [],
             $indent,

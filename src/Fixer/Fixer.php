@@ -10,6 +10,7 @@ use PhpCsFixer\FixerFactory;
 use PhpCsFixer\RuleSet;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
+use PhpCsFixerPlayground\LineEnding;
 use Symfony\Component\Finder\Tests\Iterator\MockSplFileInfo;
 
 final class Fixer implements FixerInterface
@@ -28,7 +29,7 @@ final class Fixer implements FixerInterface
         string $code,
         array $rules,
         string $indent,
-        string $lineEnding
+        LineEnding $lineEnding
     ): FixReport {
         $file = new MockSplFileInfo([]);
 
@@ -71,12 +72,12 @@ final class Fixer implements FixerInterface
     private function getFixers(
         array $rules,
         string $indent,
-        string $lineEnding
+        LineEnding $lineEnding
     ): array {
         return $this->fixerFactory
             ->registerBuiltInFixers()
             ->setWhitespacesConfig(
-                new WhitespacesFixerConfig($indent, $lineEnding)
+                new WhitespacesFixerConfig($indent, $lineEnding->getReal())
             )
             ->useRuleSet(new RuleSet($rules))
             ->getFixers()

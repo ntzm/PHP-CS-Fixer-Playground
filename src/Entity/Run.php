@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PhpCsFixerPlayground\LineEnding;
 
 /**
  * @ORM\Entity()
@@ -38,8 +39,8 @@ class Run
     private $indent;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=4)
+     * @var LineEnding
+     * @ORM\Column(type="line_ending")
      */
     private $lineEnding;
 
@@ -47,7 +48,7 @@ class Run
         string $code,
         array $rules,
         string $indent,
-        string $lineEnding
+        LineEnding $lineEnding
     ) {
         $this->code = $code;
         $this->rules = $rules;
@@ -75,21 +76,8 @@ class Run
         return $this->indent;
     }
 
-    public function getLineEnding(): string
+    public function getLineEnding(): LineEnding
     {
-        return $this->lineEnding;
-    }
-
-    public function getRealLineEnding(): string
-    {
-        if ($this->lineEnding === '\n') {
-            return "\n";
-        }
-
-        if ($this->lineEnding === '\r\n') {
-            return "\r\n";
-        }
-
         return $this->lineEnding;
     }
 }

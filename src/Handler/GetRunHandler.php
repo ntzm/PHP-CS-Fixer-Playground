@@ -54,7 +54,7 @@ final class GetRunHandler implements HandlerInterface
                 $run->getCode(),
                 $run->getRules(),
                 $run->getIndent(),
-                $run->getRealLineEnding()
+                $run->getLineEnding()
             );
 
             $result = $report->getResult();

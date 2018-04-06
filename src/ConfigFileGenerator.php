@@ -28,7 +28,7 @@ EOD;
     public function generate(
         array $rules,
         string $indent,
-        string $lineEnding
+        LineEnding $lineEnding
     ): string {
         return sprintf(
             self::TEMPLATE,
@@ -47,9 +47,9 @@ EOD;
         return sprintf("'%s'", $indent);
     }
 
-    private function formatLineEnding(string $lineEnding): string
+    private function formatLineEnding(LineEnding $lineEnding): string
     {
-        return sprintf('"%s"', $lineEnding);
+        return sprintf('"%s"', $lineEnding->getVisible());
     }
 
     private function formatRules(array $rules): string

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground;
 
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
+use PhpCsFixerPlayground\Type\LineEndingType;
 
 final class EntityManagerResolver
 {
@@ -23,6 +25,10 @@ final class EntityManagerResolver
             'driver' => 'pdo_sqlite',
             'path' => __DIR__.'/../database.sqlite',
         ];
+
+        if (!Type::hasType('line_ending')) {
+            Type::addType('line_ending', LineEndingType::class);
+        }
 
         return EntityManager::create($connection, $config);
     }
