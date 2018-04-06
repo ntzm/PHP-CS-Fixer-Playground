@@ -58,19 +58,7 @@ final class FixerOptionWrapper implements FixerOptionInterface
             return null;
         }
 
-        $types = array_values(array_unique(array_map(function ($value): string {
-            $type = strtolower(gettype($value));
-
-            if ($type === 'boolean') {
-                return 'bool';
-            }
-
-            return $type;
-        }, $allowedValues)));
-
-        sort($types);
-
-        return $types;
+        return $this->getTypesFromValues($allowedValues);
     }
 
     public function getAllowedValues(): ?array
@@ -94,5 +82,22 @@ final class FixerOptionWrapper implements FixerOptionInterface
     public function getNormalizer(): ?Closure
     {
         return $this->option->getNormalizer();
+    }
+
+    private function getTypesFromValues(array $values): array
+    {
+        $types = array_keys(array_count_values(array_map(function ($value): string {
+            $type = strtolower(gettype($value));
+
+            if ($type === 'boolean') {
+                return 'bool';
+            }
+
+            return $type;
+        }, $values)));
+
+        sort($types);
+
+        return $types;
     }
 }
