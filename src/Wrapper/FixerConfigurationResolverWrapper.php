@@ -19,9 +19,6 @@ final class FixerConfigurationResolverWrapper implements FixerConfigurationResol
         $this->resolver = $resolver;
     }
 
-    /**
-     * @return FixerOptionWrapper[]
-     */
     public function getOptions(): array
     {
         return array_map(function (FixerOptionInterface $option): FixerOptionWrapper {
@@ -29,11 +26,6 @@ final class FixerConfigurationResolverWrapper implements FixerConfigurationResol
         }, $this->resolver->getOptions());
     }
 
-    /**
-     * @param array<string, mixed> $configuration
-     *
-     * @return array<string, mixed>
-     */
     public function resolve(array $configuration): array
     {
         return $this->resolver->resolve($configuration);

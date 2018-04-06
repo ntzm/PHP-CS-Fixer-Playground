@@ -26,7 +26,7 @@ class Run
     private $code;
 
     /**
-     * @var array<string, mixed>
+     * @var array
      * @ORM\Column(type="json")
      */
     private $rules;

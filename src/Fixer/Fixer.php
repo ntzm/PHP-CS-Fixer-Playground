@@ -66,10 +66,6 @@ final class Fixer implements FixerInterface
     }
 
     /**
-     * @param array<string, mixed> $rules
-     * @param string               $indent
-     * @param string               $lineEnding
-     *
      * @return \PhpCsFixer\Fixer\FixerInterface[]
      */
     private function getFixers(
