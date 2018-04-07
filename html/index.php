@@ -4,16 +4,29 @@ declare(strict_types=1);
 
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
-use PhpCsFixerPlayground\Container;
+use League\Container\Container;
+use League\Container\ReflectionContainer;
 use PhpCsFixerPlayground\Handler\CreateRunHandler;
 use PhpCsFixerPlayground\Handler\GetRunHandler;
 use PhpCsFixerPlayground\Handler\IndexHandler;
 use PhpCsFixerPlayground\RouteHandler;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../vendor/autoload.php';
 
 $container = new Container();
+$container->delegate(new ReflectionContainer());
+
+/** @var SplFileInfo $file */
+foreach ((new Finder())->in(__DIR__.'/../src/ServiceProvider') as $file) {
+    $class = sprintf(
+        'PhpCsFixerPlayground\\ServiceProvider\\%s',
+        $file->getBasename('.php')
+    );
+
+    $container->addServiceProvider($class);
+}
 
 $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($container): void {
     $r->get('/', $container->get(IndexHandler::class));
