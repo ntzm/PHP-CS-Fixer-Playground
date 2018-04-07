@@ -86,7 +86,7 @@ final class FixerOptionWrapper implements FixerOptionInterface
 
     private function getTypesFromValues(array $values): array
     {
-        $types = array_keys(array_count_values(array_map(function ($value): string {
+        $types = array_values(array_unique(array_map(function ($value): string {
             $type = strtolower(gettype($value));
 
             if ($type === 'boolean') {
