@@ -50,7 +50,7 @@ final class RouteHandlerTest extends TestCase
             ->willReturn($response)
         ;
 
-        $actualResponse = $routeHandler->handle([Dispatcher::FOUND, $handler, ['foo' => 'bar']]);
+        $actualResponse = $routeHandler->handle([Dispatcher::FOUND, function () use ($handler) { return $handler; }, ['foo' => 'bar']]);
         $this->assertSame($response, $actualResponse);
     }
 
@@ -66,7 +66,7 @@ final class RouteHandlerTest extends TestCase
             ->willThrowException(RunNotFoundException::fromHash('foo'))
         ;
 
-        $response = $routeHandler->handle([Dispatcher::FOUND, $handler, []]);
+        $response = $routeHandler->handle([Dispatcher::FOUND, function () use ($handler) { return $handler; }, []]);
 
         $this->assertSame('Not Found', $response->getContent());
         $this->assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
