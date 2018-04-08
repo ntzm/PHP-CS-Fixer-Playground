@@ -22,8 +22,10 @@ final class RouteHandler
         }
 
         /** @var Handler\HandlerInterface $handler */
+        $handler = $routeInfo[1]();
+
         /** @var array $vars */
-        [, $handler, $vars] = $routeInfo;
+        $vars = $routeInfo[2];
 
         try {
             return $handler($vars);

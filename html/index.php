@@ -30,10 +30,21 @@ foreach ((new Finder())->in(__DIR__.'/../src/ServiceProvider') as $file) {
 }
 
 $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($container): void {
-    $r->get('/', $container->get(IndexHandler::class));
-    $r->post('/run', $container->get(CreateRunHandler::class));
-    $r->get('/run/{hash:[a-zA-Z0-9]+}', $container->get(GetRunHandler::class));
-    $r->get('/api/fixers/{version:[0-9.]+}', $container->get(GetFixersHandler::class));
+    $r->get('/', function () use ($container): IndexHandler {
+        return $container->get(IndexHandler::class);
+    });
+
+    $r->post('/run', function () use ($container): CreateRunHandler {
+        return $container->get(CreateRunHandler::class);
+    });
+
+    $r->get('/run/{hash:[a-zA-Z0-9]+}', function () use ($container): GetRunHandler {
+        return $container->get(GetRunHandler::class);
+    });
+
+    $r->get('/api/fixers/{version:[0-9.]+}', function () use ($container): GetFixersHandler {
+        return $container->get(GetFixersHandler::class);
+    });
 });
 
 /** @var Request $request */
