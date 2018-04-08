@@ -22,9 +22,7 @@ final class VersionSwitcher implements VersionSwitcherInterface
                 str_replace('\\', DIRECTORY_SEPARATOR, substr($class, 11))
             );
 
-            if (file_exists($path)) {
-                require $path;
-            } else {
+            if (!file_exists($path)) {
                 throw new RuntimeException(
                     sprintf(
                         'Cannot find class %s on PHP-CS-Fixer version %s, tried file %s',
@@ -34,6 +32,8 @@ final class VersionSwitcher implements VersionSwitcherInterface
                     )
                 );
             }
+
+            include $path;
         }, true, true);
     }
 }
