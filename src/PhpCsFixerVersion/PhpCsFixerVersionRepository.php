@@ -7,7 +7,7 @@ namespace PhpCsFixerPlayground\PhpCsFixerVersion;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpCsFixerPlayground\Entity\PhpCsFixerVersion;
 
-final class PhpCsFixerVersionRepository
+final class PhpCsFixerVersionRepository implements PhpCsFixerVersionRepositoryInterface
 {
     /**
      * @var EntityManagerInterface
@@ -22,6 +22,17 @@ final class PhpCsFixerVersionRepository
     public function has(string $version): bool
     {
         return (bool) $this->entityManager->find(PhpCsFixerVersion::class, $version);
+    }
+
+    public function get(string $version): PhpCsFixerVersion
+    {
+        $record = $this->entityManager->find(PhpCsFixerVersion::class, $version);
+
+        if (!$record instanceof PhpCsFixerVersion) {
+            throw PhpCsFixerVersionNotFoundException::fromVersion($version);
+        }
+
+        return $record;
     }
 
     public function save(PhpCsFixerVersion $version): void

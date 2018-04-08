@@ -6,6 +6,7 @@ use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
+use PhpCsFixerPlayground\Handler\Api\GetFixersHandler;
 use PhpCsFixerPlayground\Handler\CreateRunHandler;
 use PhpCsFixerPlayground\Handler\GetRunHandler;
 use PhpCsFixerPlayground\Handler\IndexHandler;
@@ -32,6 +33,7 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($container): vo
     $r->get('/', $container->get(IndexHandler::class));
     $r->post('/run', $container->get(CreateRunHandler::class));
     $r->get('/run/{hash:[a-zA-Z0-9]+}', $container->get(GetRunHandler::class));
+    $r->get('/api/fixers/{version:[0-9.]+}', $container->get(GetFixersHandler::class));
 });
 
 /** @var Request $request */

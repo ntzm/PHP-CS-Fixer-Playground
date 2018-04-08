@@ -2,15 +2,17 @@
 
 declare(strict_types=1);
 
-use PhpCsFixerPlayground\Container;
+use League\Container\Container;
+use League\Container\ReflectionContainer;
 use PhpCsFixerPlayground\Entity\PhpCsFixerVersion;
-use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersionRepository;
+use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersionRepositoryInterface;
 use PhpCsFixerPlayground\PhpCsFixerVersion\VersionRetriever;
 use PhpCsFixerPlayground\PhpCsFixerVersion\VersionSaver;
 
 require __DIR__.'/../vendor/autoload.php';
 
 $container = new Container();
+$container->delegate(new ReflectionContainer());
 
 /** @var VersionRetriever $versionRetriever */
 $versionRetriever = $container->get(VersionRetriever::class);
@@ -18,8 +20,8 @@ $versionRetriever = $container->get(VersionRetriever::class);
 /** @var VersionSaver $versionSaver */
 $versionSaver = $container->get(VersionSaver::class);
 
-/** @var PhpCsFixerVersionRepository $versionRepository */
-$versionRepository = $container->get(PhpCsFixerVersionRepository::class);
+/** @var PhpCsFixerVersionRepositoryInterface $versionRepository */
+$versionRepository = $container->get(PhpCsFixerVersionRepositoryInterface::class);
 
 $versions = $versionRetriever->retrieve();
 
