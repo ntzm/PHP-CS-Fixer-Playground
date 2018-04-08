@@ -19,7 +19,7 @@ final class VersionSwitcher implements VersionSwitcherInterface
             $path = sprintf(
                 __DIR__.'/../../data/php-cs-fixer-versions/%s/%s.php',
                 $version->getVersion(),
-                str_replace('\\', DIRECTORY_SEPARATOR, substr($class, 11))
+                str_replace('\\', '/', substr($class, 11))
             );
 
             if (!file_exists($path)) {
