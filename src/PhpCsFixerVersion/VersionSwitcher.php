@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\PhpCsFixerVersion;
 
 use PhpCsFixerPlayground\Entity\PhpCsFixerVersion;
+use RuntimeException;
 
 final class VersionSwitcher implements VersionSwitcherInterface
 {
@@ -24,7 +25,14 @@ final class VersionSwitcher implements VersionSwitcherInterface
             if (file_exists($path)) {
                 require $path;
             } else {
-                die($path);
+                throw new RuntimeException(
+                    sprintf(
+                        'Cannot find class %s on PHP-CS-Fixer version %s, tried file %s',
+                        $class,
+                        $version->getVersion(),
+                        $path
+                    )
+                );
             }
         }, true, true);
     }
