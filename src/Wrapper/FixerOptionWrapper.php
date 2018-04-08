@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Wrapper;
 
 use Closure;
+use JsonSerializable;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 
-final class FixerOptionWrapper implements FixerOptionInterface
+final class FixerOptionWrapper implements FixerOptionInterface, JsonSerializable
 {
     /**
      * @var FixerOptionInterface
@@ -52,7 +53,7 @@ final class FixerOptionWrapper implements FixerOptionInterface
             return $allowedTypes;
         }
 
-        $allowedValues = $this->getAllowedValues();
+        $allowedValues = $this->getPrintableAllowedValues();
 
         if ($allowedValues === null) {
             return null;
@@ -99,5 +100,17 @@ final class FixerOptionWrapper implements FixerOptionInterface
         sort($types);
 
         return $types;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'has_default' => $this->hasDefault(),
+            'default' => $this->hasDefault() ? $this->getDefault() : null,
+            'allowed_types' => $this->getAllowedTypes(),
+            'allowed_values' => $this->getPrintableAllowedValues(),
+        ];
     }
 }

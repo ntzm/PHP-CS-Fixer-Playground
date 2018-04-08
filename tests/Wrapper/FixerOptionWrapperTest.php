@@ -71,7 +71,7 @@ final class FixerOptionWrapperTest extends TestCase
         $option
             ->expects($this->once())
             ->method('getAllowedValues')
-            ->willReturn(['foo', 'bar', ['baz'], true])
+            ->willReturn(['foo', 'bar', ['baz'], true, function (): void {}])
         ;
 
         $wrapper = new FixerOptionWrapper($option);
@@ -129,5 +129,82 @@ final class FixerOptionWrapperTest extends TestCase
         $wrapper = new FixerOptionWrapper($option);
 
         $this->assertNull($wrapper->getPrintableAllowedValues());
+    }
+
+    public function testJsonSerializeWithDefault(): void
+    {
+        $option = $this->createMock(FixerOptionInterface::class);
+        $option
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn('foo')
+        ;
+        $option
+            ->expects($this->once())
+            ->method('getDescription')
+            ->willReturn('Bar.')
+        ;
+        $option
+            ->expects($this->exactly(2))
+            ->method('hasDefault')
+            ->willReturn(true)
+        ;
+        $option
+            ->expects($this->once())
+            ->method('getDefault')
+            ->willReturn('baz')
+        ;
+        $option
+            ->expects($this->exactly(2))
+            ->method('getAllowedValues')
+            ->willReturn(['baz', function (): void {}])
+        ;
+
+        $json = json_decode(json_encode(new FixerOptionWrapper($option)), true);
+
+        $this->assertSame([
+            'name' => 'foo',
+            'description' => 'Bar.',
+            'has_default' => true,
+            'default' => 'baz',
+            'allowed_types' => ['string'],
+            'allowed_values' => ['baz'],
+        ], $json);
+    }
+
+    public function testJsonSerializeWithoutDefault(): void
+    {
+        $option = $this->createMock(FixerOptionInterface::class);
+        $option
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn('foo')
+        ;
+        $option
+            ->expects($this->once())
+            ->method('getDescription')
+            ->willReturn('Bar.')
+        ;
+        $option
+            ->expects($this->exactly(2))
+            ->method('hasDefault')
+            ->willReturn(false)
+        ;
+        $option
+            ->expects($this->exactly(2))
+            ->method('getAllowedValues')
+            ->willReturn(['baz', function (): void {}])
+        ;
+
+        $json = json_decode(json_encode(new FixerOptionWrapper($option)), true);
+
+        $this->assertSame([
+            'name' => 'foo',
+            'description' => 'Bar.',
+            'has_default' => false,
+            'default' => null,
+            'allowed_types' => ['string'],
+            'allowed_values' => ['baz'],
+        ], $json);
     }
 }

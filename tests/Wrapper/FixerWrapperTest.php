@@ -159,4 +159,49 @@ final class FixerWrapperTest extends TestCase
 
         $wrapper->getDefinition();
     }
+
+    public function testJsonSerializeRisky(): void
+    {
+        $definition = $this->createMock(FixerDefinitionInterface::class);
+        $definition
+            ->expects($this->once())
+            ->method('getSummary')
+            ->willReturn('Bar foo.')
+        ;
+        $definition
+            ->expects($this->once())
+            ->method('getRiskyDescription')
+            ->willReturn('Foo bar.')
+        ;
+
+        $fixer = $this->createMock(DefinedFixerInterface::class);
+        $fixer
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn('foo_bar')
+        ;
+        $fixer
+            ->expects($this->once())
+            ->method('isRisky')
+            ->willReturn(true)
+        ;
+        $fixer
+            ->expects($this->exactly(2))
+            ->method('getDefinition')
+            ->willReturn($definition)
+        ;
+
+        $json = json_decode(json_encode(new FixerWrapper($fixer)), true);
+
+        $this->assertSame([
+            'name' => 'foo_bar',
+            'summary' => 'Bar foo.',
+            'is_risky' => true,
+            'risky_description' => 'Foo bar.',
+            'is_deprecated' => false,
+            'successors_names' => null,
+            'is_configurable' => false,
+            'config' => null,
+        ], $json);
+    }
 }

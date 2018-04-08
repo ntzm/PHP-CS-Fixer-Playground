@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Wrapper;
 
+use JsonSerializable;
 use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
@@ -13,7 +14,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 use RuntimeException;
 use SplFileInfo;
 
-final class FixerWrapper implements FixerInterface
+final class FixerWrapper implements FixerInterface, JsonSerializable
 {
     /**
      * @var FixerInterface
@@ -92,5 +93,19 @@ final class FixerWrapper implements FixerInterface
         return new FixerConfigurationResolverWrapper(
             $this->fixer->getConfigurationDefinition()
         );
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'summary' => $this->getDefinition()->getSummary(),
+            'is_risky' => $this->isRisky(),
+            'risky_description' => $this->getDefinition()->getRiskyDescription(),
+            'is_deprecated' => $this->isDeprecated(),
+            'successors_names' => $this->isDeprecated() ? $this->getSuccessorsNames() : null,
+            'is_configurable' => $this->isConfigurable(),
+            'config' => $this->isConfigurable() ? $this->getConfig() : null,
+        ];
     }
 }
