@@ -6,7 +6,7 @@ namespace PhpCsFixerPlayground\PhpCsFixerVersion;
 
 use GuzzleHttp\ClientInterface;
 
-final class VersionRetriever
+final class VersionRetriever implements VersionRetrieverInterface
 {
     /**
      * @var ClientInterface
