@@ -9,6 +9,18 @@ use RuntimeException;
 
 final class VersionSwitcher implements VersionSwitcherInterface
 {
+    private const DEFAULT_PATH = __DIR__.'/../../data/php-cs-fixer-versions';
+
+    /**
+     * @var string
+     */
+    private $path;
+
+    public function __construct(string $path = self::DEFAULT_PATH)
+    {
+        $this->path = $path;
+    }
+
     public function switchTo(PhpCsFixerVersion $version): void
     {
         $this->checkNoClassesAlreadyAutoloaded();
@@ -19,7 +31,7 @@ final class VersionSwitcher implements VersionSwitcherInterface
             }
 
             $path = sprintf(
-                __DIR__.'/../../data/php-cs-fixer-versions/%s/%s.php',
+                $this->path.'/%s/%s.php',
                 $version->getVersion(),
                 str_replace('\\', '/', substr($class, 11))
             );
