@@ -11,8 +11,10 @@ final class VersionSwitcher implements VersionSwitcherInterface
 {
     public function switchTo(PhpCsFixerVersion $version): void
     {
+        $this->checkNoClassesAlreadyAutoloaded();
+
         spl_autoload_register(function (string $class) use ($version): void {
-            if (strpos($class, 'PhpCsFixer\\') !== 0) {
+            if (!$this->isPhpCsFixerClass($class)) {
                 return;
             }
 
@@ -35,5 +37,21 @@ final class VersionSwitcher implements VersionSwitcherInterface
 
             include $path;
         }, true, true);
+    }
+
+    private function checkNoClassesAlreadyAutoloaded(): void
+    {
+        foreach (get_declared_classes() as $class) {
+            if ($this->isPhpCsFixerClass($class)) {
+                throw new RuntimeException(
+                    sprintf('Class %s already autoloaded', $class)
+                );
+            }
+        }
+    }
+
+    private function isPhpCsFixerClass(string $class): bool
+    {
+        return strpos($class, 'PhpCsFixer\\') === 0;
     }
 }
