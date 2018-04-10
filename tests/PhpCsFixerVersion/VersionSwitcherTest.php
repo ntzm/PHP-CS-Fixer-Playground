@@ -22,7 +22,9 @@ final class VersionSwitcherTest extends TestCase
     {
         class_exists(Finder::class);
 
-        $switcher = new VersionSwitcher();
+        $fs = vfsStream::setup();
+
+        $switcher = new VersionSwitcher($fs->url());
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Class PhpCsFixer\Finder already autoloaded');
@@ -36,13 +38,13 @@ final class VersionSwitcherTest extends TestCase
      */
     public function testAutoloadsFromDirectory(): void
     {
-        $path = vfsStream::setup('root', null, [
+        $fs = vfsStream::setup('root', null, [
             '2.11.1' => [
                 'Config.php' => '<?php namespace PhpCsFixer; class Config { public function getFormat() { return "bar"; } }',
             ],
         ]);
 
-        $switcher = new VersionSwitcher($path->url());
+        $switcher = new VersionSwitcher($fs->url());
 
         $switcher->switchTo(new PhpCsFixerVersion('2.11.1'));
 
@@ -55,13 +57,13 @@ final class VersionSwitcherTest extends TestCase
      */
     public function testAutoloadsFromDirectoryFailsWhenDoesNotExist(): void
     {
-        $path = vfsStream::setup('root', null, [
+        $fs = vfsStream::setup('root', null, [
             '2.11.1' => [
                 'Config.php' => '<?php namespace PhpCsFixer; class Config { public function getFormat() { return "bar"; } }',
             ],
         ]);
 
-        $switcher = new VersionSwitcher($path->url());
+        $switcher = new VersionSwitcher($fs->url());
 
         $switcher->switchTo(new PhpCsFixerVersion('2.11.1'));
 

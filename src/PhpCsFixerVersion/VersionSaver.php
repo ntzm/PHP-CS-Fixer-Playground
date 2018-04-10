@@ -10,21 +10,27 @@ use RecursiveIteratorIterator;
 use RuntimeException;
 use ZipArchive;
 
-final class VersionSaver
+final class VersionSaver implements VersionSaverInterface
 {
     /**
      * @var ClientInterface
      */
     private $client;
 
-    public function __construct(ClientInterface $client)
+    /**
+     * @var string
+     */
+    private $baseDir;
+
+    public function __construct(ClientInterface $client, string $baseDir)
     {
         $this->client = $client;
+        $this->baseDir = $baseDir;
     }
 
     public function save(string $version, string $zipUrl): void
     {
-        $dir = __DIR__.'/../../data/php-cs-fixer-versions/'.$version;
+        $dir = $this->baseDir.'/'.$version;
 
         $tempDir = $dir.'_tmp';
 
