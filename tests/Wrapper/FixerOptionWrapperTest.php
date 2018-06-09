@@ -8,6 +8,7 @@ use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
 use PhpCsFixer\FixerConfiguration\DeprecatedFixerOptionInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 use PhpCsFixerPlayground\Wrapper\FixerOptionWrapper;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
@@ -15,6 +16,7 @@ final class FixerOptionWrapperTest extends TestCase
 {
     public function testWrapsMethods(): void
     {
+        /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
         $option
             ->expects($this->once())
@@ -65,6 +67,7 @@ final class FixerOptionWrapperTest extends TestCase
 
     public function testGetAllowedTypesInferredFromValues(): void
     {
+        /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
         $option
             ->expects($this->once())
@@ -84,6 +87,7 @@ final class FixerOptionWrapperTest extends TestCase
 
     public function getGetAllowedTypesInferredFromNullAllowedValues(): void
     {
+        /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
         $option
             ->expects($this->once())
@@ -103,6 +107,7 @@ final class FixerOptionWrapperTest extends TestCase
 
     public function testGetPrintableAllowedValues(): void
     {
+        /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
         $option
             ->expects($this->exactly(2))
@@ -122,6 +127,7 @@ final class FixerOptionWrapperTest extends TestCase
 
     public function testGetPrintableAllowedValuesNoAllowedValues(): void
     {
+        /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
         $option
             ->expects($this->once())
@@ -136,6 +142,7 @@ final class FixerOptionWrapperTest extends TestCase
 
     public function testJsonSerializeWithDefault(): void
     {
+        /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
         $option
             ->expects($this->once())
@@ -177,6 +184,7 @@ final class FixerOptionWrapperTest extends TestCase
 
     public function testJsonSerializeWithoutDefault(): void
     {
+        /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
         $option
             ->expects($this->once())
@@ -219,6 +227,7 @@ final class FixerOptionWrapperTest extends TestCase
      */
     public function testAllowsMultipleValues(bool $expected, ?array $input): void
     {
+        /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
         $option
             ->expects($this->once())
@@ -259,6 +268,7 @@ final class FixerOptionWrapperTest extends TestCase
 
     public function testIsDeprecatedFalse(): void
     {
+        /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
 
         $wrapper = new FixerOptionWrapper($option);
@@ -268,6 +278,7 @@ final class FixerOptionWrapperTest extends TestCase
 
     public function testIsDeprecatedTrue(): void
     {
+        /** @var DeprecatedFixerOptionInterface|MockObject $option */
         $option = $this->createMock(DeprecatedFixerOptionInterface::class);
 
         $wrapper = new FixerOptionWrapper($option);
@@ -277,6 +288,7 @@ final class FixerOptionWrapperTest extends TestCase
 
     public function testGetDeprecationMessageNotDeprecated(): void
     {
+        /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
 
         $wrapper = new FixerOptionWrapper($option);
@@ -289,6 +301,7 @@ final class FixerOptionWrapperTest extends TestCase
 
     public function testGetDeprecationMessage(): void
     {
+        /** @var DeprecatedFixerOptionInterface|MockObject $option */
         $option = $this->createMock(DeprecatedFixerOptionInterface::class);
         $option
             ->expects($this->once())

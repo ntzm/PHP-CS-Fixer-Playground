@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Tests\Run;
 
 use PhpCsFixerPlayground\Run\RunNotFoundException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\UuidInterface;
 
@@ -15,6 +16,7 @@ final class RunNotFoundExceptionTest extends TestCase
 {
     public function testFromHash(): void
     {
+        /** @var UuidInterface|MockObject $uuid */
         $uuid = $this->createMock(UuidInterface::class);
         $uuid
             ->expects($this->once())

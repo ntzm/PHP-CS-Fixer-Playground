@@ -8,6 +8,7 @@ use FastRoute\Dispatcher;
 use PhpCsFixerPlayground\Handler\HandlerInterface;
 use PhpCsFixerPlayground\RouteHandler;
 use PhpCsFixerPlayground\Run\RunNotFoundException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -42,6 +43,7 @@ final class RouteHandlerTest extends TestCase
 
         $response = new Response('Foo Bar');
 
+        /** @var HandlerInterface|MockObject $handler */
         $handler = $this->createMock(HandlerInterface::class);
         $handler
             ->expects($this->once())
@@ -58,6 +60,7 @@ final class RouteHandlerTest extends TestCase
     {
         $routeHandler = new RouteHandler();
 
+        /** @var HandlerInterface|MockObject $handler */
         $handler = $this->createMock(HandlerInterface::class);
         $handler
             ->expects($this->once())

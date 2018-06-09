@@ -13,6 +13,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixerPlayground\Wrapper\FixerConfigurationResolverWrapper;
 use PhpCsFixerPlayground\Wrapper\FixerWrapper;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Symfony\Component\Finder\Tests\Iterator\MockSplFileInfo;
@@ -24,6 +25,7 @@ final class FixerWrapperTest extends TestCase
 {
     public function testWrapsMethods(): void
     {
+        /** @var FixerInterface|MockObject $fixer */
         $fixer = $this->createMock(FixerInterface::class);
         $fixer
             ->expects($this->once())
@@ -74,6 +76,7 @@ final class FixerWrapperTest extends TestCase
 
     public function testDeprecated(): void
     {
+        /** @var DeprecatedFixerInterface|MockObject $fixer */
         $fixer = $this->createMock(DeprecatedFixerInterface::class);
         $fixer
             ->expects($this->once())
@@ -89,6 +92,7 @@ final class FixerWrapperTest extends TestCase
 
     public function testNotDeprecated(): void
     {
+        /** @var FixerInterface|MockObject $fixer */
         $fixer = $this->createMock(FixerInterface::class);
 
         $wrapper = new FixerWrapper($fixer);
@@ -103,8 +107,10 @@ final class FixerWrapperTest extends TestCase
 
     public function testConfigurable(): void
     {
+        /** @var FixerConfigurationResolverInterface|MockObject $configurationDefinition */
         $configurationDefinition = $this->createMock(FixerConfigurationResolverInterface::class);
 
+        /** @var ConfigurationDefinitionFixerInterface|MockObject $fixer */
         $fixer = $this->createMock(ConfigurationDefinitionFixerInterface::class);
         $fixer
             ->expects($this->once())
@@ -120,6 +126,7 @@ final class FixerWrapperTest extends TestCase
 
     public function testNotConfigurable(): void
     {
+        /** @var FixerInterface|MockObject $fixer */
         $fixer = $this->createMock(FixerInterface::class);
 
         $wrapper = new FixerWrapper($fixer);
@@ -134,8 +141,10 @@ final class FixerWrapperTest extends TestCase
 
     public function testDefined(): void
     {
+        /** @var FixerDefinitionInterface|MockObject $definition */
         $definition = $this->createMock(FixerDefinitionInterface::class);
 
+        /** @var DefinedFixerInterface|MockObject $fixer */
         $fixer = $this->createMock(DefinedFixerInterface::class);
         $fixer
             ->expects($this->once())
@@ -150,6 +159,7 @@ final class FixerWrapperTest extends TestCase
 
     public function testNotDefined(): void
     {
+        /** @var FixerInterface|MockObject $fixer */
         $fixer = $this->createMock(FixerInterface::class);
 
         $wrapper = new FixerWrapper($fixer);
@@ -162,6 +172,7 @@ final class FixerWrapperTest extends TestCase
 
     public function testJsonSerializeRisky(): void
     {
+        /** @var FixerDefinitionInterface|MockObject $definition */
         $definition = $this->createMock(FixerDefinitionInterface::class);
         $definition
             ->expects($this->once())
@@ -174,6 +185,7 @@ final class FixerWrapperTest extends TestCase
             ->willReturn('Foo bar.')
         ;
 
+        /** @var DefinedFixerInterface|MockObject $fixer */
         $fixer = $this->createMock(DefinedFixerInterface::class);
         $fixer
             ->expects($this->once())

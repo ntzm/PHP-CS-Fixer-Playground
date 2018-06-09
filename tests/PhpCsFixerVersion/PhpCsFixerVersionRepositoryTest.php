@@ -7,6 +7,7 @@ namespace PhpCsFixerPlayground\Tests\PhpCsFixerVersion;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpCsFixerPlayground\Entity\PhpCsFixerVersion;
 use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersionRepository;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,6 +17,7 @@ final class PhpCsFixerVersionRepositoryTest extends TestCase
 {
     public function testHas(): void
     {
+        /** @var EntityManagerInterface|MockObject $entityManager */
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager
             ->expects($this->exactly(2))
@@ -40,6 +42,7 @@ final class PhpCsFixerVersionRepositoryTest extends TestCase
     {
         $version = new PhpCsFixerVersion('2.11.1');
 
+        /** @var EntityManagerInterface|MockObject $entityManager */
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager
             ->expects($this->once())

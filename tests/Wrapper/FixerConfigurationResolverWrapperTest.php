@@ -8,6 +8,7 @@ use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 use PhpCsFixerPlayground\Wrapper\FixerConfigurationResolverWrapper;
 use PhpCsFixerPlayground\Wrapper\FixerOptionWrapper;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,6 +18,7 @@ final class FixerConfigurationResolverWrapperTest extends TestCase
 {
     public function testGetOptions(): void
     {
+        /** @var FixerConfigurationResolverInterface|MockObject $resolver */
         $resolver = $this->createMock(FixerConfigurationResolverInterface::class);
         $resolver
             ->expects($this->once())
@@ -34,6 +36,7 @@ final class FixerConfigurationResolverWrapperTest extends TestCase
 
     public function testResolve(): void
     {
+        /** @var FixerConfigurationResolverInterface|MockObject $resolver */
         $resolver = $this->createMock(FixerConfigurationResolverInterface::class);
         $resolver
             ->expects($this->once())
@@ -48,6 +51,7 @@ final class FixerConfigurationResolverWrapperTest extends TestCase
 
     public function testJsonSerialize(): void
     {
+        /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
         $option
             ->expects($this->once())
@@ -70,6 +74,7 @@ final class FixerConfigurationResolverWrapperTest extends TestCase
             ->willReturn(['baz', function (): void {}])
         ;
 
+        /** @var FixerConfigurationResolverInterface|MockObject $resolver */
         $resolver = $this->createMock(FixerConfigurationResolverInterface::class);
         $resolver
             ->expects($this->once())

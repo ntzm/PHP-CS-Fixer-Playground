@@ -9,6 +9,7 @@ use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\LineEnding;
 use PhpCsFixerPlayground\Run\RunNotFoundException;
 use PhpCsFixerPlayground\Run\RunRepository;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
@@ -21,6 +22,7 @@ final class RunRepositoryTest extends TestCase
     {
         $run = new Run('<?php echo "hi";', ['single_quote' => true], '    ', LineEnding::fromVisible('\n'));
 
+        /** @var EntityManagerInterface|MockObject $entityManager */
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager
             ->expects($this->once())
@@ -36,6 +38,7 @@ final class RunRepositoryTest extends TestCase
 
     public function testGetByUuidNonExistent(): void
     {
+        /** @var EntityManagerInterface|MockObject $entityManager */
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager
             ->expects($this->once())
@@ -56,6 +59,7 @@ final class RunRepositoryTest extends TestCase
     {
         $run = new Run('<?php echo "hi";', ['single_quote' => true], '    ', LineEnding::fromVisible('\n'));
 
+        /** @var EntityManagerInterface|MockObject $entityManager */
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager
             ->expects($this->once())
