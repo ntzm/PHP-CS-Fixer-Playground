@@ -97,17 +97,17 @@
                                             {% endif %}
                                             {% if option.allowsMultipleValues %}
                                                 <select multiple class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}][]">
-                                                    {% for value in option.printableAllowedValues %}
-                                                        {% set selected = option.hasDefault and value in option.default %}
-                                                        <option value="{{ value }}"{{ selected ? ' selected' : '' }}>{{ value }}</option>
+                                                    {% for v in option.printableAllowedValues %}
+                                                        {% set selected = v in value %}
+                                                        <option value="{{ v }}"{{ selected ? ' selected' : '' }}>{{ v }}</option>
                                                     {% endfor %}
                                                 </select>
                                             {% elseif option.allowedTypes is same as(['string']) %}
                                                 {% if option.printableAllowedValues %}
                                                     <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]">
-                                                        {% for value in option.printableAllowedValues %}
-                                                            {% set selected = option.hasDefault and option.default is same as(value) %}
-                                                            <option value="{{ value }}"{{ selected ? ' selected' : '' }}>{{ value }}</option>
+                                                        {% for v in option.printableAllowedValues %}
+                                                            {% set selected = v is same as(value) %}
+                                                            <option value="{{ v }}"{{ selected ? ' selected' : '' }}>{{ v }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 {% else %}
