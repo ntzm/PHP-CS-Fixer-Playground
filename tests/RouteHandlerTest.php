@@ -63,7 +63,7 @@ final class RouteHandlerTest extends TestCase
             ->expects($this->once())
             ->method('__invoke')
             ->with([])
-            ->willThrowException(RunNotFoundException::fromHash('foo'))
+            ->willThrowException(new RunNotFoundException())
         ;
 
         $response = $routeHandler->handle([Dispatcher::FOUND, function () use ($handler) { return $handler; }, []]);

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Run;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Hashids\HashidsInterface;
 use PhpCsFixerPlayground\Entity\Run;
+use Ramsey\Uuid\UuidInterface;
 
 final class RunRepository implements RunRepositoryInterface
 {
@@ -15,31 +15,17 @@ final class RunRepository implements RunRepositoryInterface
      */
     private $entityManager;
 
-    /**
-     * @var HashidsInterface
-     */
-    private $hashids;
-
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        HashidsInterface $hashids
-    ) {
+    public function __construct(EntityManagerInterface $entityManager)
+    {
         $this->entityManager = $entityManager;
-        $this->hashids = $hashids;
     }
 
-    public function getByHash(string $hash): Run
+    public function findByUuid(UuidInterface $uuid): Run
     {
-        $id = $this->hashids->decode($hash)[0] ?? null;
-
-        if (empty($id)) {
-            throw RunNotFoundException::fromHash($hash);
-        }
-
-        $run = $this->entityManager->find(Run::class, $id);
+        $run = $this->entityManager->find(Run::class, $uuid->toString());
 
         if (!$run instanceof Run) {
-            throw RunNotFoundException::fromHash($hash);
+            throw RunNotFoundException::fromUuid($uuid);
         }
 
         return $run;

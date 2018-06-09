@@ -41,11 +41,4 @@ final class RunTest extends TestCase
         $this->assertSame('\n', $run->getLineEnding()->getVisible());
         $this->assertSame("\n", $run->getLineEnding()->getReal());
     }
-
-    public function testGetIdUnsaved(): void
-    {
-        $run = new Run('<?php echo "hi";', [], '    ', LineEnding::fromVisible('\n'));
-
-        $this->assertNull($run->getId());
-    }
 }

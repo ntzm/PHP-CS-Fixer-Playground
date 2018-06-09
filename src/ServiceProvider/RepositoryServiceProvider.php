@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\ServiceProvider;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Hashids\HashidsInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersionRepository;
 use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersionRepositoryInterface;
@@ -24,7 +23,6 @@ final class RepositoryServiceProvider extends AbstractServiceProvider
         $this->container
             ->add(RunRepositoryInterface::class, RunRepository::class)
             ->withArgument(EntityManagerInterface::class)
-            ->withArgument(HashidsInterface::class)
         ;
 
         $this->container

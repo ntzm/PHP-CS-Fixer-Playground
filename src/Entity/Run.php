@@ -6,6 +6,8 @@ namespace PhpCsFixerPlayground\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use PhpCsFixerPlayground\LineEnding;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @ORM\Entity()
@@ -13,10 +15,10 @@ use PhpCsFixerPlayground\LineEnding;
 class Run
 {
     /**
-     * @var int|null
+     * @var string
      * @ORM\Id()
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue()
+     * @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $id;
 
@@ -50,15 +52,16 @@ class Run
         string $indent,
         LineEnding $lineEnding
     ) {
+        $this->id = (string) Uuid::uuid4();
         $this->code = $code;
         $this->rules = $rules;
         $this->indent = $indent;
         $this->lineEnding = $lineEnding;
     }
 
-    public function getId(): ?int
+    public function getId(): UuidInterface
     {
-        return $this->id;
+        return Uuid::fromString($this->id);
     }
 
     public function getCode(): string

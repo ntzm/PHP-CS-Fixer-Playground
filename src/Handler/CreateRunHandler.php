@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Handler;
 
-use Hashids\HashidsInterface;
 use PhpCsFixerPlayground\LineEnding;
 use PhpCsFixerPlayground\RequestRuleParserInterface;
 use PhpCsFixerPlayground\Entity\Run;
@@ -30,21 +29,14 @@ final class CreateRunHandler implements HandlerInterface
      */
     private $requestRuleParser;
 
-    /**
-     * @var HashidsInterface
-     */
-    private $hashids;
-
     public function __construct(
         RunRepositoryInterface $runs,
         Request $request,
-        RequestRuleParserInterface $requestRuleParser,
-        HashidsInterface $hashids
+        RequestRuleParserInterface $requestRuleParser
     ) {
         $this->runs = $runs;
         $this->request = $request;
         $this->requestRuleParser = $requestRuleParser;
-        $this->hashids = $hashids;
     }
 
     public function __invoke(array $vars): Response
@@ -60,8 +52,8 @@ final class CreateRunHandler implements HandlerInterface
 
         $this->runs->save($run);
 
-        $hash = $this->hashids->encode($run->getId());
-
-        return new RedirectResponse(sprintf('/run/%s', $hash));
+        return new RedirectResponse(
+            sprintf('/run/%s', $run->getId()->toString())
+        );
     }
 }

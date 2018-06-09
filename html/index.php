@@ -38,7 +38,7 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($container): vo
         return $container->get(CreateRunHandler::class);
     });
 
-    $r->get('/run/{hash:[a-zA-Z0-9]+}', function () use ($container): GetRunHandler {
+    $r->get('/run/{uuid:[a-f0-9-]+}', function () use ($container): GetRunHandler {
         return $container->get(GetRunHandler::class);
     });
 

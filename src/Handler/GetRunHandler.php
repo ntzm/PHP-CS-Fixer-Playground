@@ -6,8 +6,11 @@ namespace PhpCsFixerPlayground\Handler;
 
 use PhpCsFixerPlayground\ConfigFileGeneratorInterface;
 use PhpCsFixerPlayground\Fixer\FixerInterface;
+use PhpCsFixerPlayground\Run\RunNotFoundException;
 use PhpCsFixerPlayground\Run\RunRepositoryInterface;
 use PhpCsFixerPlayground\View\ViewFactoryInterface;
+use Ramsey\Uuid\Exception\InvalidUuidStringException;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -47,7 +50,13 @@ final class GetRunHandler implements HandlerInterface
 
     public function __invoke(array $vars): Response
     {
-        $run = $this->runs->getByHash($vars['hash']);
+        try {
+            $uuid = Uuid::fromString($vars['uuid']);
+        } catch (InvalidUuidStringException $e) {
+            throw new RunNotFoundException();
+        }
+
+        $run = $this->runs->findByUuid($uuid);
 
         try {
             $report = $this->fixer->fix(

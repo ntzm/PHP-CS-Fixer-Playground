@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Tests\Run;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Hashids\HashidsInterface;
 use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\LineEnding;
 use PhpCsFixerPlayground\Run\RunNotFoundException;
 use PhpCsFixerPlayground\Run\RunRepository;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @covers \PhpCsFixerPlayground\Run\RunRepository
  */
 final class RunRepositoryTest extends TestCase
 {
-    public function testGetByHash(): void
+    public function testGetByUuid(): void
     {
         $run = new Run('<?php echo "hi";', ['single_quote' => true], '    ', LineEnding::fromVisible('\n'));
 
@@ -25,67 +25,31 @@ final class RunRepositoryTest extends TestCase
         $entityManager
             ->expects($this->once())
             ->method('find')
-            ->with(Run::class, 5)
+            ->with(Run::class, 'b05e6923-a749-4ec0-afc1-cbafc2452c5f')
             ->willReturn($run)
         ;
 
-        $hashids = $this->createMock(HashidsInterface::class);
-        $hashids
-            ->expects($this->once())
-            ->method('decode')
-            ->with('foo')
-            ->willReturn([5])
-        ;
+        $runs = new RunRepository($entityManager);
 
-        $runs = new RunRepository($entityManager, $hashids);
-
-        $this->assertSame($run, $runs->getByHash('foo'));
+        $this->assertSame($run, $runs->findByUuid(Uuid::fromString('b05e6923-a749-4ec0-afc1-cbafc2452c5f')));
     }
 
-    public function testGetByHashNonExistent(): void
+    public function testGetByUuidNonExistent(): void
     {
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager
             ->expects($this->once())
             ->method('find')
-            ->with(Run::class, 5)
+            ->with(Run::class, 'b05e6923-a749-4ec0-afc1-cbafc2452c5f')
             ->willReturn(null)
         ;
 
-        $hashids = $this->createMock(HashidsInterface::class);
-        $hashids
-            ->expects($this->once())
-            ->method('decode')
-            ->with('foo')
-            ->willReturn([5])
-        ;
-
-        $runs = new RunRepository($entityManager, $hashids);
+        $runs = new RunRepository($entityManager);
 
         $this->expectException(RunNotFoundException::class);
-        $this->expectExceptionMessage('Cannot find run with hash foo');
+        $this->expectExceptionMessage('Cannot find run with UUID b05e6923-a749-4ec0-afc1-cbafc2452c5f');
 
-        $runs->getByHash('foo');
-    }
-
-    public function testGetByHashInvalid(): void
-    {
-        $entityManager = $this->createMock(EntityManagerInterface::class);
-
-        $hashids = $this->createMock(HashidsInterface::class);
-        $hashids
-            ->expects($this->once())
-            ->method('decode')
-            ->with('foo')
-            ->willReturn([])
-        ;
-
-        $runs = new RunRepository($entityManager, $hashids);
-
-        $this->expectException(RunNotFoundException::class);
-        $this->expectExceptionMessage('Cannot find run with hash foo');
-
-        $runs->getByHash('foo');
+        $runs->findByUuid(Uuid::fromString('b05e6923-a749-4ec0-afc1-cbafc2452c5f'));
     }
 
     public function testSave(): void
@@ -103,9 +67,7 @@ final class RunRepositoryTest extends TestCase
             ->method('flush')
         ;
 
-        $hashids = $this->createMock(HashidsInterface::class);
-
-        $runs = new RunRepository($entityManager, $hashids);
+        $runs = new RunRepository($entityManager);
 
         $runs->save($run);
     }
