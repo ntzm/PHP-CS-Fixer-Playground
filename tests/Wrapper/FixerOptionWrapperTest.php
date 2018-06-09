@@ -246,7 +246,7 @@ final class FixerOptionWrapperTest extends TestCase
             ],
             [
                 false,
-                [function () {}],
+                [function (): void {}],
             ],
             [
                 true,
