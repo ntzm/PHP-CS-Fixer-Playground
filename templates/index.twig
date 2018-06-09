@@ -92,7 +92,14 @@
                                         <div class="form-group">
                                             <label><code>{{ option.name }}</code></label>
                                             <p>{{ option.description|e|format }}</p>
-                                            {% if option.allowedTypes == ['string'] %}
+                                            {% if option.allowsMultipleValues %}
+                                                <select multiple class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}][]">
+                                                    {% for value in option.printableAllowedValues %}
+                                                        {% set selected = option.hasDefault and value in option.default %}
+                                                        <option value="{{ value }}"{{ selected ? ' selected' : '' }}>{{ value }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            {% elseif option.allowedTypes == ['string'] %}
                                                 {% if option.printableAllowedValues %}
                                                     <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]">
                                                         {% for value in option.printableAllowedValues %}
@@ -114,8 +121,6 @@
                                                     <option value="_false"{{ value is same as(false) ? ' selected' : '' }}>False</option>
                                                     <option value="_null"{{ value is same as(null) ? ' selected' : '' }}>Null</option>
                                                 </select>
-                                            {% elseif option.allowedTypes == ['array'] %}
-                                                <textarea class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]" rows="5">{{ value|join('\n') }}</textarea>
                                             {% else %}
                                                 <p>Unsupported types {{ option.allowedTypes|join(', ') }}</p>
                                             {% endif %}

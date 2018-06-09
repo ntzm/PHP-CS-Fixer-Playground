@@ -65,7 +65,7 @@ final class FixerConfigurationResolverWrapperTest extends TestCase
             ->willReturn(false)
         ;
         $option
-            ->expects($this->exactly(2))
+            ->expects($this->exactly(4))
             ->method('getAllowedValues')
             ->willReturn(['baz', function (): void {}])
         ;

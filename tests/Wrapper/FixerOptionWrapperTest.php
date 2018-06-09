@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Tests\Wrapper;
 
+use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 use PhpCsFixerPlayground\Wrapper\FixerOptionWrapper;
 use PHPUnit\Framework\TestCase;
@@ -69,7 +70,7 @@ final class FixerOptionWrapperTest extends TestCase
             ->willReturn(null)
         ;
         $option
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('getAllowedValues')
             ->willReturn(['foo', 'bar', ['baz'], true, function (): void {}])
         ;
@@ -102,7 +103,7 @@ final class FixerOptionWrapperTest extends TestCase
     {
         $option = $this->createMock(FixerOptionInterface::class);
         $option
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('getAllowedValues')
             ->willReturn([
                 'foo',
@@ -155,7 +156,7 @@ final class FixerOptionWrapperTest extends TestCase
             ->willReturn('baz')
         ;
         $option
-            ->expects($this->exactly(2))
+            ->expects($this->exactly(4))
             ->method('getAllowedValues')
             ->willReturn(['baz', function (): void {}])
         ;
@@ -191,7 +192,7 @@ final class FixerOptionWrapperTest extends TestCase
             ->willReturn(false)
         ;
         $option
-            ->expects($this->exactly(2))
+            ->expects($this->exactly(4))
             ->method('getAllowedValues')
             ->willReturn(['baz', function (): void {}])
         ;
@@ -206,5 +207,51 @@ final class FixerOptionWrapperTest extends TestCase
             'allowed_types' => ['string'],
             'allowed_values' => ['baz'],
         ], $json);
+    }
+
+    /**
+     * @param bool       $expected
+     * @param array|null $input
+     *
+     * @dataProvider provideTestAllowsMultipleValuesCases
+     */
+    public function testAllowsMultipleValues(bool $expected, ?array $input): void
+    {
+        $option = $this->createMock(FixerOptionInterface::class);
+        $option
+            ->expects($this->once())
+            ->method('getAllowedValues')
+            ->willReturn($input)
+        ;
+
+        $wrapper = new FixerOptionWrapper($option);
+
+        $this->assertSame($expected, $wrapper->allowsMultipleValues());
+    }
+
+    public function provideTestAllowsMultipleValuesCases(): array
+    {
+        return [
+            [
+                false,
+                [],
+            ],
+            [
+                false,
+                null,
+            ],
+            [
+                false,
+                ['foo', 'bar'],
+            ],
+            [
+                false,
+                [function () {}],
+            ],
+            [
+                true,
+                [new AllowedValueSubset(['foo'])],
+            ],
+        ];
     }
 }

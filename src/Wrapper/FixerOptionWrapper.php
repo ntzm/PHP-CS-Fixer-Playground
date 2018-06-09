@@ -6,6 +6,7 @@ namespace PhpCsFixerPlayground\Wrapper;
 
 use Closure;
 use JsonSerializable;
+use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 
 final class FixerOptionWrapper implements FixerOptionInterface, JsonSerializable
@@ -75,6 +76,10 @@ final class FixerOptionWrapper implements FixerOptionInterface, JsonSerializable
             return null;
         }
 
+        if ($this->allowsMultipleValues()) {
+            return $allowedValues[0]->getAllowedValues();
+        }
+
         return array_values(array_filter($allowedValues, function ($value): bool {
             return !$value instanceof Closure;
         }));
@@ -83,6 +88,15 @@ final class FixerOptionWrapper implements FixerOptionInterface, JsonSerializable
     public function getNormalizer(): ?Closure
     {
         return $this->option->getNormalizer();
+    }
+
+    public function allowsMultipleValues(): bool
+    {
+        $values = $this->getAllowedValues();
+
+        return $values !== null
+            && count($values) === 1
+            && $values[0] instanceof AllowedValueSubset;
     }
 
     private function getTypesFromValues(array $values): array
