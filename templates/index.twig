@@ -96,7 +96,7 @@
                                                 <p><strong>Deprecated option: {{ option.deprecationMessage|e|format }}</strong></p>
                                             {% endif %}
                                             {% if option.allowsMultipleValues %}
-                                                <select multiple class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}][]">
+                                                <select multiple size="{{ option.printableAllowedValues|length }}" class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}][]">
                                                     {% for v in option.printableAllowedValues %}
                                                         {% set selected = v in value %}
                                                         <option value="{{ v }}"{{ selected ? ' selected' : '' }}>{{ v }}</option>
