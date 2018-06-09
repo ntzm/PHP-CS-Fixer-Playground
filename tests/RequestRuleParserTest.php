@@ -67,25 +67,6 @@ final class RequestRuleParserTest extends TestCase
                     ],
                 ],
             ],
-            [
-                [
-                    'rule_1' => [
-                        'option_1' => [
-                            'value_1',
-                            'value_2',
-                        ],
-                    ],
-                ],
-                [
-                    'rule_1' => [
-                        '_enabled' => '_true',
-                        'option_1' => [
-                            'value_1',
-                            'value_2',
-                        ],
-                    ],
-                ],
-            ],
         ];
     }
 }

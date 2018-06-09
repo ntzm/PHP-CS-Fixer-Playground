@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Tests\Wrapper;
 
-use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 use PhpCsFixerPlayground\Wrapper\FixerOptionWrapper;
 use PHPUnit\Framework\TestCase;
@@ -72,24 +71,12 @@ final class FixerOptionWrapperTest extends TestCase
         $option
             ->expects($this->once())
             ->method('getAllowedValues')
-            ->willReturn([
-                'foo',
-                'bar',
-                ['baz'],
-                true,
-                function (): void {},
-                new AllowedValueSubset(['foo', 'bar']),
-            ])
+            ->willReturn(['foo', 'bar', ['baz'], true, function (): void {}])
         ;
 
         $wrapper = new FixerOptionWrapper($option);
 
-        $this->assertSame([
-            'PhpCsFixer\FixerConfiguration\AllowedValueSubset',
-            'array',
-            'bool',
-            'string',
-        ], $wrapper->getAllowedTypes());
+        $this->assertSame(['array', 'bool', 'string'], $wrapper->getAllowedTypes());
     }
 
     public function getGetAllowedTypesInferredFromNullAllowedValues(): void
