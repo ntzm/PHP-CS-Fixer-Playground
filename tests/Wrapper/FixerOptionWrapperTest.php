@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Tests\Wrapper;
 
 use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
+use PhpCsFixer\FixerConfiguration\DeprecatedFixerOptionInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 use PhpCsFixerPlayground\Wrapper\FixerOptionWrapper;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 final class FixerOptionWrapperTest extends TestCase
 {
@@ -253,5 +255,49 @@ final class FixerOptionWrapperTest extends TestCase
                 [new AllowedValueSubset(['foo'])],
             ],
         ];
+    }
+
+    public function testIsDeprecatedFalse(): void
+    {
+        $option = $this->createMock(FixerOptionInterface::class);
+
+        $wrapper = new FixerOptionWrapper($option);
+
+        $this->assertFalse($wrapper->isDeprecated());
+    }
+
+    public function testIsDeprecatedTrue(): void
+    {
+        $option = $this->createMock(DeprecatedFixerOptionInterface::class);
+
+        $wrapper = new FixerOptionWrapper($option);
+
+        $this->assertTrue($wrapper->isDeprecated());
+    }
+
+    public function testGetDeprecationMessageNotDeprecated(): void
+    {
+        $option = $this->createMock(FixerOptionInterface::class);
+
+        $wrapper = new FixerOptionWrapper($option);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Option not deprecated');
+
+        $wrapper->getDeprecationMessage();
+    }
+
+    public function testGetDeprecationMessage(): void
+    {
+        $option = $this->createMock(DeprecatedFixerOptionInterface::class);
+        $option
+            ->expects($this->once())
+            ->method('getDeprecationMessage')
+            ->willReturn('foo bar')
+        ;
+
+        $wrapper = new FixerOptionWrapper($option);
+
+        $this->assertSame('foo bar', $wrapper->getDeprecationMessage());
     }
 }

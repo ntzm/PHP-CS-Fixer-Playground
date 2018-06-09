@@ -7,7 +7,9 @@ namespace PhpCsFixerPlayground\Wrapper;
 use Closure;
 use JsonSerializable;
 use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
+use PhpCsFixer\FixerConfiguration\DeprecatedFixerOptionInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
+use RuntimeException;
 
 final class FixerOptionWrapper implements FixerOptionInterface, JsonSerializable
 {
@@ -97,6 +99,20 @@ final class FixerOptionWrapper implements FixerOptionInterface, JsonSerializable
         return $values !== null
             && count($values) === 1
             && $values[0] instanceof AllowedValueSubset;
+    }
+
+    public function isDeprecated(): bool
+    {
+        return $this->option instanceof DeprecatedFixerOptionInterface;
+    }
+
+    public function getDeprecationMessage(): string
+    {
+        if (!$this->option instanceof DeprecatedFixerOptionInterface) {
+            throw new RuntimeException('Option not deprecated');
+        }
+
+        return $this->option->getDeprecationMessage();
     }
 
     private function getTypesFromValues(array $values): array

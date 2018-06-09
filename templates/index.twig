@@ -92,6 +92,9 @@
                                         <div class="form-group">
                                             <label><code>{{ option.name }}</code></label>
                                             <p>{{ option.description|e|format }}</p>
+                                            {% if option.deprecated %}
+                                                <p><strong>Deprecated option: {{ option.deprecationMessage|format }}</strong></p>
+                                            {% endif %}
                                             {% if option.allowsMultipleValues %}
                                                 <select multiple class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}][]">
                                                     {% for value in option.printableAllowedValues %}
