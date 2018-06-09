@@ -116,13 +116,6 @@
                                                 </select>
                                             {% elseif option.allowedTypes == ['array'] %}
                                                 <textarea class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]" rows="5">{{ value|join('\n') }}</textarea>
-                                            {% elseif option.allowedTypes == ['PhpCsFixer\\FixerConfiguration\\AllowedValueSubset'] %}
-                                                <select multiple class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}][]">
-                                                    {% for value in option.allowedValues[0].allowedValues %}
-                                                        {% set selected = option.hasDefault and value in option.default %}
-                                                        <option value="{{ value }}"{{ selected ? ' selected' : '' }}>{{ value }}</option>
-                                                    {% endfor %}
-                                                </select>
                                             {% else %}
                                                 <p>Unsupported types {{ option.allowedTypes|join(', ') }}</p>
                                             {% endif %}

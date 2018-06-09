@@ -88,10 +88,6 @@ final class FixerOptionWrapper implements FixerOptionInterface, JsonSerializable
     private function getTypesFromValues(array $values): array
     {
         $types = array_values(array_unique(array_map(function ($value): string {
-            if (is_object($value)) {
-                return get_class($value);
-            }
-
             $type = strtolower(gettype($value));
 
             if ($type === 'boolean') {

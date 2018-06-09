@@ -41,10 +41,6 @@ final class RequestRuleParser implements RequestRuleParserInterface
     private function parseOptions(array $options): array
     {
         foreach ($options as &$option) {
-            if (is_array($option)) {
-                continue;
-            }
-
             if (array_key_exists($option, self::TYPE_MAP)) {
                 $option = self::TYPE_MAP[$option];
             } elseif (strpos($option, "\r\n") !== false) {
