@@ -35,9 +35,9 @@
                             <div class="form-group">
                                 <label for="indent">Indentation</label>
                                 <select class="form-control" name="indent" id="indent">
-                                    <option value="    "{{ indent == '    ' ? ' selected' : '' }}>4 Spaces</option>
-                                    <option value="  "{{ indent == '  ' ? ' selected' : '' }}>2 Spaces</option>
-                                    <option value="	"{{ indent == '	' ? ' selected' : '' }}>Tabs</option>
+                                    <option value="    "{{ indent is same as('    ') ? ' selected' : '' }}>4 Spaces</option>
+                                    <option value="  "{{ indent is same as('  ') ? ' selected' : '' }}>2 Spaces</option>
+                                    <option value="	"{{ indent is same as('	') ? ' selected' : '' }}>Tabs</option>
                                 </select>
                             </div>
                         </div>
@@ -45,8 +45,8 @@
                             <div class="form-group">
                                 <label for="line-ending">Line Ending</label>
                                 <select class="form-control" name="line_ending" id="line-ending">
-                                    <option value="\n"{{ lineEnding == '\n' ? ' selected' : '' }}>\n</option>
-                                    <option value="\r\n"{{ lineEnding == '\r\n' ? ' selected' : '' }}>\r\n</option>
+                                    <option value="\n"{{ lineEnding.real is same as('\n') ? ' selected' : '' }}>\n</option>
+                                    <option value="\r\n"{{ lineEnding.real is same as('\r\n') ? ' selected' : '' }}>\r\n</option>
                                 </select>
                             </div>
                         </div>
@@ -99,23 +99,23 @@
                                                         <option value="{{ value }}"{{ selected ? ' selected' : '' }}>{{ value }}</option>
                                                     {% endfor %}
                                                 </select>
-                                            {% elseif option.allowedTypes == ['string'] %}
+                                            {% elseif option.allowedTypes is same as(['string']) %}
                                                 {% if option.printableAllowedValues %}
                                                     <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]">
                                                         {% for value in option.printableAllowedValues %}
-                                                            {% set selected = option.hasDefault and option.default == value %}
+                                                            {% set selected = option.hasDefault and option.default is same as(value) %}
                                                             <option value="{{ value }}"{{ selected ? ' selected' : '' }}>{{ value }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 {% else %}
                                                     <input class="form-control" type="text" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="{{ value }}">
                                                 {% endif %}
-                                            {% elseif option.allowedTypes == ['bool'] %}
+                                            {% elseif option.allowedTypes is same as(['bool']) %}
                                                 <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]">
                                                     <option value="_true"{{ value is same as(true) ? ' selected ' : '' }}>True</option>
                                                     <option value="_false"{{ value is same as(false) ? ' selected' : '' }}>False</option>
                                                 </select>
-                                            {% elseif option.allowedTypes == ['bool', 'null'] %}
+                                            {% elseif option.allowedTypes is same as(['bool', 'null']) %}
                                                 <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]">
                                                     <option value="_true"{{ value is same as(true) ? ' selected ' : '' }}>True</option>
                                                     <option value="_false"{{ value is same as(false) ? ' selected' : '' }}>False</option>
