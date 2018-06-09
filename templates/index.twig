@@ -136,6 +136,18 @@
                 </form>
             </div>
             <div class="col-sm-6">
+                {% if deprecationMessages %}
+                    <div class="card bg-warning text-white mb-3">
+                        <div class="card-header">Deprecations</div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                {% for message in deprecationMessages %}
+                                    <li>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
                 <div class="card mb-3">
                     <div class="card-header">Result</div>
                     <div class="card-body">

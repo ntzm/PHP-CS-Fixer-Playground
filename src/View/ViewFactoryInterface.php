@@ -12,6 +12,7 @@ interface ViewFactoryInterface
         Run $run,
         string $result,
         array $appliedFixers,
+        array $deprecationMessages,
         string $generatedConfig
     ): string;
 }

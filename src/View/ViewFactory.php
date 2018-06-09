@@ -43,6 +43,7 @@ final class ViewFactory implements ViewFactoryInterface
         Run $run,
         string $result,
         array $appliedFixers,
+        array $deprecationMessages,
         string $generatedConfig
     ): string {
         $availableFixers = $this->fixerFactory
@@ -70,6 +71,7 @@ final class ViewFactory implements ViewFactoryInterface
                 'lineEnding' => $run->getLineEnding(),
                 'result' => $result,
                 'appliedFixers' => $appliedFixers,
+                'deprecationMessages' => $deprecationMessages,
                 'generatedConfig' => $generatedConfig,
                 'availableFixers' => $availableFixers,
                 'phpCsFixerVersion' => $phpCsFixerVersion,

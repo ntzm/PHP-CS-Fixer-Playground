@@ -68,9 +68,11 @@ final class GetRunHandler implements HandlerInterface
 
             $result = $report->getResult();
             $appliedFixers = $report->getAppliedFixers();
+            $deprecationMessages = $report->getDeprecationMessages();
         } catch (Throwable $e) {
             $result = $e->getMessage();
             $appliedFixers = [];
+            $deprecationMessages = [];
         }
 
         return new Response(
@@ -78,6 +80,7 @@ final class GetRunHandler implements HandlerInterface
                 $run,
                 $result,
                 $appliedFixers,
+                $deprecationMessages,
                 $this->configFileGenerator->generate(
                     $run->getRules(),
                     $run->getIndent(),

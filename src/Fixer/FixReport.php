@@ -16,10 +16,19 @@ final class FixReport
      */
     private $appliedFixers;
 
-    public function __construct(string $result, array $appliedFixers)
-    {
+    /**
+     * @var string[]
+     */
+    private $deprecationMessages;
+
+    public function __construct(
+        string $result,
+        array $appliedFixers,
+        array $deprecationMessages
+    ) {
         $this->result = $result;
         $this->appliedFixers = $appliedFixers;
+        $this->deprecationMessages = $deprecationMessages;
     }
 
     public function getResult(): string
@@ -33,5 +42,13 @@ final class FixReport
     public function getAppliedFixers(): array
     {
         return $this->appliedFixers;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getDeprecationMessages(): array
+    {
+        return $this->deprecationMessages;
     }
 }

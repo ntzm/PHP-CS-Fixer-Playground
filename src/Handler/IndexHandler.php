@@ -44,7 +44,7 @@ final class IndexHandler implements HandlerInterface
         $run = new Run($code, [], $indent, $lineEnding);
 
         return new Response(
-            $this->viewFactory->make($run, $code, [], $generatedConfig)
+            $this->viewFactory->make($run, $code, [], [], $generatedConfig)
         );
     }
 }

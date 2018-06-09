@@ -31,6 +31,12 @@ final class Fixer implements FixerInterface
         string $indent,
         LineEnding $lineEnding
     ): FixReport {
+        $deprecationMessages = [];
+
+        set_error_handler(function (int $number, string $message) use (&$deprecationMessages): void {
+            $deprecationMessages[] = $message;
+        }, E_USER_DEPRECATED);
+
         $file = new MockSplFileInfo([]);
 
         $tokens = Tokens::fromCode($code);
@@ -44,15 +50,6 @@ final class Fixer implements FixerInterface
                 continue;
             }
 
-            if ($fixer instanceof ConfigurableFixerInterface) {
-                try {
-                    $fixer->configure([]);
-                } catch (InvalidArgumentException $e) {
-                    // TODO
-                    continue;
-                }
-            }
-
             $fixer->fix($file, $tokens);
 
             if ($tokens->isChanged()) {
@@ -63,7 +60,9 @@ final class Fixer implements FixerInterface
             }
         }
 
-        return new FixReport($tokens->generateCode(), $appliedFixers);
+        restore_error_handler();
+
+        return new FixReport($tokens->generateCode(), $appliedFixers, $deprecationMessages);
     }
 
     /**
