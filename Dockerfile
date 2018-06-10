@@ -1,3 +1,11 @@
+FROM node:10 as build-assets
+
+COPY package* ./
+COPY gulpfile.js .
+
+RUN npm install \
+ && node_modules/.bin/gulp
+
 FROM php:7.2-apache
 
 WORKDIR /var/www/
@@ -17,6 +25,9 @@ RUN apt-get update \
 COPY composer.* ./
 
 RUN composer install --prefer-dist --no-dev
+
+COPY --from=build-assets html/app.js html
+COPY --from=build-assets html/style.css html
 
 RUN chown www-data:www-data .
 
