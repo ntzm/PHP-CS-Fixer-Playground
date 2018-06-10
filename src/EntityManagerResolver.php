@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground;
 
+use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
@@ -17,7 +18,7 @@ final class EntityManagerResolver
             [__DIR__.'/Entity'],
             true,
             null,
-            null,
+            new FilesystemCache(__DIR__.'/../data/cache/doctrine'),
             false
         );
 
