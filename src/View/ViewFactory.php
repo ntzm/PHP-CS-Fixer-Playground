@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\View;
 
-use Jean85\PrettyVersions;
 use PhpCsFixer\Console\Application;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
