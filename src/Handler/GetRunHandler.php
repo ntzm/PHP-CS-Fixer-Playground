@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Handler;
 
+use PhpCsFixer\Console\Application;
 use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\Fixer\FixerInterface;
 use PhpCsFixerPlayground\Issue;
@@ -89,7 +90,7 @@ final class GetRunHandler implements HandlerInterface
             $result,
             $configFile,
             PHP_VERSION,
-            '1.2'
+            Application::VERSION.' '.Application::VERSION_CODENAME
         );
 
         return new Response(

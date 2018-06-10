@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\View;
 
 use Jean85\PrettyVersions;
+use PhpCsFixer\Console\Application;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\ConfigFile;
@@ -56,13 +57,6 @@ final class ViewFactory implements ViewFactoryInterface
             $this->fixerFactory->registerBuiltInFixers()->getFixers()
         );
 
-        $phpCsFixerVersion = ltrim(
-            PrettyVersions
-                ::getVersion('friendsofphp/php-cs-fixer')
-                ->getPrettyVersion(),
-            'v'
-        );
-
         return $this->twig->render(
             'index.twig',
             [
@@ -76,7 +70,7 @@ final class ViewFactory implements ViewFactoryInterface
                 'configFile' => $configFile,
                 'issue' => $issue,
                 'availableFixers' => $availableFixers,
-                'phpCsFixerVersion' => $phpCsFixerVersion,
+                'phpCsFixerVersion' => Application::VERSION,
                 'diff' => $this->differ->diff($run->getCode(), $result),
             ]
         );
