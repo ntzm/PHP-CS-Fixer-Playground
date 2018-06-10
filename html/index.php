@@ -55,7 +55,7 @@ $response = (new RouteHandler())->handle(
 );
 
 $response->headers->add([
-    'Content-Security-Policy' => "default-src 'self'",
+    'Content-Security-Policy' => "default-src 'self'; font-src data:;",
 ]);
 
 $response->send();

@@ -1,11 +1,13 @@
 FROM node:10 as build-assets
 
 COPY package* ./
+
+RUN npm install
+
 COPY gulpfile.js .
 COPY assets assets
 
-RUN npm install \
- && node_modules/.bin/gulp
+RUN node_modules/.bin/gulp
 
 FROM php:7.2-apache
 
