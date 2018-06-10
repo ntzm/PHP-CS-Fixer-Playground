@@ -15,7 +15,7 @@ final class FixReportTest extends TestCase
 {
     public function testGetResult(): void
     {
-        $report = new FixReport('<?php echo "hi";', []);
+        $report = new FixReport('<?php echo "hi";', [], []);
 
         $this->assertSame('<?php echo "hi";', $report->getResult());
     }
@@ -24,8 +24,17 @@ final class FixReportTest extends TestCase
     {
         $fixers = [new NoAliasFunctionsFixer()];
 
-        $report = new FixReport('<?php echo "hi";', $fixers);
+        $report = new FixReport('<?php echo "hi";', $fixers, []);
 
         $this->assertEquals($fixers, $report->getAppliedFixers());
+    }
+
+    public function testGetDeprecationMessages(): void
+    {
+        $deprecationMessages = ['foo', 'bar'];
+
+        $report = new FixReport('<?php echo "hi";', [], $deprecationMessages);
+
+        $this->assertSame($deprecationMessages, $report->getDeprecationMessages());
     }
 }

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Fixer;
 
-use InvalidArgumentException;
-use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixer\RuleSet;
 use PhpCsFixer\Tokenizer\Tokens;
