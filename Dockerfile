@@ -18,6 +18,8 @@ EXPOSE 8000
 RUN apt-get update \
  && apt-get install -y \
     unzip \
+ && docker-php-ext-install \
+    opcache \
  && a2enmod rewrite \
  && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
