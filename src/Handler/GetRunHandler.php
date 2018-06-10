@@ -82,7 +82,14 @@ final class GetRunHandler implements HandlerInterface
             $run->getLineEnding()
         );
 
-        $issue = new Issue('', $run->getCode(), $result, $config, PHP_VERSION, '1.2');
+        $issue = new Issue(
+            '',
+            $run->getCode(),
+            $result,
+            $config,
+            PHP_VERSION,
+            '1.2'
+        );
 
         return new Response(
             $this->viewFactory->make(

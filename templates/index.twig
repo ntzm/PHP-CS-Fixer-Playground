@@ -237,12 +237,15 @@
             </div>
             <div class="col-sm-6">
                 {% if issue %}
-                    <a
-                        href="https://github.com/FriendsOfPHP/PHP-CS-Fixer/issues/new?body={{ issue|url_encode }}"
-                        target="_blank"
-                    >
-                        Open issue
-                    </a>
+                    <p>
+                        Something look wrong? Please
+                        <a
+                            href="https://github.com/FriendsOfPHP/PHP-CS-Fixer/issues/new?body={{ issue|url_encode }}"
+                            target="_blank"
+                        >
+                            open an issue
+                        </a>
+                    </p>
                 {% endif %}
                 {% if deprecationMessages %}
                     <div class="card bg-warning text-white mb-3">

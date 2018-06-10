@@ -54,7 +54,7 @@ final class Issue
 
     public function __toString(): string
     {
-        return <<<NOW
+        return <<<ISSUE
 For configuration or updating questions please read the README and UPGRADE documentation,
 or visit: https://gitter.im/PHP-CS-Fixer
 
@@ -67,7 +67,7 @@ When reporting an issue (bug) please provide the following information:
 => {$this->phpCsFixerVersion}
 
 #### The command you use to run PHP CS Fixer:
-=> {$this->runUrl}
+=> [{$this->runUrl}]({$this->runUrl})
 
 #### The configuration file you are using, if any:
 ```php
@@ -89,6 +89,6 @@ When reporting an issue (bug) please provide the following information:
 ```php
 => ....................................
 ```
-NOW;
+ISSUE;
     }
 }
