@@ -13,6 +13,13 @@ use PhpCsFixerPlayground\LineEnding;
  */
 final class RunTest extends TestCase
 {
+    public function testGetId(): void
+    {
+        $run = new Run('<?php echo "hi";', [], '    ', LineEnding::fromVisible('\n'));
+
+        $this->assertSame(4, $run->getId()->getVersion());
+    }
+
     public function testGetCode(): void
     {
         $run = new Run('<?php echo "hi";', [], '    ', LineEnding::fromVisible('\n'));
