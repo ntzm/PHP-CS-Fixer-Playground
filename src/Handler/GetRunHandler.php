@@ -9,6 +9,7 @@ use PhpCsFixerPlayground\Fixer\FixerInterface;
 use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\Run\RunNotFoundException;
 use PhpCsFixerPlayground\Run\RunRepositoryInterface;
+use PhpCsFixerPlayground\UrlGeneratorInterface;
 use PhpCsFixerPlayground\View\ViewFactoryInterface;
 use Ramsey\Uuid\Exception\InvalidUuidStringException;
 use Ramsey\Uuid\Uuid;
@@ -32,14 +33,21 @@ final class GetRunHandler implements HandlerInterface
      */
     private $fixer;
 
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $urlGenerator;
+
     public function __construct(
         RunRepositoryInterface $runs,
         ViewFactoryInterface $viewFactory,
-        FixerInterface $fixer
+        FixerInterface $fixer,
+        UrlGeneratorInterface $urlGenerator
     ) {
         $this->runs = $runs;
         $this->viewFactory = $viewFactory;
         $this->fixer = $fixer;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function __invoke(array $vars): Response
@@ -76,7 +84,7 @@ final class GetRunHandler implements HandlerInterface
         );
 
         $issue = new Issue(
-            '',
+            $this->urlGenerator->generateUrlForRun($run),
             $run->getCode(),
             $result,
             $configFile,
