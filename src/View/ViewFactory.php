@@ -8,6 +8,7 @@ use PackageVersions\Versions;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\Entity\Run;
+use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\Wrapper\FixerWrapper;
 use SebastianBergmann\Diff\Differ;
 use Twig\Environment;
@@ -44,7 +45,8 @@ final class ViewFactory implements ViewFactoryInterface
         string $result,
         array $appliedFixers,
         array $deprecationMessages,
-        string $generatedConfig
+        string $generatedConfig,
+        Issue $issue = null
     ): string {
         $availableFixers = $this->fixerFactory
             ->registerBuiltInFixers()
@@ -73,6 +75,7 @@ final class ViewFactory implements ViewFactoryInterface
                 'appliedFixers' => $appliedFixers,
                 'deprecationMessages' => $deprecationMessages,
                 'generatedConfig' => $generatedConfig,
+                'issue' => $issue,
                 'availableFixers' => $availableFixers,
                 'phpCsFixerVersion' => $phpCsFixerVersion,
                 'diff' => $this->differ->diff($run->getCode(), $result),

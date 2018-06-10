@@ -6,6 +6,7 @@ namespace PhpCsFixerPlayground\Handler;
 
 use PhpCsFixerPlayground\ConfigFileGeneratorInterface;
 use PhpCsFixerPlayground\Fixer\FixerInterface;
+use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\Run\RunNotFoundException;
 use PhpCsFixerPlayground\Run\RunRepositoryInterface;
 use PhpCsFixerPlayground\View\ViewFactoryInterface;
@@ -75,17 +76,22 @@ final class GetRunHandler implements HandlerInterface
             $deprecationMessages = [];
         }
 
+        $config = $this->configFileGenerator->generate(
+            $run->getRules(),
+            $run->getIndent(),
+            $run->getLineEnding()
+        );
+
+        $issue = new Issue('', $run->getCode(), $result, $config, PHP_VERSION, '1.2');
+
         return new Response(
             $this->viewFactory->make(
                 $run,
                 $result,
                 $appliedFixers,
                 $deprecationMessages,
-                $this->configFileGenerator->generate(
-                    $run->getRules(),
-                    $run->getIndent(),
-                    $run->getLineEnding()
-                )
+                $config,
+                $issue
             )
         );
     }
