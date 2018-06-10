@@ -89,14 +89,15 @@
                                         {% if not value and option.hasDefault %}
                                             {% set value = option.default %}
                                         {% endif %}
+                                        {% set slug = fixer.name~'_'~option.name %}
                                         <div class="form-group">
-                                            <label><code>{{ option.name }}</code></label>
+                                            <label for="{{ slug }}"><code>{{ option.name }}</code></label>
                                             <p>{{ option.description|e|format }}</p>
                                             {% if option.deprecated %}
                                                 <p><strong>Deprecated option: {{ option.deprecationMessage|e|format }}</strong></p>
                                             {% endif %}
                                             {% if option.allowsMultipleValues %}
-                                                <select multiple size="{{ option.printableAllowedValues|length }}" class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}][]">
+                                                <select multiple size="{{ option.printableAllowedValues|length }}" class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}][]" id="{{ slug }}">
                                                     {% for v in option.printableAllowedValues %}
                                                         {% set selected = v in value %}
                                                         <option value="{{ v }}"{{ selected ? ' selected' : '' }}>{{ v }}</option>
@@ -104,22 +105,22 @@
                                                 </select>
                                             {% elseif option.allowedTypes is same as(['string']) %}
                                                 {% if option.printableAllowedValues %}
-                                                    <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]">
+                                                    <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]" id="{{ slug }}">
                                                         {% for v in option.printableAllowedValues %}
                                                             {% set selected = v is same as(value) %}
                                                             <option value="{{ v }}"{{ selected ? ' selected' : '' }}>{{ v }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 {% else %}
-                                                    <input class="form-control" type="text" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="{{ value }}">
+                                                    <input class="form-control" type="text" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="{{ value }}" id="{{ slug }}">
                                                 {% endif %}
                                             {% elseif option.allowedTypes is same as(['bool']) %}
-                                                <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]">
+                                                <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]" id="{{ slug }}">
                                                     <option value="_true"{{ value is same as(true) ? ' selected ' : '' }}>True</option>
                                                     <option value="_false"{{ value is same as(false) ? ' selected' : '' }}>False</option>
                                                 </select>
                                             {% elseif option.allowedTypes is same as(['bool', 'null']) %}
-                                                <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]">
+                                                <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]" id="{{ slug }}">
                                                     <option value="_true"{{ value is same as(true) ? ' selected ' : '' }}>True</option>
                                                     <option value="_false"{{ value is same as(false) ? ' selected' : '' }}>False</option>
                                                     <option value="_null"{{ value is same as(null) ? ' selected' : '' }}>Null</option>
