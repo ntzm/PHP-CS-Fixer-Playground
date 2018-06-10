@@ -50,6 +50,12 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($container): vo
 /** @var Request $request */
 $request = $container->get(Request::class);
 
-(new RouteHandler())->handle(
+$response = (new RouteHandler())->handle(
     $dispatcher->dispatch($request->getMethod(), $request->getPathInfo())
-)->send();
+);
+
+$response->headers->add([
+    'Content-Security-Policy' => "default-src 'self'",
+]);
+
+$response->send();
