@@ -2,12 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    >
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>PHP-CS-Fixer Playground</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/themes/prism.min.css" integrity="sha256-6RI2bGiVbA9GqCSAFm96msi4ap50++uo5NYUQ+o7AXk=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/plugins/show-invisibles/prism-show-invisibles.min.css" integrity="sha256-mhLIsMVR80BiRz+mG8IKgmGIguoQuTYxtPgUdmx3Jrw=" crossorigin="anonymous">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20="
+        crossorigin="anonymous"
+    >
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/themes/prism.min.css"
+        integrity="sha256-6RI2bGiVbA9GqCSAFm96msi4ap50++uo5NYUQ+o7AXk="
+        crossorigin="anonymous"
+    >
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/plugins/show-invisibles/prism-show-invisibles.min.css"
+        integrity="sha256-mhLIsMVR80BiRz+mG8IKgmGIguoQuTYxtPgUdmx3Jrw="
+        crossorigin="anonymous"
+    >
     <style>
         #code {
             font-family: monospace;
@@ -17,9 +35,6 @@
 <body>
     <div class="container-fluid">
         <h1>PHP-CS-Fixer Playground <span class="badge badge-primary">{{ phpCsFixerVersion }}</span></h1>
-        <noscript>
-            <div class="alert alert-info" role="alert">This site works perfectly without JavaScript enabled, however if you want syntax highlighting, JavaScript is unfortunately required!</div>
-        </noscript>
         <a href="https://github.com/ntzm/PHP-CS-Fixer-Playground/">GitHub</a>
         <div class="row">
             <div class="col-sm-6">
@@ -35,9 +50,24 @@
                             <div class="form-group">
                                 <label for="indent">Indentation</label>
                                 <select class="form-control" name="indent" id="indent">
-                                    <option value="    "{{ indent is same as('    ') ? ' selected' : '' }}>4 Spaces</option>
-                                    <option value="  "{{ indent is same as('  ') ? ' selected' : '' }}>2 Spaces</option>
-                                    <option value="	"{{ indent is same as('	') ? ' selected' : '' }}>Tabs</option>
+                                    <option
+                                        value="    "
+                                        {{ indent is same as('    ') ? 'selected' : '' }}
+                                    >
+                                        4 Spaces
+                                    </option>
+                                    <option
+                                        value="  "
+                                        {{ indent is same as('  ') ? 'selected' : '' }}
+                                    >
+                                        2 Spaces
+                                    </option>
+                                    <option
+                                        value="	"
+                                        {{ indent is same as('	') ? 'selected' : '' }}
+                                    >
+                                        Tabs
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -45,8 +75,18 @@
                             <div class="form-group">
                                 <label for="line-ending">Line Ending</label>
                                 <select class="form-control" name="line_ending" id="line-ending">
-                                    <option value="\n"{{ lineEnding.real is same as('\n') ? ' selected' : '' }}>\n</option>
-                                    <option value="\r\n"{{ lineEnding.real is same as('\r\n') ? ' selected' : '' }}>\r\n</option>
+                                    <option
+                                        value="\n"
+                                        {{ lineEnding.real is same as('\n') ? 'selected' : '' }}
+                                    >
+                                        \n
+                                    </option>
+                                    <option
+                                        value="\r\n"
+                                        {{ lineEnding.real is same as('\r\n') ? 'selected' : '' }}
+                                    >
+                                        \r\n
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -63,7 +103,13 @@
                             <li class="{{ itemClasses|join(' ') }}" id="{{ fixer.name }}">
                                 <div class="d-flex w-100 justify-content-between">
                                     <label>
-                                        <input type="checkbox" name="fixers[{{ fixer.name }}][_enabled]" value="_true"{{ enabled ? ' checked' : '' }}> <code>{{ fixer.name }}</code>
+                                        <input
+                                            type="checkbox"
+                                            name="fixers[{{ fixer.name }}][_enabled]"
+                                            value="_true"
+                                            {{ enabled ? 'checked' : '' }}
+                                        >
+                                        <code>{{ fixer.name }}</code>
                                     </label>
                                     <a href="#{{ fixer.name }}">#</a>
                                 </div>
@@ -97,33 +143,86 @@
                                                 <p><strong>Deprecated option: {{ option.deprecationMessage|e|format }}</strong></p>
                                             {% endif %}
                                             {% if option.allowsMultipleValues %}
-                                                <select multiple size="{{ option.printableAllowedValues|length }}" class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}][]" id="{{ slug }}">
+                                                <select
+                                                    multiple
+                                                    size="{{ option.printableAllowedValues|length }}"
+                                                    class="form-control"
+                                                    name="fixers[{{ fixer.name }}][{{ option.name }}][]"
+                                                    id="{{ slug }}"
+                                                >
                                                     {% for v in option.printableAllowedValues %}
                                                         {% set selected = v in value %}
-                                                        <option value="{{ v }}"{{ selected ? ' selected' : '' }}>{{ v }}</option>
+                                                        <option value="{{ v }}"{{ selected ? ' selected' : '' }}>
+                                                            {{ v }}
+                                                        </option>
                                                     {% endfor %}
                                                 </select>
                                             {% elseif option.allowedTypes is same as(['string']) %}
                                                 {% if option.printableAllowedValues %}
-                                                    <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]" id="{{ slug }}">
+                                                    <select
+                                                        class="form-control"
+                                                        name="fixers[{{ fixer.name }}][{{ option.name }}]"
+                                                        id="{{ slug }}"
+                                                    >
                                                         {% for v in option.printableAllowedValues %}
                                                             {% set selected = v is same as(value) %}
-                                                            <option value="{{ v }}"{{ selected ? ' selected' : '' }}>{{ v }}</option>
+                                                            <option value="{{ v }}"{{ selected ? ' selected' : '' }}>
+                                                                {{ v }}
+                                                            </option>
                                                         {% endfor %}
                                                     </select>
                                                 {% else %}
-                                                    <input class="form-control" type="text" name="fixers[{{ fixer.name }}][{{ option.name }}]" value="{{ value }}" id="{{ slug }}">
+                                                    <input
+                                                        class="form-control"
+                                                        type="text"
+                                                        name="fixers[{{ fixer.name }}][{{ option.name }}]"
+                                                        value="{{ value }}"
+                                                        id="{{ slug }}"
+                                                    >
                                                 {% endif %}
                                             {% elseif option.allowedTypes is same as(['bool']) %}
-                                                <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]" id="{{ slug }}">
-                                                    <option value="_true"{{ value is same as(true) ? ' selected ' : '' }}>True</option>
-                                                    <option value="_false"{{ value is same as(false) ? ' selected' : '' }}>False</option>
+                                                <select
+                                                    class="form-control"
+                                                    name="fixers[{{ fixer.name }}][{{ option.name }}]"
+                                                    id="{{ slug }}"
+                                                >
+                                                    <option
+                                                        value="_true"
+                                                        {{ value is same as(true) ? 'selected ' : '' }}
+                                                    >
+                                                        True
+                                                    </option>
+                                                    <option
+                                                        value="_false"
+                                                        {{ value is same as(false) ? 'selected' : '' }}
+                                                    >
+                                                        False
+                                                    </option>
                                                 </select>
                                             {% elseif option.allowedTypes is same as(['bool', 'null']) %}
-                                                <select class="form-control" name="fixers[{{ fixer.name }}][{{ option.name }}]" id="{{ slug }}">
-                                                    <option value="_true"{{ value is same as(true) ? ' selected ' : '' }}>True</option>
-                                                    <option value="_false"{{ value is same as(false) ? ' selected' : '' }}>False</option>
-                                                    <option value="_null"{{ value is same as(null) ? ' selected' : '' }}>Null</option>
+                                                <select
+                                                    class="form-control"
+                                                    name="fixers[{{ fixer.name }}][{{ option.name }}]"
+                                                    id="{{ slug }}"
+                                                >
+                                                    <option
+                                                        value="_true"
+                                                        {{ value is same as(true) ? 'selected ' : '' }}
+                                                    >
+                                                        True
+                                                    </option>
+                                                    <option
+                                                        value="_false"
+                                                        {{ value is same as(false) ? 'selected' : '' }}
+                                                    >
+                                                        False
+                                                    </option>
+                                                    <option
+                                                        value="_null"
+                                                        {{ value is same as(null) ? 'selected' : '' }}
+                                                    >
+                                                        Null
+                                                    </option>
                                                 </select>
                                             {% else %}
                                                 <p>Unsupported types {{ option.allowedTypes|join(', ') }}</p>
@@ -138,7 +237,12 @@
             </div>
             <div class="col-sm-6">
                 {% if issue %}
-                    <a href="https://github.com/FriendsOfPHP/PHP-CS-Fixer/issues/new?body={{ issue|url_encode }}" target="_blank">Open issue</a>
+                    <a
+                        href="https://github.com/FriendsOfPHP/PHP-CS-Fixer/issues/new?body={{ issue|url_encode }}"
+                        target="_blank"
+                    >
+                        Open issue
+                    </a>
                 {% endif %}
                 {% if deprecationMessages %}
                     <div class="card bg-warning text-white mb-3">
@@ -188,9 +292,25 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/prism.min.js" integrity="sha256-AqXn2u4UOZ36/xOhOEYrMIqgHrq1p8m88HJO+oPzPiM=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/plugins/show-invisibles/prism-show-invisibles.min.js" integrity="sha256-V62xAwTNFNOCJXJEuhm/kMsRDYrWnnULpww5h+y1j0s=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-php.min.js" integrity="sha256-yQtytnnfraW6dL24hRbZtmTuhb7Y5l8o0wXesz/wIbI=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-diff.min.js" integrity="sha256-2j19IpsajXc3FKagWaOLYxCvNv13NmR4mMP749TMBxg=" crossorigin="anonymous"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/prism.min.js"
+        integrity="sha256-AqXn2u4UOZ36/xOhOEYrMIqgHrq1p8m88HJO+oPzPiM="
+        crossorigin="anonymous"
+    ></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/plugins/show-invisibles/prism-show-invisibles.min.js"
+        integrity="sha256-V62xAwTNFNOCJXJEuhm/kMsRDYrWnnULpww5h+y1j0s="
+        crossorigin="anonymous"
+    ></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-php.min.js"
+        integrity="sha256-yQtytnnfraW6dL24hRbZtmTuhb7Y5l8o0wXesz/wIbI="
+        crossorigin="anonymous"
+    ></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/components/prism-diff.min.js"
+        integrity="sha256-2j19IpsajXc3FKagWaOLYxCvNv13NmR4mMP749TMBxg="
+        crossorigin="anonymous"
+    ></script>
 </body>
 </html>
