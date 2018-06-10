@@ -7,13 +7,13 @@ namespace PhpCsFixerPlayground\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity
  */
 class PhpCsFixerVersion
 {
     /**
      * @var string
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\Column(type="string")
      */
     private $version;
