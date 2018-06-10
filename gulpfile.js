@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const concat = require('gulp-concat');
+const sass = require('gulp-sass');
 
 gulp.task('js', () =>
     gulp.src([
@@ -13,12 +14,8 @@ gulp.task('js', () =>
 );
 
 gulp.task('css', () =>
-    gulp.src([
-        'node_modules/bootstrap/dist/css/bootstrap.css',
-        'node_modules/prismjs/themes/prism.css',
-        'node_modules/prismjs/plugins/show-invisibles/prism-show-invisibles.css',
-    ])
-        .pipe(concat('style.css'))
+    gulp.src('assets/style.scss')
+        .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('html'))
 );
 

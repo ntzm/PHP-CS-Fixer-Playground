@@ -2,6 +2,7 @@ FROM node:10 as build-assets
 
 COPY package* ./
 COPY gulpfile.js .
+COPY assets assets
 
 RUN npm install \
  && node_modules/.bin/gulp
