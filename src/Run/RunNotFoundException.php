@@ -11,8 +11,6 @@ final class RunNotFoundException extends NotFoundException
 {
     public static function fromUuid(UuidInterface $uuid): self
     {
-        return new self(
-            sprintf('Cannot find run with UUID %s', $uuid->toString())
-        );
+        return new self("Cannot find run with UUID {$uuid->toString()}");
     }
 }

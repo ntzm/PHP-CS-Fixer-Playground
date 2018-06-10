@@ -52,8 +52,6 @@ final class CreateRunHandler implements HandlerInterface
 
         $this->runs->save($run);
 
-        return new RedirectResponse(
-            sprintf('/run/%s', $run->getId()->toString())
-        );
+        return new RedirectResponse("/run/{$run->getId()->toString()}");
     }
 }

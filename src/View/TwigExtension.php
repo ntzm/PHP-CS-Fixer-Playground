@@ -36,7 +36,7 @@ final class TwigExtension extends AbstractExtension
     public function linkRulesFilter(array $rules): string
     {
         return implode(', ', array_map(function (string $rule): string {
-            return sprintf('<a href="#%s"><code>%s</code></a>', $rule, $rule);
+            return "<a href=\"#{$rule}\"><code>{$rule}</code></a>";
         }, $rules));
     }
 }

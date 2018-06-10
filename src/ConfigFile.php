@@ -85,7 +85,7 @@ CONFIG;
         $result = '';
 
         foreach (explode("\n", $code) as $line) {
-            $result .= sprintf("    %s\n", $line);
+            $result .= "    $line\n";
         }
 
         return trim($result);

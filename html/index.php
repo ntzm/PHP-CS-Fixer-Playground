@@ -20,10 +20,7 @@ $container->delegate(new ReflectionContainer());
 
 /** @var SplFileInfo $file */
 foreach ((new Finder())->in(__DIR__.'/../src/ServiceProvider') as $file) {
-    $class = sprintf(
-        'PhpCsFixerPlayground\\ServiceProvider\\%s',
-        $file->getBasename('.php')
-    );
+    $class = "PhpCsFixerPlayground\\ServiceProvider\\{$file->getBasename('.php')}";
 
     $container->addServiceProvider($class);
 }
