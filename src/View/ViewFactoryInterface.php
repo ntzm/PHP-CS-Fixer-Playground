@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\View;
 
+use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\Issue;
 
@@ -14,7 +15,7 @@ interface ViewFactoryInterface
         string $result,
         array $appliedFixers,
         array $deprecationMessages,
-        string $generatedConfig,
+        ConfigFile $configFile,
         Issue $issue = null
     ): string;
 }

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Tests;
 
-use PhpCsFixerPlayground\ConfigFileGenerator;
+use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\LineEnding;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \PhpCsFixerPlayground\ConfigFileGenerator
+ * @covers \PhpCsFixerPlayground\ConfigFile
  */
-final class ConfigFileGeneratorTest extends TestCase
+final class ConfigFileTest extends TestCase
 {
     public function testGenerate(): void
     {
@@ -37,8 +37,8 @@ return Config::create()
 ;
 EOD;
 
-        $generator = new ConfigFileGenerator();
+        $generator = new ConfigFile(['foo' => true, 'bar' => ['baz' => 'bop']], '    ', LineEnding::fromVisible('\n'));
 
-        $this->assertSame($expected, $generator->generate(['foo' => true, 'bar' => ['baz' => 'bop']], '    ', LineEnding::fromVisible('\n')));
+        $this->assertSame($expected, $generator->__toString());
     }
 }

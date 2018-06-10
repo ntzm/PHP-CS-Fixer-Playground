@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Handler;
 
-use PhpCsFixerPlayground\ConfigFileGeneratorInterface;
+use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\LineEnding;
 use PhpCsFixerPlayground\View\ViewFactoryInterface;
@@ -17,17 +17,9 @@ final class IndexHandler implements HandlerInterface
      */
     private $viewFactory;
 
-    /**
-     * @var ConfigFileGeneratorInterface
-     */
-    private $configFileGenerator;
-
-    public function __construct(
-        ViewFactoryInterface $viewFactory,
-        ConfigFileGeneratorInterface $configFileGenerator
-    ) {
+    public function __construct(ViewFactoryInterface $viewFactory)
+    {
         $this->viewFactory = $viewFactory;
-        $this->configFileGenerator = $configFileGenerator;
     }
 
     public function __invoke(array $vars): Response
@@ -35,16 +27,13 @@ final class IndexHandler implements HandlerInterface
         $code = "<?php\n\n";
         $indent = '    ';
         $lineEnding = new LineEnding("\n");
-        $generatedConfig = $this->configFileGenerator->generate(
-            [],
-            $indent,
-            $lineEnding
-        );
+
+        $configFile = new ConfigFile([], $indent, $lineEnding);
 
         $run = new Run($code, [], $indent, $lineEnding);
 
         return new Response(
-            $this->viewFactory->make($run, $code, [], [], $generatedConfig)
+            $this->viewFactory->make($run, $code, [], [], $configFile)
         );
     }
 }

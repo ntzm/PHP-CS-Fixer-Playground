@@ -22,9 +22,9 @@ final class Issue
     private $output;
 
     /**
-     * @var string
+     * @var ConfigFile
      */
-    private $config;
+    private $configFile;
 
     /**
      * @var string
@@ -40,14 +40,14 @@ final class Issue
         string $runUrl,
         string $input,
         string $output,
-        string $config,
+        ConfigFile $configFile,
         string $phpVersion,
         string $phpCsFixerVersion
     ) {
         $this->runUrl = $runUrl;
         $this->input = $input;
         $this->output = $output;
-        $this->config = $config;
+        $this->configFile = $configFile;
         $this->phpVersion = $phpVersion;
         $this->phpCsFixerVersion = $phpCsFixerVersion;
     }
@@ -71,7 +71,7 @@ When reporting an issue (bug) please provide the following information:
 
 #### The configuration file you are using, if any:
 ```php
-{$this->config}
+{$this->configFile}
 ```
 
 #### If applicable, please provide minimum samples of PHP code (as plain text, not screenshots):

@@ -7,6 +7,7 @@ namespace PhpCsFixerPlayground\View;
 use Jean85\PrettyVersions;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
+use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\Wrapper\FixerWrapper;
@@ -45,7 +46,7 @@ final class ViewFactory implements ViewFactoryInterface
         string $result,
         array $appliedFixers,
         array $deprecationMessages,
-        string $generatedConfig,
+        ConfigFile $configFile,
         Issue $issue = null
     ): string {
         $availableFixers = array_map(
@@ -72,7 +73,7 @@ final class ViewFactory implements ViewFactoryInterface
                 'result' => $result,
                 'appliedFixers' => $appliedFixers,
                 'deprecationMessages' => $deprecationMessages,
-                'generatedConfig' => $generatedConfig,
+                'configFile' => $configFile,
                 'issue' => $issue,
                 'availableFixers' => $availableFixers,
                 'phpCsFixerVersion' => $phpCsFixerVersion,

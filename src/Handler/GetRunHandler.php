@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Handler;
 
-use PhpCsFixerPlayground\ConfigFileGeneratorInterface;
+use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\Fixer\FixerInterface;
 use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\Run\RunNotFoundException;
@@ -32,21 +32,14 @@ final class GetRunHandler implements HandlerInterface
      */
     private $fixer;
 
-    /**
-     * @var ConfigFileGeneratorInterface
-     */
-    private $configFileGenerator;
-
     public function __construct(
         RunRepositoryInterface $runs,
         ViewFactoryInterface $viewFactory,
-        FixerInterface $fixer,
-        ConfigFileGeneratorInterface $configFileGenerator
+        FixerInterface $fixer
     ) {
         $this->runs = $runs;
         $this->viewFactory = $viewFactory;
         $this->fixer = $fixer;
-        $this->configFileGenerator = $configFileGenerator;
     }
 
     public function __invoke(array $vars): Response
@@ -76,7 +69,7 @@ final class GetRunHandler implements HandlerInterface
             $deprecationMessages = [];
         }
 
-        $config = $this->configFileGenerator->generate(
+        $configFile = new ConfigFile(
             $run->getRules(),
             $run->getIndent(),
             $run->getLineEnding()
@@ -86,7 +79,7 @@ final class GetRunHandler implements HandlerInterface
             '',
             $run->getCode(),
             $result,
-            $config,
+            $configFile,
             PHP_VERSION,
             '1.2'
         );
@@ -97,7 +90,7 @@ final class GetRunHandler implements HandlerInterface
                 $result,
                 $appliedFixers,
                 $deprecationMessages,
-                $config,
+                $configFile,
                 $issue
             )
         );
