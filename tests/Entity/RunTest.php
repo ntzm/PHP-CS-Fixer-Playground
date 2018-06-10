@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Tests\Entity;
 
-use PhpCsFixer\Tests\TestCase;
 use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\LineEnding;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \PhpCsFixerPlayground\Entity\Run
