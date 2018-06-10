@@ -8,7 +8,7 @@ use League\Container\ReflectionContainer;
 use PhpCsFixerPlayground\Handler\CreateRunHandler;
 use PhpCsFixerPlayground\Handler\GetRunHandler;
 use PhpCsFixerPlayground\Handler\IndexHandler;
-use PhpCsFixerPlayground\RouteHandler;
+use PhpCsFixerPlayground\HandleRoute;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
 use function FastRoute\simpleDispatcher;
@@ -45,7 +45,7 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($container): vo
 /** @var Request $request */
 $request = $container->get(Request::class);
 
-$response = (new RouteHandler())->handle(
+$response = (new HandleRoute())(
     $dispatcher->dispatch($request->getMethod(), $request->getPathInfo())
 );
 

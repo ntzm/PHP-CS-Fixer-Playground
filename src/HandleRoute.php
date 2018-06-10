@@ -7,9 +7,9 @@ namespace PhpCsFixerPlayground;
 use FastRoute\Dispatcher;
 use Symfony\Component\HttpFoundation\Response;
 
-final class RouteHandler
+final class HandleRoute
 {
-    public function handle(array $routeInfo): Response
+    public function __invoke(array $routeInfo): Response
     {
         $status = $routeInfo[0];
 
