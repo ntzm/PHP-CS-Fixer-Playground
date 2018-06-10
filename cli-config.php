@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use PhpCsFixerPlayground\EntityManagerResolver;
+use PhpCsFixerPlayground\ResolveEntityManager;
 
 require_once __DIR__.'/vendor/autoload.php';
 
-return ConsoleRunner::createHelperSet((new EntityManagerResolver())());
+return ConsoleRunner::createHelperSet((new ResolveEntityManager())());

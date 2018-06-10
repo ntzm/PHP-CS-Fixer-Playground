@@ -6,7 +6,7 @@ namespace PhpCsFixerPlayground\ServiceProvider;
 
 use Doctrine\ORM\EntityManagerInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use PhpCsFixerPlayground\EntityManagerResolver;
+use PhpCsFixerPlayground\ResolveEntityManager;
 
 final class EntityManagerServiceProvider extends AbstractServiceProvider
 {
@@ -18,7 +18,7 @@ final class EntityManagerServiceProvider extends AbstractServiceProvider
     {
         $this->container->add(
             EntityManagerInterface::class,
-            new EntityManagerResolver()
+            new ResolveEntityManager()
         );
     }
 }

@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 use PhpCsFixerPlayground\Type\LineEndingType;
 
-final class EntityManagerResolver
+final class ResolveEntityManager
 {
     public function __invoke(): EntityManager
     {
