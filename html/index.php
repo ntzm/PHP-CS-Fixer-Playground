@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use FastRoute\RouteCollector;
-use function FastRoute\simpleDispatcher;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
 use PhpCsFixerPlayground\Handler\Api\GetFixersHandler;
@@ -13,6 +12,7 @@ use PhpCsFixerPlayground\Handler\IndexHandler;
 use PhpCsFixerPlayground\RouteHandler;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
+use function FastRoute\simpleDispatcher;
 
 require __DIR__.'/../vendor/autoload.php';
 

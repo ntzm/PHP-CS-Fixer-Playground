@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Handler;
 
+use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\LineEnding;
 use PhpCsFixerPlayground\RequestRuleParserInterface;
-use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\Run\RunRepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
