@@ -52,9 +52,7 @@ final class ViewFactory implements ViewFactoryInterface
             function (FixerInterface $fixer): FixerWrapper {
                 return new FixerWrapper($fixer);
             },
-            $this->fixerFactory
-                ->registerBuiltInFixers()
-                ->getFixers()
+            $this->fixerFactory->registerBuiltInFixers()->getFixers()
         );
 
         $phpCsFixerVersion = ltrim(
