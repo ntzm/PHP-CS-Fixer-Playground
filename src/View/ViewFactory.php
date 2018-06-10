@@ -48,14 +48,14 @@ final class ViewFactory implements ViewFactoryInterface
         string $generatedConfig,
         Issue $issue = null
     ): string {
-        $availableFixers = $this->fixerFactory
-            ->registerBuiltInFixers()
-            ->getFixers()
-        ;
-
-        $availableFixers = array_map(function (FixerInterface $fixer): FixerWrapper {
-            return new FixerWrapper($fixer);
-        }, $availableFixers);
+        $availableFixers = array_map(
+            function (FixerInterface $fixer): FixerWrapper {
+                return new FixerWrapper($fixer);
+            },
+            $this->fixerFactory
+                ->registerBuiltInFixers()
+                ->getFixers()
+        );
 
         $phpCsFixerVersion = ltrim(
             PrettyVersions
