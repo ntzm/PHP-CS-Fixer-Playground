@@ -6,6 +6,8 @@ gulp.task('js', () =>
     gulp.src([
         'node_modules/prismjs/prism.js',
         'node_modules/prismjs/plugins/show-invisibles/prism-show-invisibles.js',
+        'node_modules/prismjs/components/prism-clike.js',
+        'node_modules/prismjs/components/prism-markup-templating.js',
         'node_modules/prismjs/components/prism-php.js',
         'node_modules/prismjs/components/prism-diff.js',
     ])
