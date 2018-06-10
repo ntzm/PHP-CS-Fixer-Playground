@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground;
 
-final class RequestRuleParser implements RequestRuleParserInterface
+final class ParseRulesFromRequest implements ParseRulesFromRequestInterface
 {
     private const ENABLED = '_enabled';
     private const TRUE = '_true';
@@ -17,7 +17,7 @@ final class RequestRuleParser implements RequestRuleParserInterface
         self::NULL => null,
     ];
 
-    public function parse(array $rules): array
+    public function __invoke(array $rules): array
     {
         $result = [];
 

@@ -6,7 +6,7 @@ namespace PhpCsFixerPlayground\Handler;
 
 use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\LineEnding;
-use PhpCsFixerPlayground\RequestRuleParserInterface;
+use PhpCsFixerPlayground\ParseRulesFromRequestInterface;
 use PhpCsFixerPlayground\Run\RunRepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,18 +25,18 @@ final class CreateRunHandler implements HandlerInterface
     private $request;
 
     /**
-     * @var RequestRuleParserInterface
+     * @var ParseRulesFromRequestInterface
      */
-    private $requestRuleParser;
+    private $parseRulesFromRequest;
 
     public function __construct(
         RunRepositoryInterface $runs,
         Request $request,
-        RequestRuleParserInterface $requestRuleParser
+        ParseRulesFromRequestInterface $requestRuleParser
     ) {
         $this->runs = $runs;
         $this->request = $request;
-        $this->requestRuleParser = $requestRuleParser;
+        $this->parseRulesFromRequest = $requestRuleParser;
     }
 
     public function __invoke(array $vars): Response
@@ -45,7 +45,7 @@ final class CreateRunHandler implements HandlerInterface
 
         $run = new Run(
             $query->get('code'),
-            $this->requestRuleParser->parse($query->get('fixers')),
+            $this->parseRulesFromRequest->__invoke($query->get('fixers')),
             $query->get('indent'),
             LineEnding::fromVisible($query->get('line_ending'))
         );

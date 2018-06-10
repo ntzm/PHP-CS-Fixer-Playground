@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Tests;
 
-use PhpCsFixerPlayground\RequestRuleParser;
+use PhpCsFixerPlayground\ParseRulesFromRequest;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \PhpCsFixerPlayground\RequestRuleParser
+ * @covers \PhpCsFixerPlayground\ParseRulesFromRequest
  */
-final class RequestRuleParserTest extends TestCase
+final class ParseRulesFromRequestTest extends TestCase
 {
     /**
      * @param array $expected
@@ -20,9 +20,9 @@ final class RequestRuleParserTest extends TestCase
      */
     public function test(array $expected, array $input): void
     {
-        $parser = new RequestRuleParser();
+        $parser = new ParseRulesFromRequest();
 
-        $this->assertSame($expected, $parser->parse($input));
+        $this->assertSame($expected, $parser->__invoke($input));
     }
 
     public function provideTestCases(): array
