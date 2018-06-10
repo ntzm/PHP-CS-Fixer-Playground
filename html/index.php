@@ -20,9 +20,9 @@ $container->delegate(new ReflectionContainer());
 
 /** @var SplFileInfo $file */
 foreach ((new Finder())->in(__DIR__.'/../src/ServiceProvider') as $file) {
-    $class = "PhpCsFixerPlayground\\ServiceProvider\\{$file->getBasename('.php')}";
-
-    $container->addServiceProvider($class);
+    $container->addServiceProvider(
+        "PhpCsFixerPlayground\\ServiceProvider\\{$file->getBasename('.php')}"
+    );
 }
 
 $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($container): void {
