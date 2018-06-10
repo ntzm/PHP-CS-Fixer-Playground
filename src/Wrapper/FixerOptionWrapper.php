@@ -97,7 +97,7 @@ final class FixerOptionWrapper implements FixerOptionInterface, JsonSerializable
         $values = $this->getAllowedValues();
 
         return $values !== null
-            && count($values) === 1
+            && \count($values) === 1
             && $values[0] instanceof AllowedValueSubset;
     }
 
@@ -118,7 +118,7 @@ final class FixerOptionWrapper implements FixerOptionInterface, JsonSerializable
     private function getTypesFromValues(array $values): array
     {
         $types = array_values(array_unique(array_map(function ($value): string {
-            $type = strtolower(gettype($value));
+            $type = strtolower(\gettype($value));
 
             if ($type === 'boolean') {
                 return 'bool';

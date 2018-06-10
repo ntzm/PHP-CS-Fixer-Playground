@@ -20,7 +20,7 @@ final class LineEnding
 
     public function __construct(string $realLineEnding)
     {
-        if (!in_array($realLineEnding, self::MAP, true)) {
+        if (!\in_array($realLineEnding, self::MAP, true)) {
             throw self::invalidLineEnding($realLineEnding);
         }
 

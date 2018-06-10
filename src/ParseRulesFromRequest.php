@@ -41,7 +41,7 @@ final class ParseRulesFromRequest implements ParseRulesFromRequestInterface
     private function parseOptions(array $options): array
     {
         foreach ($options as &$option) {
-            if (is_array($option)) {
+            if (\is_array($option)) {
                 continue;
             }
 
