@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\View;
 
-use PackageVersions\Versions;
+use Jean85\PrettyVersions;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\Entity\Run;
@@ -57,12 +57,12 @@ final class ViewFactory implements ViewFactoryInterface
             return new FixerWrapper($fixer);
         }, $availableFixers);
 
-        preg_match(
-            '/^v([0-9.]+)@/',
-            Versions::getVersion('friendsofphp/php-cs-fixer'),
-            $matches
+        $phpCsFixerVersion = ltrim(
+            PrettyVersions
+                ::getVersion('friendsofphp/php-cs-fixer')
+                ->getPrettyVersion(),
+            'v'
         );
-        $phpCsFixerVersion = $matches[1];
 
         return $this->twig->render(
             'index.twig',
