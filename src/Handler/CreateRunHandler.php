@@ -32,11 +32,11 @@ final class CreateRunHandler implements HandlerInterface
     public function __construct(
         RunRepositoryInterface $runs,
         Request $request,
-        ParseRulesFromRequestInterface $requestRuleParser
+        ParseRulesFromRequestInterface $parseRulesFromRequest
     ) {
         $this->runs = $runs;
         $this->request = $request;
-        $this->parseRulesFromRequest = $requestRuleParser;
+        $this->parseRulesFromRequest = $parseRulesFromRequest;
     }
 
     public function __invoke(array $vars): Response
