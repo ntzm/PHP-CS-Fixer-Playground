@@ -69,7 +69,7 @@ final class FixerConfigurationResolverWrapperTest extends TestCase
             ->willReturn(false)
         ;
         $option
-            ->expects($this->exactly(4))
+            ->expects($this->exactly(5))
             ->method('getAllowedValues')
             ->willReturn(['baz', function (): void {}])
         ;
@@ -92,6 +92,9 @@ final class FixerConfigurationResolverWrapperTest extends TestCase
                 'default' => null,
                 'allowed_types' => ['string'],
                 'allowed_values' => ['baz'],
+                'allows_multiple_values' => false,
+                'is_deprecated' => false,
+                'deprecation_message' => null,
             ],
         ], $json);
     }

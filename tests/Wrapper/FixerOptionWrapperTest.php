@@ -165,7 +165,7 @@ final class FixerOptionWrapperTest extends TestCase
             ->willReturn('baz')
         ;
         $option
-            ->expects($this->exactly(4))
+            ->expects($this->exactly(5))
             ->method('getAllowedValues')
             ->willReturn(['baz', function (): void {}])
         ;
@@ -179,6 +179,9 @@ final class FixerOptionWrapperTest extends TestCase
             'default' => 'baz',
             'allowed_types' => ['string'],
             'allowed_values' => ['baz'],
+            'allows_multiple_values' => false,
+            'is_deprecated' => false,
+            'deprecation_message' => null,
         ], $json);
     }
 
@@ -202,7 +205,7 @@ final class FixerOptionWrapperTest extends TestCase
             ->willReturn(false)
         ;
         $option
-            ->expects($this->exactly(4))
+            ->expects($this->exactly(5))
             ->method('getAllowedValues')
             ->willReturn(['baz', function (): void {}])
         ;
@@ -216,6 +219,9 @@ final class FixerOptionWrapperTest extends TestCase
             'default' => null,
             'allowed_types' => ['string'],
             'allowed_values' => ['baz'],
+            'allows_multiple_values' => false,
+            'is_deprecated' => false,
+            'deprecation_message' => null,
         ], $json);
     }
 

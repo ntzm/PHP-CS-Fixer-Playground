@@ -141,6 +141,9 @@ final class FixerOptionWrapper implements FixerOptionInterface, JsonSerializable
             'default' => $this->hasDefault() ? $this->getDefault() : null,
             'allowed_types' => $this->getAllowedTypes(),
             'allowed_values' => $this->getPrintableAllowedValues(),
+            'allows_multiple_values' => $this->allowsMultipleValues(),
+            'is_deprecated' => $this->isDeprecated(),
+            'deprecation_message' => $this->isDeprecated() ? $this->getDeprecationMessage() : null,
         ];
     }
 }
