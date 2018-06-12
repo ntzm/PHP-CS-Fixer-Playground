@@ -52,7 +52,7 @@ $response = (new HandleRoute())(
 );
 
 $response->headers->add([
-    'Content-Security-Policy' => "default-src 'self'; font-src data:;",
+    'Content-Security-Policy' => "default-src 'self'",
 ]);
 
 $response->send();
