@@ -229,13 +229,14 @@
             <div class="col-sm-6">
                 {% if issue %}
                     <p>
-                        Something look wrong? Please
+                        Is something wrong with PHP-CS-Fixer here? Please
                         <a
                             href="https://github.com/FriendsOfPHP/PHP-CS-Fixer/issues/new?body={{ issue|url_encode }}"
                             target="_blank"
                         >
                             open an issue
                         </a>
+                        !
                     </p>
                 {% endif %}
                 {% if deprecationMessages %}
