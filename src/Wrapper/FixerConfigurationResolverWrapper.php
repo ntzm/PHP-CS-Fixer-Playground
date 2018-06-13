@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Wrapper;
 
-use JsonSerializable;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 
-final class FixerConfigurationResolverWrapper implements FixerConfigurationResolverInterface, JsonSerializable
+final class FixerConfigurationResolverWrapper implements FixerConfigurationResolverInterface
 {
     /**
      * @var FixerConfigurationResolverInterface
@@ -30,10 +29,5 @@ final class FixerConfigurationResolverWrapper implements FixerConfigurationResol
     public function resolve(array $configuration): array
     {
         return $this->resolver->resolve($configuration);
-    }
-
-    public function jsonSerialize(): array
-    {
-        return $this->getOptions();
     }
 }

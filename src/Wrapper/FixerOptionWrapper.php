@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Wrapper;
 
 use Closure;
-use JsonSerializable;
 use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
 use PhpCsFixer\FixerConfiguration\DeprecatedFixerOptionInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 use RuntimeException;
 
-final class FixerOptionWrapper implements FixerOptionInterface, JsonSerializable
+final class FixerOptionWrapper implements FixerOptionInterface
 {
     /**
      * @var FixerOptionInterface
@@ -130,20 +129,5 @@ final class FixerOptionWrapper implements FixerOptionInterface, JsonSerializable
         sort($types);
 
         return $types;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'name' => $this->getName(),
-            'description' => $this->getDescription(),
-            'has_default' => $this->hasDefault(),
-            'default' => $this->hasDefault() ? $this->getDefault() : null,
-            'allowed_types' => $this->getAllowedTypes(),
-            'allowed_values' => $this->getPrintableAllowedValues(),
-            'allows_multiple_values' => $this->allowsMultipleValues(),
-            'is_deprecated' => $this->isDeprecated(),
-            'deprecation_message' => $this->isDeprecated() ? $this->getDeprecationMessage() : null,
-        ];
     }
 }
