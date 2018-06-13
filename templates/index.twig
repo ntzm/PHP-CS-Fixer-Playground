@@ -215,6 +215,33 @@
                                                         Null
                                                     </option>
                                                 </select>
+                                            {% elseif option.allowedTypes is same as(['array']) %}
+                                                {% for v in value %}
+                                                    <div class="form-group input-group">
+                                                        <input
+                                                            class="form-control"
+                                                            type="text"
+                                                            name="fixers[{{ fixer.name }}][{{ option.name }}][]"
+                                                            value="{{ v }}"
+                                                        >
+                                                        <div class="input-group-append">
+                                                            <button
+                                                                class="btn btn-outline-danger"
+                                                                data-option-remove
+                                                            >
+                                                                ×
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                                <button
+                                                    class="btn btn-block btn-outline-success"
+                                                    data-option-add
+                                                    data-option-fixer="{{ fixer.name }}"
+                                                    data-option-name="{{ option.name }}"
+                                                >
+                                                    +
+                                                </button>
                                             {% else %}
                                                 <p>Unsupported types {{ option.allowedTypes|join(', ') }}</p>
                                             {% endif %}
