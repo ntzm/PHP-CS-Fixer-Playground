@@ -35,14 +35,20 @@
             $input.setAttribute('type', 'text');
             $input.setAttribute('name', `fixers[${fixer}][${name}][]`);
 
-            const $deleteContainer = document.createElement('div');
-            $deleteContainer.classList.add('input-group-append');
+            const $removeContainer = document.createElement('div');
+            $removeContainer.classList.add('input-group-append');
 
-            const $deleteButton = document.createElement('button');
-            $deleteButton.textContent = '×';
-            $deleteButton.classList.add('btn', 'btn-outline-danger');
+            const $removeOption = document.createElement('button');
+            $removeOption.textContent = '×';
+            $removeOption.classList.add('btn', 'btn-outline-danger');
 
-            $deleteContainer.appendChild($deleteButton);
+            $removeOption.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                $removeOption.parentNode.parentNode.remove();
+            });
+
+            $removeContainer.appendChild($removeOption);
 
             if ($addOption.dataset.optionAdd === 'associative') {
                 const $keyInput = document.createElement('input');
@@ -52,7 +58,7 @@
             }
 
             $group.appendChild($input);
-            $group.appendChild($deleteContainer);
+            $group.appendChild($removeContainer);
 
             $addOption.parentNode.insertBefore($group, $addOption);
         });
