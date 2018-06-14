@@ -8,8 +8,8 @@ use Exception;
 use PhpCsFixer\Fixer\FixerInterface as PhpCsFixerFixerInterface;
 use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\Entity\Run;
-use PhpCsFixerPlayground\Fixer\FixerInterface;
-use PhpCsFixerPlayground\Fixer\FixReport;
+use PhpCsFixerPlayground\Fix\FixInterface;
+use PhpCsFixerPlayground\Fix\FixReport;
 use PhpCsFixerPlayground\Handler\GetRunHandler;
 use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\LineEnding;
@@ -73,11 +73,11 @@ final class GetRunHandlerTest extends TestCase
             ->willReturn('foo')
         ;
 
-        /** @var FixerInterface|MockObject $fixer */
-        $fixer = $this->createMock(FixerInterface::class);
-        $fixer
+        /** @var FixInterface|MockObject $fix */
+        $fix = $this->createMock(FixInterface::class);
+        $fix
             ->expects($this->once())
-            ->method('fix')
+            ->method('__invoke')
             ->with(
                 '<?php echo "hi";',
                 ['foo' => true],
@@ -98,7 +98,7 @@ final class GetRunHandlerTest extends TestCase
             ->willReturn('/run/foo')
         ;
 
-        $handler = new GetRunHandler($runs, $viewFactory, $fixer, $urlGenerator);
+        $handler = new GetRunHandler($runs, $viewFactory, $fix, $urlGenerator);
 
         $response = $handler(['uuid' => $runUuid]);
 
@@ -114,15 +114,6 @@ final class GetRunHandlerTest extends TestCase
             ['foo' => true],
             '    ',
             LineEnding::fromVisible('\n')
-        );
-
-        /** @var PhpCsFixerFixerInterface|MockObject $fooFixer */
-        $fooFixer = $this->createMock(PhpCsFixerFixerInterface::class);
-
-        $fixReport = new FixReport(
-            "<?php echo 'hi';",
-            [$fooFixer],
-            ['do not use this function']
         );
 
         /** @var RunRepositoryInterface|MockObject $runs */
@@ -152,11 +143,11 @@ final class GetRunHandlerTest extends TestCase
             ->willReturn('foo')
         ;
 
-        /** @var FixerInterface|MockObject $fixer */
-        $fixer = $this->createMock(FixerInterface::class);
+        /** @var FixInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixInterface::class);
         $fixer
             ->expects($this->once())
-            ->method('fix')
+            ->method('__invoke')
             ->with(
                 '<?php echo "hi";',
                 ['foo' => true],
@@ -192,13 +183,13 @@ final class GetRunHandlerTest extends TestCase
         /** @var ViewFactoryInterface|MockObject $viewFactory */
         $viewFactory = $this->createMock(ViewFactoryInterface::class);
 
-        /** @var FixerInterface|MockObject $fixer */
-        $fixer = $this->createMock(FixerInterface::class);
+        /** @var FixInterface|MockObject $fix */
+        $fix = $this->createMock(FixInterface::class);
 
         /** @var UrlGeneratorInterface|MockObject $urlGenerator */
         $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
 
-        $handler = new GetRunHandler($runs, $viewFactory, $fixer, $urlGenerator);
+        $handler = new GetRunHandler($runs, $viewFactory, $fix, $urlGenerator);
 
         $this->expectException(RunNotFoundException::class);
 

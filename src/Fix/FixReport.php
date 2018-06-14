@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Fixer;
+namespace PhpCsFixerPlayground\Fix;
 
 final class FixReport
 {

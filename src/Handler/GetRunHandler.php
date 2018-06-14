@@ -6,7 +6,7 @@ namespace PhpCsFixerPlayground\Handler;
 
 use PhpCsFixer\Console\Application;
 use PhpCsFixerPlayground\ConfigFile;
-use PhpCsFixerPlayground\Fixer\FixerInterface;
+use PhpCsFixerPlayground\Fix\FixInterface;
 use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\Run\RunNotFoundException;
 use PhpCsFixerPlayground\Run\RunRepositoryInterface;
@@ -30,9 +30,9 @@ final class GetRunHandler implements HandlerInterface
     private $viewFactory;
 
     /**
-     * @var FixerInterface
+     * @var FixInterface
      */
-    private $fixer;
+    private $fix;
 
     /**
      * @var UrlGeneratorInterface
@@ -42,12 +42,12 @@ final class GetRunHandler implements HandlerInterface
     public function __construct(
         RunRepositoryInterface $runs,
         ViewFactoryInterface $viewFactory,
-        FixerInterface $fixer,
+        FixInterface $fix,
         UrlGeneratorInterface $urlGenerator
     ) {
         $this->runs = $runs;
         $this->viewFactory = $viewFactory;
-        $this->fixer = $fixer;
+        $this->fix = $fix;
         $this->urlGenerator = $urlGenerator;
     }
 
@@ -62,7 +62,7 @@ final class GetRunHandler implements HandlerInterface
         $run = $this->runs->findByUuid($uuid);
 
         try {
-            $report = $this->fixer->fix(
+            $report = $this->fix->__invoke(
                 $run->getCode(),
                 $run->getRules(),
                 $run->getIndent(),

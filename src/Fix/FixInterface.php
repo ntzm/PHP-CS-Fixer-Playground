@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Fixer;
+namespace PhpCsFixerPlayground\Fix;
 
 use PhpCsFixerPlayground\LineEnding;
 
-interface FixerInterface
+interface FixInterface
 {
-    public function fix(
+    public function __invoke(
         string $code,
         array $rules,
         string $indent,

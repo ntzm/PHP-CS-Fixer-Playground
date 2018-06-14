@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Tests\Fixer;
 
 use PhpCsFixer\Fixer\Alias\NoAliasFunctionsFixer;
-use PhpCsFixerPlayground\Fixer\FixReport;
+use PhpCsFixerPlayground\Fix\FixReport;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \PhpCsFixerPlayground\Fixer\FixReport
+ * @covers \PhpCsFixerPlayground\Fix\FixReport
  */
 final class FixReportTest extends TestCase
 {

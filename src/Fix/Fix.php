@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Fixer;
+namespace PhpCsFixerPlayground\Fix;
 
 use PhpCsFixer\FixerFactory;
 use PhpCsFixer\RuleSet;
@@ -11,7 +11,7 @@ use PhpCsFixer\WhitespacesFixerConfig;
 use PhpCsFixerPlayground\LineEnding;
 use Symfony\Component\Finder\Tests\Iterator\MockSplFileInfo;
 
-final class Fixer implements FixerInterface
+final class Fix implements FixInterface
 {
     /**
      * @var FixerFactory
@@ -23,7 +23,7 @@ final class Fixer implements FixerInterface
         $this->fixerFactory = $fixerFactory;
     }
 
-    public function fix(
+    public function __invoke(
         string $code,
         array $rules,
         string $indent,

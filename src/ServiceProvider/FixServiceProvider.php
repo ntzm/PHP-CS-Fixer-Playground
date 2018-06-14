@@ -6,19 +6,19 @@ namespace PhpCsFixerPlayground\ServiceProvider;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use PhpCsFixer\FixerFactory;
-use PhpCsFixerPlayground\Fixer\Fixer;
-use PhpCsFixerPlayground\Fixer\FixerInterface;
+use PhpCsFixerPlayground\Fix\Fix;
+use PhpCsFixerPlayground\Fix\FixInterface;
 
-final class FixerServiceProvider extends AbstractServiceProvider
+final class FixServiceProvider extends AbstractServiceProvider
 {
     protected $provides = [
-        FixerInterface::class,
+        FixInterface::class,
     ];
 
     public function register(): void
     {
         $this->container
-            ->add(FixerInterface::class, Fixer::class)
+            ->add(FixInterface::class, Fix::class)
             ->withArgument(FixerFactory::class)
         ;
     }
