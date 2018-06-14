@@ -236,7 +236,39 @@
                                                 {% endfor %}
                                                 <button
                                                     class="btn btn-block btn-outline-success"
-                                                    data-option-add
+                                                    data-option-add="list"
+                                                    data-option-fixer="{{ fixer.name }}"
+                                                    data-option-name="{{ option.name }}"
+                                                >
+                                                    +
+                                                </button>
+                                            {% elseif option.allowedTypes is same as(['associative-array']) %}
+                                                {% for key, v in value %}
+                                                    <div class="form-group input-group">
+                                                        <input
+                                                            class="form-control"
+                                                            type="text"
+                                                            value="{{ key }}"
+                                                        >
+                                                        <input
+                                                            class="form-control"
+                                                            type="text"
+                                                            name="fixers[{{ fixer.name }}][{{ option.name }}][]"
+                                                            value="{{ v }}"
+                                                        >
+                                                        <div class="input-group-append">
+                                                            <button
+                                                                class="btn btn-outline-danger"
+                                                                data-option-remove
+                                                            >
+                                                                ×
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                                <button
+                                                    class="btn btn-block btn-outline-success"
+                                                    data-option-add="associative"
                                                     data-option-fixer="{{ fixer.name }}"
                                                     data-option-name="{{ option.name }}"
                                                 >

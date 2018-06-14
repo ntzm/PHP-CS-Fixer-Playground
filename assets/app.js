@@ -44,6 +44,13 @@
 
             $deleteContainer.appendChild($deleteButton);
 
+            if ($addOption.dataset.optionAdd === 'associative') {
+                const $keyInput = document.createElement('input');
+                $keyInput.classList.add('form-control');
+
+                $group.append($keyInput);
+            }
+
             $group.appendChild($input);
             $group.appendChild($deleteContainer);
 

@@ -90,7 +90,8 @@ final class FixerWrapper implements FixerInterface
         }
 
         return new FixerConfigurationResolverWrapper(
-            $this->fixer->getConfigurationDefinition()
+            $this->fixer->getConfigurationDefinition(),
+            $this
         );
     }
 }

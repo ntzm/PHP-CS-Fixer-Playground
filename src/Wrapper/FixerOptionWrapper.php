@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Wrapper;
 
 use Closure;
+use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
 use PhpCsFixer\FixerConfiguration\DeprecatedFixerOptionInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
@@ -12,14 +13,31 @@ use RuntimeException;
 
 final class FixerOptionWrapper implements FixerOptionInterface
 {
+    private const FORCE_ALLOW_ASSOC = [
+        'php_unit_test_case_static_method_calls' => [
+            'methods',
+        ],
+        'binary_operator_spaces' => [
+            'operators',
+        ],
+    ];
+
     /**
      * @var FixerOptionInterface
      */
     private $option;
 
-    public function __construct(FixerOptionInterface $option)
-    {
+    /**
+     * @var FixerInterface
+     */
+    private $fixer;
+
+    public function __construct(
+        FixerOptionInterface $option,
+        FixerInterface $fixer
+    ) {
         $this->option = $option;
+        $this->fixer = $fixer;
     }
 
     public function getName(): string
@@ -49,19 +67,33 @@ final class FixerOptionWrapper implements FixerOptionInterface
     {
         $allowedTypes = $this->option->getAllowedTypes();
 
-        if ($allowedTypes !== null) {
-            sort($allowedTypes);
+        if ($allowedTypes === null) {
+            $allowedValues = $this->getPrintableAllowedValues();
+            $allowedTypes = $this->getTypesFromValues($allowedValues);
 
-            return $allowedTypes;
+            if ($allowedValues === null) {
+                return null;
+            }
         }
 
-        $allowedValues = $this->getPrintableAllowedValues();
+        $arrayPosition = array_search('array', $allowedTypes, true);
 
-        if ($allowedValues === null) {
-            return null;
+        if ($arrayPosition !== false) {
+            if ($this->hasDefault()) {
+                $default = $this->getDefault();
+
+                if (
+                    (is_array($default) && $this->isAssociative($this->getDefault())) ||
+                    (isset(self::FORCE_ALLOW_ASSOC[$this->fixer->getName()]) && in_array($this->getName(), self::FORCE_ALLOW_ASSOC[$this->fixer->getName()], true))
+                ) {
+                    $allowedTypes[$arrayPosition] = 'associative-array';
+                }
+            }
         }
 
-        return $this->getTypesFromValues($allowedValues);
+        sort($allowedTypes);
+
+        return $allowedTypes;
     }
 
     public function getAllowedValues(): ?array
@@ -129,5 +161,12 @@ final class FixerOptionWrapper implements FixerOptionInterface
         sort($types);
 
         return $types;
+    }
+
+    private function isAssociative(array $array): bool
+    {
+        $keys = array_keys($array);
+
+        return array_keys($keys) !== $keys;
     }
 }
