@@ -69,11 +69,12 @@ final class FixerOptionWrapper implements FixerOptionInterface
 
         if ($allowedTypes === null) {
             $allowedValues = $this->getPrintableAllowedValues();
-            $allowedTypes = $this->getTypesFromValues($allowedValues);
 
             if ($allowedValues === null) {
                 return null;
             }
+
+            $allowedTypes = $this->getTypesFromValues($allowedValues);
         }
 
         $arrayPosition = array_search('array', $allowedTypes, true);

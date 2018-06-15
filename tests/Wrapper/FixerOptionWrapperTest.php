@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Tests\Wrapper;
 
+use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
 use PhpCsFixer\FixerConfiguration\DeprecatedFixerOptionInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
@@ -54,7 +55,10 @@ final class FixerOptionWrapperTest extends TestCase
             ->willReturn(null)
         ;
 
-        $wrapper = new FixerOptionWrapper($option);
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+
+        $wrapper = new FixerOptionWrapper($option, $fixer);
 
         $this->assertSame('foo', $wrapper->getName());
         $this->assertSame('foo bar', $wrapper->getDescription());
@@ -77,12 +81,15 @@ final class FixerOptionWrapperTest extends TestCase
         $option
             ->expects($this->exactly(2))
             ->method('getAllowedValues')
-            ->willReturn(['foo', 'bar', ['baz'], true, function (): void {}])
+            ->willReturn(['foo', 'bar', true, function (): void {}])
         ;
 
-        $wrapper = new FixerOptionWrapper($option);
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
 
-        $this->assertSame(['array', 'bool', 'string'], $wrapper->getAllowedTypes());
+        $wrapper = new FixerOptionWrapper($option, $fixer);
+
+        $this->assertSame(['bool', 'string'], $wrapper->getAllowedTypes());
     }
 
     public function getGetAllowedTypesInferredFromNullAllowedValues(): void
@@ -100,7 +107,10 @@ final class FixerOptionWrapperTest extends TestCase
             ->willReturn(null)
         ;
 
-        $wrapper = new FixerOptionWrapper($option);
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+
+        $wrapper = new FixerOptionWrapper($option, $fixer);
 
         $this->assertNull($wrapper->getAllowedTypes());
     }
@@ -120,7 +130,10 @@ final class FixerOptionWrapperTest extends TestCase
             ])
         ;
 
-        $wrapper = new FixerOptionWrapper($option);
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+
+        $wrapper = new FixerOptionWrapper($option, $fixer);
 
         $this->assertSame(['foo', 'bar', 'baz'], $wrapper->getPrintableAllowedValues());
     }
@@ -135,7 +148,10 @@ final class FixerOptionWrapperTest extends TestCase
             ->willReturn(null)
         ;
 
-        $wrapper = new FixerOptionWrapper($option);
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+
+        $wrapper = new FixerOptionWrapper($option, $fixer);
 
         $this->assertNull($wrapper->getPrintableAllowedValues());
     }
@@ -156,7 +172,10 @@ final class FixerOptionWrapperTest extends TestCase
             ->willReturn($input)
         ;
 
-        $wrapper = new FixerOptionWrapper($option);
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+
+        $wrapper = new FixerOptionWrapper($option, $fixer);
 
         $this->assertSame($expected, $wrapper->allowsMultipleValues());
     }
@@ -192,7 +211,10 @@ final class FixerOptionWrapperTest extends TestCase
         /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
 
-        $wrapper = new FixerOptionWrapper($option);
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+
+        $wrapper = new FixerOptionWrapper($option, $fixer);
 
         $this->assertFalse($wrapper->isDeprecated());
     }
@@ -202,7 +224,10 @@ final class FixerOptionWrapperTest extends TestCase
         /** @var DeprecatedFixerOptionInterface|MockObject $option */
         $option = $this->createMock(DeprecatedFixerOptionInterface::class);
 
-        $wrapper = new FixerOptionWrapper($option);
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+
+        $wrapper = new FixerOptionWrapper($option, $fixer);
 
         $this->assertTrue($wrapper->isDeprecated());
     }
@@ -212,7 +237,10 @@ final class FixerOptionWrapperTest extends TestCase
         /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
 
-        $wrapper = new FixerOptionWrapper($option);
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+
+        $wrapper = new FixerOptionWrapper($option, $fixer);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Option not deprecated');
@@ -230,7 +258,10 @@ final class FixerOptionWrapperTest extends TestCase
             ->willReturn('foo bar')
         ;
 
-        $wrapper = new FixerOptionWrapper($option);
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+
+        $wrapper = new FixerOptionWrapper($option, $fixer);
 
         $this->assertSame('foo bar', $wrapper->getDeprecationMessage());
     }

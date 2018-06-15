@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Tests\Wrapper;
 
+use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 use PhpCsFixerPlayground\Wrapper\FixerConfigurationResolverWrapper;
@@ -29,7 +30,10 @@ final class FixerConfigurationResolverWrapperTest extends TestCase
             ])
         ;
 
-        $wrapper = new FixerConfigurationResolverWrapper($resolver);
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+
+        $wrapper = new FixerConfigurationResolverWrapper($resolver, $fixer);
 
         $this->assertContainsOnlyInstancesOf(FixerOptionWrapper::class, $wrapper->getOptions());
     }
@@ -44,7 +48,10 @@ final class FixerConfigurationResolverWrapperTest extends TestCase
             ->willReturn(['foo' => 'bar'])
         ;
 
-        $wrapper = new FixerConfigurationResolverWrapper($resolver);
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+
+        $wrapper = new FixerConfigurationResolverWrapper($resolver, $fixer);
 
         $this->assertSame(['foo' => 'bar'], $wrapper->resolve([]));
     }
