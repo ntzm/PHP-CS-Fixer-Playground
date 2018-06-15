@@ -5,7 +5,6 @@ declare(strict_types=1);
 use FastRoute\RouteCollector;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
-use PhpCsFixerPlayground\Handler\Api\GetFixersHandler;
 use PhpCsFixerPlayground\Handler\CreateRunHandler;
 use PhpCsFixerPlayground\Handler\GetRunHandler;
 use PhpCsFixerPlayground\Handler\IndexHandler;
@@ -37,10 +36,6 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($container): vo
 
     $r->get('/run/{uuid:[a-f0-9-]+}', function () use ($container): GetRunHandler {
         return $container->get(GetRunHandler::class);
-    });
-
-    $r->get('/api/fixers', function () use ($container): GetFixersHandler {
-        return $container->get(GetFixersHandler::class);
     });
 });
 
