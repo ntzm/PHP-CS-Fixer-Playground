@@ -14,19 +14,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class CreateRunHandler implements HandlerInterface
 {
-    /**
-     * @var RunRepositoryInterface
-     */
+    /** @var RunRepositoryInterface */
     private $runs;
 
-    /**
-     * @var Request
-     */
+    /** @var Request */
     private $request;
 
-    /**
-     * @var ParseRulesFromRequestInterface
-     */
+    /** @var ParseRulesFromRequestInterface */
     private $parseRulesFromRequest;
 
     public function __construct(

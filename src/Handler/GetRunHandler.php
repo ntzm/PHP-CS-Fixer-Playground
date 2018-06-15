@@ -19,24 +19,16 @@ use Throwable;
 
 final class GetRunHandler implements HandlerInterface
 {
-    /**
-     * @var RunRepositoryInterface
-     */
+    /** @var RunRepositoryInterface */
     private $runs;
 
-    /**
-     * @var ViewFactoryInterface
-     */
+    /** @var ViewFactoryInterface */
     private $viewFactory;
 
-    /**
-     * @var FixInterface
-     */
+    /** @var FixInterface */
     private $fix;
 
-    /**
-     * @var UrlGeneratorInterface
-     */
+    /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
     public function __construct(

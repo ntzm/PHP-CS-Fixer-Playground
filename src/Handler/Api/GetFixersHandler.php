@@ -13,9 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class GetFixersHandler implements HandlerInterface
 {
-    /**
-     * @var FixerFactory
-     */
+    /** @var FixerFactory */
     private $fixerFactory;
 
     public function __construct(FixerFactory $fixerFactory)

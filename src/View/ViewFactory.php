@@ -16,19 +16,13 @@ use Twig\Environment;
 
 final class ViewFactory implements ViewFactoryInterface
 {
-    /**
-     * @var Environment
-     */
+    /** @var Environment */
     private $twig;
 
-    /**
-     * @var Differ
-     */
+    /** @var Differ */
     private $differ;
 
-    /**
-     * @var FixerFactory
-     */
+    /** @var FixerFactory */
     private $fixerFactory;
 
     public function __construct(

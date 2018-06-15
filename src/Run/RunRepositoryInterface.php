@@ -9,6 +9,7 @@ use Ramsey\Uuid\UuidInterface;
 
 interface RunRepositoryInterface
 {
+    /** @throws RunNotFoundException */
     public function findByUuid(UuidInterface $uuid): Run;
 
     public function save(Run $run): void;

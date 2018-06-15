@@ -13,9 +13,7 @@ final class LineEnding
         '\r\n' => "\r\n",
     ];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $realLineEnding;
 
     public function __construct(string $realLineEnding)

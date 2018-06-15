@@ -10,14 +10,10 @@ use PhpCsFixer\FixerConfiguration\FixerOptionInterface;
 
 final class FixerConfigurationResolverWrapper implements FixerConfigurationResolverInterface
 {
-    /**
-     * @var FixerConfigurationResolverInterface
-     */
+    /** @var FixerConfigurationResolverInterface */
     private $resolver;
 
-    /**
-     * @var FixerInterface
-     */
+    /** @var FixerInterface */
     private $fixer;
 
     public function __construct(

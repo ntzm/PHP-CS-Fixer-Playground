@@ -8,9 +8,7 @@ use PhpCsFixerPlayground\Entity\Run;
 
 final class UrlGenerator implements UrlGeneratorInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $baseUrl;
 
     public function __construct(string $baseUrl)

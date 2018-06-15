@@ -6,34 +6,22 @@ namespace PhpCsFixerPlayground;
 
 final class Issue
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $runUrl;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $input;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $output;
 
-    /**
-     * @var ConfigFile
-     */
+    /** @var ConfigFile */
     private $configFile;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $phpVersion;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $phpCsFixerVersion;
 
     public function __construct(

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Fix;
 
+use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerFactory;
 use PhpCsFixer\RuleSet;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -13,9 +14,7 @@ use Symfony\Component\Finder\Tests\Iterator\MockSplFileInfo;
 
 final class Fix implements FixInterface
 {
-    /**
-     * @var FixerFactory
-     */
+    /** @var FixerFactory */
     private $fixerFactory;
 
     public function __construct(FixerFactory $fixerFactory)
@@ -63,9 +62,7 @@ final class Fix implements FixInterface
         return new FixReport($tokens->generateCode(), $appliedFixers, $deprecationMessages);
     }
 
-    /**
-     * @return \PhpCsFixer\Fixer\FixerInterface[]
-     */
+    /** @return FixerInterface[] */
     private function getFixers(
         array $rules,
         string $indent,

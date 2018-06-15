@@ -22,14 +22,10 @@ final class FixerOptionWrapper implements FixerOptionInterface
         ],
     ];
 
-    /**
-     * @var FixerOptionInterface
-     */
+    /** @var FixerOptionInterface */
     private $option;
 
-    /**
-     * @var FixerInterface
-     */
+    /** @var FixerInterface */
     private $fixer;
 
     public function __construct(
@@ -60,9 +56,7 @@ final class FixerOptionWrapper implements FixerOptionInterface
         return $this->option->getDefault();
     }
 
-    /**
-     * @return string[]|null
-     */
+    /** @return string[]|null */
     public function getAllowedTypes(): ?array
     {
         $allowedTypes = $this->option->getAllowedTypes();
@@ -145,6 +139,7 @@ final class FixerOptionWrapper implements FixerOptionInterface
         return $this->option->getDeprecationMessage();
     }
 
+    /** @return string[] */
     private function getTypesFromValues(array $values): array
     {
         $types = array_values(array_unique(array_map(function ($value): string {

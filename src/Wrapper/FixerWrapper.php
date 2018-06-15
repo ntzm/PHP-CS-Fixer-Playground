@@ -15,9 +15,7 @@ use SplFileInfo;
 
 final class FixerWrapper implements FixerInterface
 {
-    /**
-     * @var FixerInterface
-     */
+    /** @var FixerInterface */
     private $fixer;
 
     public function __construct(FixerInterface $fixer)
@@ -69,6 +67,7 @@ final class FixerWrapper implements FixerInterface
         return $this->fixer instanceof DeprecatedFixerInterface;
     }
 
+    /** @return string[] */
     public function getSuccessorsNames(): array
     {
         if (!$this->fixer instanceof DeprecatedFixerInterface) {

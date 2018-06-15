@@ -10,9 +10,7 @@ use Ramsey\Uuid\UuidInterface;
 
 final class RunRepository implements RunRepositoryInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)

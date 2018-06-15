@@ -17,9 +17,7 @@ final class LineEndingType extends Type
         return $platform->getVarcharTypeDeclarationSQL(['length' => 4]);
     }
 
-    /**
-     * @param string $value
-     */
+    /** @param string $value */
     public function convertToPHPValue(
         $value,
         AbstractPlatform $platform
@@ -27,9 +25,7 @@ final class LineEndingType extends Type
         return LineEnding::fromVisible($value);
     }
 
-    /**
-     * @param LineEnding $value
-     */
+    /** @param LineEnding $value */
     public function convertToDatabaseValue(
         $value,
         AbstractPlatform $platform

@@ -8,19 +8,13 @@ use Zend\Code\Generator\ValueGenerator;
 
 final class ConfigFile
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     private $rules;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $indent;
 
-    /**
-     * @var LineEnding
-     */
+    /** @var LineEnding */
     private $lineEnding;
 
     public function __construct(

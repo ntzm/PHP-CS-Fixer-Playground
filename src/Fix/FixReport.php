@@ -4,21 +4,17 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Fix;
 
+use PhpCsFixer\Fixer\FixerInterface;
+
 final class FixReport
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $result;
 
-    /**
-     * @var \PhpCsFixer\Fixer\FixerInterface[]
-     */
+    /** @var FixerInterface[] */
     private $appliedFixers;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private $deprecationMessages;
 
     public function __construct(
@@ -36,17 +32,13 @@ final class FixReport
         return $this->result;
     }
 
-    /**
-     * @return \PhpCsFixer\Fixer\FixerInterface[]
-     */
+    /** @return \PhpCsFixer\Fixer\FixerInterface[] */
     public function getAppliedFixers(): array
     {
         return $this->appliedFixers;
     }
 
-    /**
-     * @return string[]
-     */
+    /** @return string[] */
     public function getDeprecationMessages(): array
     {
         return $this->deprecationMessages;
