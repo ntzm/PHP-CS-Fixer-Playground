@@ -79,16 +79,14 @@ final class FixerOptionWrapper implements FixerOptionInterface
 
         $arrayPosition = array_search('array', $allowedTypes, true);
 
-        if ($arrayPosition !== false) {
-            if ($this->hasDefault()) {
-                $default = $this->getDefault();
+        if ($arrayPosition !== false && $this->hasDefault()) {
+            $default = $this->getDefault();
 
-                if (
-                    (\is_array($default) && $this->isAssociative($this->getDefault())) ||
-                    (isset(self::FORCE_ALLOW_ASSOC[$this->fixer->getName()]) && \in_array($this->getName(), self::FORCE_ALLOW_ASSOC[$this->fixer->getName()], true))
-                ) {
-                    $allowedTypes[$arrayPosition] = 'associative-array';
-                }
+            if (
+                (\is_array($default) && $this->isAssociative($this->getDefault())) ||
+                (isset(self::FORCE_ALLOW_ASSOC[$this->fixer->getName()]) && \in_array($this->getName(), self::FORCE_ALLOW_ASSOC[$this->fixer->getName()], true))
+            ) {
+                $allowedTypes[$arrayPosition] = 'associative-array';
             }
         }
 
