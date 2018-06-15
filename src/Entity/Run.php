@@ -41,8 +41,8 @@ class Run
     private $indent;
 
     /**
-     * @var LineEnding
-     * @ORM\Column(type="line_ending")
+     * @var string
+     * @ORM\Column(type="string", length=2)
      */
     private $lineEnding;
 
@@ -56,7 +56,7 @@ class Run
         $this->code = $code;
         $this->rules = $rules;
         $this->indent = $indent;
-        $this->lineEnding = $lineEnding;
+        $this->lineEnding = $lineEnding->getReal();
     }
 
     public function getId(): UuidInterface
@@ -81,6 +81,6 @@ class Run
 
     public function getLineEnding(): LineEnding
     {
-        return $this->lineEnding;
+        return new LineEnding($this->lineEnding);
     }
 }
