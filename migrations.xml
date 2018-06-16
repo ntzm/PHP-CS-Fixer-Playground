@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://doctrine-project.org/schemas/migrations/configuration http://doctrine-project.org/schemas/migrations/configuration.xsd"
 >
     <name>PHP-CS-Fixer Playground Migrations</name>
-    <migrations-namespace>PhpCsFixerPlayground\Migrations</migrations-namespace>
+    <migrations-namespace>PhpCsFixerPlayground\Migration</migrations-namespace>
     <migrations-directory>src/Migration</migrations-directory>
     <all-or-nothing>true</all-or-nothing>
 </doctrine-migrations>
