@@ -12,7 +12,7 @@ final class Version20180616072518 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Create the runs table';
     }
 
     public function up(Schema $schema): void
