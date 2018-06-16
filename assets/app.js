@@ -20,6 +20,14 @@
 
     $query.addEventListener('keyup', () => filterFixers($query.value));
 
+    function addRemoveEventListener($removeOption) {
+        $removeOption.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            $removeOption.parentNode.parentNode.remove();
+        });
+    }
+
     document.querySelectorAll('[data-option-add]').forEach(($addOption) => {
         $addOption.addEventListener('click', (event) => {
             event.preventDefault();
@@ -42,11 +50,7 @@
             $removeOption.textContent = '×';
             $removeOption.classList.add('btn', 'btn-outline-danger');
 
-            $removeOption.addEventListener('click', (event) => {
-                event.preventDefault();
-
-                $removeOption.parentNode.parentNode.remove();
-            });
+            addRemoveEventListener($removeOption);
 
             $removeContainer.appendChild($removeOption);
 
@@ -65,10 +69,6 @@
     });
 
     document.querySelectorAll('[data-option-remove]').forEach(($removeOption) => {
-        $removeOption.addEventListener('click', (event) => {
-            event.preventDefault();
-
-            $removeOption.parentNode.parentNode.remove();
-        });
+        addRemoveEventListener($removeOption);
     });
 })();
