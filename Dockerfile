@@ -25,7 +25,7 @@ RUN apt-get update \
 
 COPY composer.* ./
 
-RUN composer install --prefer-dist --no-dev
+RUN composer install --optimize-autoloader --prefer-dist --no-dev
 
 COPY --from=build-assets html/app.js html
 COPY --from=build-assets html/style.css html
