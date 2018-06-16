@@ -11,6 +11,7 @@ use Ramsey\Uuid\UuidInterface;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="runs")
  */
 class Run
 {
@@ -42,7 +43,7 @@ class Run
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=2)
+     * @ORM\Column(name="line_ending", type="string", length=2)
      */
     private $lineEnding;
 

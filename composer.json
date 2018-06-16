@@ -19,7 +19,8 @@
         "sebastian/diff": "^3.0",
         "symfony/http-foundation": "^4.0",
         "twig/twig": "^2.4",
-        "zendframework/zend-code": "^3.3"
+        "zendframework/zend-code": "^3.3",
+        "doctrine/migrations": "2.0.x-dev"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.9.2",
