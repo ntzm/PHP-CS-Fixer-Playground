@@ -21,8 +21,7 @@ final class ResolveEntityManager
         );
 
         $connection = [
-            'driver' => 'pdo_sqlite',
-            'path' => __DIR__.'/../database.sqlite',
+            'url' => getenv('DB_URL'),
         ];
 
         return EntityManager::create($connection, $config);
