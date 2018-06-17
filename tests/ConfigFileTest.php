@@ -41,4 +41,57 @@ EOD;
 
         $this->assertSame($expected, $generator->__toString());
     }
+
+    public function testGenerateWithTabIndent(): void
+    {
+        $expected = <<<'EOD'
+<?php
+
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+return Config::create()
+    ->setRiskyAllowed(true)
+    ->setIndent("\t")
+    ->setLineEnding("\n")
+    ->setRules([
+        'foo' => true,
+        'bar' => [
+            'baz' => 'bop',
+        ],
+    ])
+    ->setFinder(
+        Finder::create()->in(__DIR__)
+    )
+;
+EOD;
+
+        $generator = new ConfigFile(['foo' => true, 'bar' => ['baz' => 'bop']], "\t", LineEnding::fromVisible('\n'));
+
+        $this->assertSame($expected, $generator->__toString());
+    }
+
+    public function testGenerateWithNoRules(): void
+    {
+        $expected = <<<'EOD'
+<?php
+
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+return Config::create()
+    ->setRiskyAllowed(true)
+    ->setIndent('    ')
+    ->setLineEnding("\n")
+    ->setRules([])
+    ->setFinder(
+        Finder::create()->in(__DIR__)
+    )
+;
+EOD;
+
+        $generator = new ConfigFile([], '    ', LineEnding::fromVisible('\n'));
+
+        $this->assertSame($expected, $generator->__toString());
+    }
 }
