@@ -5,13 +5,19 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\ServiceProvider;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\View\TwigExtension;
+use PhpCsFixerPlayground\View\ViewFactory;
+use PhpCsFixerPlayground\View\ViewFactoryInterface;
+use SebastianBergmann\Diff\Differ;
+use Twig\Cache\FilesystemCache;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-final class TwigServiceProvider extends AbstractServiceProvider
+final class ViewServiceProvider extends AbstractServiceProvider
 {
     protected $provides = [
+        ViewFactoryInterface::class,
         Environment::class,
     ];
 
@@ -21,7 +27,7 @@ final class TwigServiceProvider extends AbstractServiceProvider
             ->add(Environment::class, function (): Environment {
                 $loader = new FilesystemLoader(__DIR__.'/../../templates');
                 $twig = new Environment($loader, [
-                    'cache' => __DIR__.'/../../data/cache/twig',
+                    'cache' => new FilesystemCache(__DIR__.'/../../data/cache/twig'),
                     'strict_variables' => true,
                 ]);
 
@@ -29,5 +35,12 @@ final class TwigServiceProvider extends AbstractServiceProvider
 
                 return $twig;
             });
+
+        $this->container
+            ->add(ViewFactoryInterface::class, ViewFactory::class)
+            ->withArgument(Environment::class)
+            ->withArgument(Differ::class)
+            ->withArgument(FixerFactory::class)
+        ;
     }
 }
