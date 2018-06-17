@@ -17,6 +17,16 @@ use PHPUnit\Framework\TestCase;
  */
 final class Version20180616072518Test extends TestCase
 {
+    public function testGetDescription(): void
+    {
+        /** @var Version|MockObject $version */
+        $version = $this->createMock(Version::class);
+
+        $migration = new Version20180616072518($version);
+
+        $this->assertSame('Create the runs table', $migration->getDescription());
+    }
+
     public function testUp(): void
     {
         $table = $this->createMock(Table::class);
