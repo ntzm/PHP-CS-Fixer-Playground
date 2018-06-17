@@ -92,7 +92,7 @@ final class FixerOptionWrapperTest extends TestCase
         $this->assertSame(['bool', 'string'], $wrapper->getAllowedTypes());
     }
 
-    public function getGetAllowedTypesInferredFromNullAllowedValues(): void
+    public function testGetAllowedTypesInferredFromNullAllowedValues(): void
     {
         /** @var FixerOptionInterface|MockObject $option */
         $option = $this->createMock(FixerOptionInterface::class);
@@ -113,6 +113,73 @@ final class FixerOptionWrapperTest extends TestCase
         $wrapper = new FixerOptionWrapper($option, $fixer);
 
         $this->assertNull($wrapper->getAllowedTypes());
+    }
+
+    public function testGetAllowedTypesAssociativeDefault(): void
+    {
+        /** @var FixerOptionInterface|MockObject $option */
+        $option = $this->createMock(FixerOptionInterface::class);
+        $option
+            ->expects($this->once())
+            ->method('getAllowedTypes')
+            ->willReturn(['array', 'string'])
+        ;
+        $option
+            ->expects($this->once())
+            ->method('hasDefault')
+            ->willReturn(true)
+        ;
+        $option
+            ->expects($this->exactly(2))
+            ->method('getDefault')
+            ->willReturn(['foo' => 'bar'])
+        ;
+
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+
+        $wrapper = new FixerOptionWrapper($option, $fixer);
+
+        $this->assertSame(['associative-array', 'string'], $wrapper->getAllowedTypes());
+    }
+
+    /** @dataProvider provideForcedOptions */
+    public function testGetAllowedTypesAssociativeForced(
+        string $fixerName,
+        string $optionName
+    ): void {
+        /** @var FixerOptionInterface|MockObject $option */
+        $option = $this->createMock(FixerOptionInterface::class);
+        $option
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn($optionName)
+        ;
+        $option
+            ->expects($this->once())
+            ->method('getAllowedTypes')
+            ->willReturn(['array', 'string'])
+        ;
+
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+        $fixer
+            ->expects($this->exactly(2))
+            ->method('getName')
+            ->willReturn($fixerName)
+        ;
+
+        $wrapper = new FixerOptionWrapper($option, $fixer);
+
+        $this->assertSame(['associative-array', 'string'], $wrapper->getAllowedTypes());
+    }
+
+    public function provideForcedOptions(): array
+    {
+        return [
+            ['php_unit_test_case_static_method_calls', 'methods'],
+            ['binary_operator_spaces', 'operators'],
+        ];
     }
 
     public function testGetPrintableAllowedValues(): void
