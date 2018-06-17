@@ -2,6 +2,6 @@
 /html/app.js
 /html/style.css
 /node_modules/
+/tests/
 /vendor/
-/database.sqlite
 /.php_cs.cache
