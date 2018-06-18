@@ -10,6 +10,7 @@ use PhpCsFixerPlayground\UrlGeneratorInterface;
 
 final class UrlGeneratorServiceProvider extends AbstractServiceProvider
 {
+    /** @var string[] */
     protected $provides = [
         UrlGeneratorInterface::class,
     ];

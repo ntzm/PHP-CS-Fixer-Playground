@@ -30,8 +30,10 @@ final class Fix implements FixInterface
     ): FixReport {
         $deprecationMessages = [];
 
-        set_error_handler(function (int $number, string $message) use (&$deprecationMessages): void {
+        set_error_handler(function (int $number, string $message) use (&$deprecationMessages): bool {
             $deprecationMessages[] = $message;
+
+            return true;
         }, E_USER_DEPRECATED);
 
         $file = new MockSplFileInfo([]);

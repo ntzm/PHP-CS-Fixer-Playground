@@ -16,6 +16,7 @@ use Twig\Loader\FilesystemLoader;
 
 final class ViewServiceProvider extends AbstractServiceProvider
 {
+    /** @var string[] */
     protected $provides = [
         ViewFactoryInterface::class,
         Environment::class,

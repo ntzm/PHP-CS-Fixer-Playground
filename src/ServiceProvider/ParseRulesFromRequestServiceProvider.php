@@ -10,6 +10,7 @@ use PhpCsFixerPlayground\ParseRulesFromRequestInterface;
 
 final class ParseRulesFromRequestServiceProvider extends AbstractServiceProvider
 {
+    /** @var string[] */
     protected $provides = [
         ParseRulesFromRequestInterface::class,
     ];

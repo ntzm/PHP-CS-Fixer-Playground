@@ -10,6 +10,7 @@ use PhpCsFixerPlayground\ResolveEntityManager;
 
 final class EntityManagerServiceProvider extends AbstractServiceProvider
 {
+    /** @var string[] */
     protected $provides = [
         EntityManagerInterface::class,
     ];

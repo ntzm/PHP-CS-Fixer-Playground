@@ -11,6 +11,7 @@ use PhpCsFixerPlayground\Run\RunRepositoryInterface;
 
 final class RepositoryServiceProvider extends AbstractServiceProvider
 {
+    /** @var string[] */
     protected $provides = [
         RunRepositoryInterface::class,
     ];

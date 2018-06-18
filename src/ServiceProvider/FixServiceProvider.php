@@ -11,6 +11,7 @@ use PhpCsFixerPlayground\Fix\FixInterface;
 
 final class FixServiceProvider extends AbstractServiceProvider
 {
+    /** @var string[] */
     protected $provides = [
         FixInterface::class,
     ];

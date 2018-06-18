@@ -53,7 +53,7 @@ class Run
         string $indent,
         LineEnding $lineEnding
     ) {
-        $this->id = (string) Uuid::uuid4();
+        $this->id = Uuid::uuid4()->toString();
         $this->code = $code;
         $this->rules = $rules;
         $this->indent = $indent;
