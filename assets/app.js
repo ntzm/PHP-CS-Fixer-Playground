@@ -38,11 +38,6 @@
             const $group = document.createElement('div');
             $group.classList.add('form-group', 'input-group');
 
-            const $input = document.createElement('input');
-            $input.classList.add('form-control');
-            $input.setAttribute('type', 'text');
-            $input.setAttribute('name', `fixers[${fixer}][${name}][]`);
-
             const $removeContainer = document.createElement('div');
             $removeContainer.classList.add('input-group-append');
 
@@ -57,11 +52,25 @@
             if ($addOption.dataset.optionAdd === 'associative') {
                 const $keyInput = document.createElement('input');
                 $keyInput.classList.add('form-control');
+                $keyInput.setAttribute('type', 'text');
+                $keyInput.setAttribute('name', `fixers[${fixer}][${name}][_keys][]`);
+
+                const $valueInput = document.createElement('input');
+                $valueInput.classList.add('form-control');
+                $valueInput.setAttribute('type', 'text');
+                $valueInput.setAttribute('name', `fixers[${fixer}][${name}][_values][]`);
 
                 $group.append($keyInput);
+                $group.append($valueInput);
+            } else {
+                const $valueInput = document.createElement('input');
+                $valueInput.classList.add('form-control');
+                $valueInput.setAttribute('type', 'text');
+                $valueInput.setAttribute('name', `fixers[${fixer}][${name}][]`);
+
+                $group.append($valueInput);
             }
 
-            $group.appendChild($input);
             $group.appendChild($removeContainer);
 
             $addOption.parentNode.insertBefore($group, $addOption);

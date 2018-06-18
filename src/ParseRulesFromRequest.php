@@ -10,6 +10,8 @@ final class ParseRulesFromRequest implements ParseRulesFromRequestInterface
     private const TRUE = '_true';
     private const FALSE = '_false';
     private const NULL = '_null';
+    private const KEYS = '_keys';
+    private const VALUES = '_values';
 
     private const TYPE_MAP = [
         self::TRUE => true,
@@ -42,6 +44,10 @@ final class ParseRulesFromRequest implements ParseRulesFromRequestInterface
     {
         foreach ($options as &$option) {
             if (\is_array($option)) {
+                if (array_keys($option) === [self::KEYS, self::VALUES]) {
+                    $option = array_combine($option[self::KEYS], $option[self::VALUES]);
+                }
+
                 continue;
             }
 

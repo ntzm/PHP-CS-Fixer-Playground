@@ -86,6 +86,34 @@ final class ParseRulesFromRequestTest extends TestCase
                     ],
                 ],
             ],
+            [
+                [
+                    'rule_1' => [
+                        'option_1' => [
+                            'foo' => 1,
+                            'bar' => 2,
+                            'baz' => 3,
+                        ],
+                    ],
+                ],
+                [
+                    'rule_1' => [
+                        '_enabled' => '_true',
+                        'option_1' => [
+                            '_keys' => [
+                                'foo',
+                                'bar',
+                                'baz',
+                            ],
+                            '_values' => [
+                                1,
+                                2,
+                                3,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 }
