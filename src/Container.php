@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpCsFixerPlayground;
 
 use League\Container\Container as LeagueContainer;

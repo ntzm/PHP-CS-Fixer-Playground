@@ -13,6 +13,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
+/**
+ * @covers \PhpCsFixerPlayground\Wrapper\FixerOptionWrapper
+ */
 final class FixerOptionWrapperTest extends TestCase
 {
     public function testWrapsMethods(): void

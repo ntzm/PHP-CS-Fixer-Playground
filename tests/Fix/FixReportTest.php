@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Tests\Fixer;
+namespace PhpCsFixerPlayground\Tests\Fix;
 
 use PhpCsFixer\Fixer\Alias\NoAliasFunctionsFixer;
 use PhpCsFixerPlayground\Fix\FixReport;
