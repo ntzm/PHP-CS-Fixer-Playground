@@ -8,6 +8,7 @@ use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\LineEnding;
+use PhpCsFixerPlayground\PhpVersion\PhpVersion;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -80,7 +81,7 @@ ISSUE;
             '<?php echo "hi";',
             "<?php echo 'hi';",
             $configFile,
-            '7.2.6',
+            new PhpVersion('7.2.6'),
             '2.12.1'
         );
 
