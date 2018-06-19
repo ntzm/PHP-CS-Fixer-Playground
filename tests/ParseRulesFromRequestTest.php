@@ -51,10 +51,6 @@ final class ParseRulesFromRequestTest extends TestCase
                         'option_1' => true,
                         'option_2' => false,
                         'option_3' => null,
-                        'option_4' => [
-                            'foo',
-                            'bar',
-                        ],
                     ],
                 ],
                 [
@@ -63,7 +59,6 @@ final class ParseRulesFromRequestTest extends TestCase
                         'option_1' => '_true',
                         'option_2' => '_false',
                         'option_3' => '_null',
-                        'option_4' => "foo\r\nbar",
                     ],
                 ],
             ],
