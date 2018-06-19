@@ -40,7 +40,7 @@ final class IndexHandlerTest extends TestCase
 
         $handler = new IndexHandler($viewFactory);
 
-        $response = $handler([]);
+        $response = $handler->__invoke([]);
 
         $this->assertSame('foo', $response->getContent());
     }

@@ -19,9 +19,9 @@ final class HandleRouteTest extends TestCase
 {
     public function testHandlesNotFound(): void
     {
-        $routeHandler = new HandleRoute();
+        $handleRoute = new HandleRoute();
 
-        $response = $routeHandler([Dispatcher::NOT_FOUND]);
+        $response = $handleRoute->__invoke([Dispatcher::NOT_FOUND]);
 
         $this->assertSame('Not Found', $response->getContent());
         $this->assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
@@ -29,9 +29,9 @@ final class HandleRouteTest extends TestCase
 
     public function testHandlesMethodNotAllowed(): void
     {
-        $routeHandler = new HandleRoute();
+        $handleRoute = new HandleRoute();
 
-        $response = $routeHandler([Dispatcher::METHOD_NOT_ALLOWED, ['GET', 'PUT']]);
+        $response = $handleRoute->__invoke([Dispatcher::METHOD_NOT_ALLOWED, ['GET', 'PUT']]);
 
         $this->assertSame('Method Not Allowed', $response->getContent());
         $this->assertSame(Response::HTTP_METHOD_NOT_ALLOWED, $response->getStatusCode());
@@ -39,7 +39,7 @@ final class HandleRouteTest extends TestCase
 
     public function testHandle(): void
     {
-        $routeHandler = new HandleRoute();
+        $handleRoute = new HandleRoute();
 
         $response = new Response('Foo Bar');
 
@@ -52,13 +52,13 @@ final class HandleRouteTest extends TestCase
             ->willReturn($response)
         ;
 
-        $actualResponse = $routeHandler([Dispatcher::FOUND, function () use ($handler) { return $handler; }, ['foo' => 'bar']]);
+        $actualResponse = $handleRoute->__invoke([Dispatcher::FOUND, function () use ($handler) { return $handler; }, ['foo' => 'bar']]);
         $this->assertSame($response, $actualResponse);
     }
 
     public function testHandleThrowsRunNotFound(): void
     {
-        $routeHandler = new HandleRoute();
+        $handleRoute = new HandleRoute();
 
         /** @var HandlerInterface|MockObject $handler */
         $handler = $this->createMock(HandlerInterface::class);
@@ -69,7 +69,7 @@ final class HandleRouteTest extends TestCase
             ->willThrowException(new RunNotFoundException())
         ;
 
-        $response = $routeHandler([Dispatcher::FOUND, function () use ($handler) { return $handler; }, []]);
+        $response = $handleRoute->__invoke([Dispatcher::FOUND, function () use ($handler) { return $handler; }, []]);
 
         $this->assertSame('Not Found', $response->getContent());
         $this->assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());

@@ -56,7 +56,7 @@ final class CreateRunHandlerTest extends TestCase
         $handler = new CreateRunHandler($runs, $request, $parseRulesFromRequest);
 
         /** @var RedirectResponse $response */
-        $response = $handler([]);
+        $response = $handler->__invoke([]);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertRegExp('/^\/run\/[a-f0-9-]+$/', $response->getTargetUrl());

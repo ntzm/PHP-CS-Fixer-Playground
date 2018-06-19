@@ -101,7 +101,7 @@ final class GetRunHandlerTest extends TestCase
 
         $handler = new GetRunHandler($runs, $viewFactory, $fix, $urlGenerator);
 
-        $response = $handler(['uuid' => $runUuid]);
+        $response = $handler->__invoke(['uuid' => $runUuid]);
 
         $this->assertSame('foo', $response->getContent());
     }
@@ -171,7 +171,7 @@ final class GetRunHandlerTest extends TestCase
 
         $handler = new GetRunHandler($runs, $viewFactory, $fixer, $urlGenerator);
 
-        $response = $handler(['uuid' => $runUuid]);
+        $response = $handler->__invoke(['uuid' => $runUuid]);
 
         $this->assertSame('foo', $response->getContent());
     }
@@ -194,6 +194,6 @@ final class GetRunHandlerTest extends TestCase
 
         $this->expectException(RunNotFoundException::class);
 
-        $handler(['uuid' => 'wqlkdj']);
+        $handler->__invoke(['uuid' => 'wqlkdj']);
     }
 }

@@ -32,7 +32,7 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($container): vo
 /** @var Request $request */
 $request = $container->get(Request::class);
 
-$response = (new HandleRoute())(
+$response = (new HandleRoute())->__invoke(
     $dispatcher->dispatch($request->getMethod(), $request->getPathInfo())
 );
 
