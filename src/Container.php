@@ -18,16 +18,21 @@ final class Container
     {
         $this->container = (new LeagueContainer())->delegate(new ReflectionContainer());
 
+        $this->registerServiceProviders();
+    }
+
+    public function get(string $id)
+    {
+        return $this->container->get($id);
+    }
+
+    private function registerServiceProviders(): void
+    {
         /** @var SplFileInfo $file */
         foreach ((new Finder())->in(__DIR__.'/ServiceProvider') as $file) {
             $this->container->addServiceProvider(
                 "PhpCsFixerPlayground\\ServiceProvider\\{$file->getBasename('.php')}"
             );
         }
-    }
-
-    public function get(string $id)
-    {
-        return $this->container->get($id);
     }
 }
