@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\LineEnding;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -83,5 +84,14 @@ class Run
     public function getLineEnding(): LineEnding
     {
         return new LineEnding($this->lineEnding);
+    }
+
+    public function getConfigFile(): ConfigFile
+    {
+        return new ConfigFile(
+            $this->getRules(),
+            $this->getIndent(),
+            $this->getLineEnding()
+        );
     }
 }

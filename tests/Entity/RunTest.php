@@ -48,4 +48,28 @@ final class RunTest extends TestCase
         $this->assertSame('\n', $run->getLineEnding()->getVisible());
         $this->assertSame("\n", $run->getLineEnding()->getReal());
     }
+
+    public function testGetConfigFile(): void
+    {
+        $run = new Run('<?php echo "hi";', [], '    ', LineEnding::fromVisible('\n'));
+
+        $expected = <<<'EOD'
+<?php
+
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+return Config::create()
+    ->setRiskyAllowed(true)
+    ->setIndent('    ')
+    ->setLineEnding("\n")
+    ->setRules([])
+    ->setFinder(
+        Finder::create()->in(__DIR__)
+    )
+;
+EOD;
+
+        $this->assertSame($expected, (string) $run->getConfigFile());
+    }
 }

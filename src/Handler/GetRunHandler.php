@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Handler;
 
 use PhpCsFixer\Console\Application;
-use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\Fix\FixInterface;
 use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\Run\RunNotFoundException;
@@ -70,11 +69,7 @@ final class GetRunHandler implements HandlerInterface
             $deprecationMessages = [];
         }
 
-        $configFile = new ConfigFile(
-            $run->getRules(),
-            $run->getIndent(),
-            $run->getLineEnding()
-        );
+        $configFile = $run->getConfigFile();
 
         $issue = new Issue(
             $this->urlGenerator->generateUrlForRun($run),
