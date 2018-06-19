@@ -30,7 +30,7 @@ When reporting an issue (bug) please provide the following information:
 => 2.12.1
 
 #### The command you use to run PHP CS Fixer:
-=> [https://foo.com/bar](https://foo.com/bar)
+=> https://foo.com/bar
 
 #### The configuration file you are using, if any:
 ```php

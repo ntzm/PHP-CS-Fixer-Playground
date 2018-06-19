@@ -55,7 +55,7 @@ When reporting an issue (bug) please provide the following information:
 => {$this->phpCsFixerVersion}
 
 #### The command you use to run PHP CS Fixer:
-=> [{$this->runUrl}]({$this->runUrl})
+=> {$this->runUrl}
 
 #### The configuration file you are using, if any:
 ```php
