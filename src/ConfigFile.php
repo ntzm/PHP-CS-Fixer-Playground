@@ -74,14 +74,20 @@ CONFIG;
 
         $generator->setIndentation('    ');
 
-        $code = $generator->generate();
+        return $this->indentLines($generator->generate());
+    }
 
-        $result = '';
-
-        foreach (explode("\n", $code) as $line) {
-            $result .= "    $line\n";
-        }
-
-        return trim($result);
+    private function indentLines(string $lines): string
+    {
+        return trim(
+            implode("\n",
+                array_map(
+                    function (string $line): string {
+                        return "    $line";
+                    },
+                    explode("\n", $lines)
+                )
+            )
+        );
     }
 }
