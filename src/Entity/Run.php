@@ -14,7 +14,7 @@ use Ramsey\Uuid\UuidInterface;
  * @ORM\Entity
  * @ORM\Table(name="runs")
  */
-class Run
+final class Run
 {
     /**
      * @var string
