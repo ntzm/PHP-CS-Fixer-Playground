@@ -19,6 +19,7 @@ final class RequestServiceProvider extends AbstractServiceProvider
         $this->container
             ->add(Request::class, function (): Request {
                 return Request::createFromGlobals();
-            });
+            })
+        ;
     }
 }

@@ -11,6 +11,7 @@ return Config::create()
         '@PHP71Migration' => true,
         '@PHP71Migration:risky' => true,
         '@DoctrineAnnotation' => true,
+        'multiline_whitespace_before_semicolons' => ['strategy' => 'new_line_for_chained_calls'],
         'native_function_invocation' => ['include' => ['@compiler_optimized']],
         'ordered_imports' => true,
         'yoda_style' => false,

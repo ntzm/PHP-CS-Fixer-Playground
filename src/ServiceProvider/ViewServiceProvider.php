@@ -35,7 +35,8 @@ final class ViewServiceProvider extends AbstractServiceProvider
                 $twig->addExtension(new TwigExtension());
 
                 return $twig;
-            });
+            })
+        ;
 
         $this->container
             ->add(ViewFactoryInterface::class, ViewFactory::class)
