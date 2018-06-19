@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Fix;
 
+use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\LineEnding;
 
 interface FixInterface
@@ -11,7 +12,7 @@ interface FixInterface
     public function __invoke(
         string $code,
         array $rules,
-        string $indent,
+        Indent $indent,
         LineEnding $lineEnding
     ): FixReport;
 }

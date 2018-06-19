@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Tests;
 
 use PhpCsFixerPlayground\ConfigFile;
+use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\LineEnding;
 use PHPUnit\Framework\TestCase;
 
@@ -37,7 +38,11 @@ return Config::create()
 ;
 EOD;
 
-        $generator = new ConfigFile(['foo' => true, 'bar' => ['baz' => 'bop']], '    ', LineEnding::fromVisible('\n'));
+        $generator = new ConfigFile(
+            ['foo' => true, 'bar' => ['baz' => 'bop']],
+            new Indent('    '),
+            LineEnding::fromVisible('\n')
+        );
 
         $this->assertSame($expected, $generator->__toString());
     }
@@ -66,7 +71,11 @@ return Config::create()
 ;
 EOD;
 
-        $generator = new ConfigFile(['foo' => true, 'bar' => ['baz' => 'bop']], "\t", LineEnding::fromVisible('\n'));
+        $generator = new ConfigFile(
+            ['foo' => true, 'bar' => ['baz' => 'bop']],
+            new Indent("\t"),
+            LineEnding::fromVisible('\n')
+        );
 
         $this->assertSame($expected, $generator->__toString());
     }
@@ -90,7 +99,11 @@ return Config::create()
 ;
 EOD;
 
-        $generator = new ConfigFile([], '    ', LineEnding::fromVisible('\n'));
+        $generator = new ConfigFile(
+            [],
+            new Indent('    '),
+            LineEnding::fromVisible('\n')
+        );
 
         $this->assertSame($expected, $generator->__toString());
     }

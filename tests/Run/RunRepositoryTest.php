@@ -6,6 +6,7 @@ namespace PhpCsFixerPlayground\Tests\Run;
 
 use Doctrine\ORM\EntityManagerInterface;
 use PhpCsFixerPlayground\Entity\Run;
+use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\LineEnding;
 use PhpCsFixerPlayground\Run\RunNotFoundException;
 use PhpCsFixerPlayground\Run\RunRepository;
@@ -20,7 +21,12 @@ final class RunRepositoryTest extends TestCase
 {
     public function testGetByUuid(): void
     {
-        $run = new Run('<?php echo "hi";', ['single_quote' => true], '    ', LineEnding::fromVisible('\n'));
+        $run = new Run(
+            '<?php echo "hi";',
+            ['single_quote' => true],
+            new Indent('    '),
+            LineEnding::fromVisible('\n')
+        );
 
         /** @var EntityManagerInterface|MockObject $entityManager */
         $entityManager = $this->createMock(EntityManagerInterface::class);
@@ -57,7 +63,12 @@ final class RunRepositoryTest extends TestCase
 
     public function testSave(): void
     {
-        $run = new Run('<?php echo "hi";', ['single_quote' => true], '    ', LineEnding::fromVisible('\n'));
+        $run = new Run(
+            '<?php echo "hi";',
+            ['single_quote' => true],
+            new Indent('    '),
+            LineEnding::fromVisible('\n')
+        );
 
         /** @var EntityManagerInterface|MockObject $entityManager */
         $entityManager = $this->createMock(EntityManagerInterface::class);

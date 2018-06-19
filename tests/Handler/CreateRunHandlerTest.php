@@ -29,7 +29,7 @@ final class CreateRunHandlerTest extends TestCase
             ->with($this->callback(function (Run $run): bool {
                 return $run->getCode() === '<?php echo "hi";'
                     && $run->getRules() === ['bar' => true]
-                    && $run->getIndent() === '    '
+                    && (string) $run->getIndent() === '    '
                     && $run->getLineEnding()->getVisible() === '\n';
             }))
         ;

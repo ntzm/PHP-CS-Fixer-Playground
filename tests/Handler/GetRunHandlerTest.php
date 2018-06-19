@@ -11,6 +11,7 @@ use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\Fix\FixInterface;
 use PhpCsFixerPlayground\Fix\FixReport;
 use PhpCsFixerPlayground\Handler\GetRunHandler;
+use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\LineEnding;
 use PhpCsFixerPlayground\Run\RunNotFoundException;
@@ -33,7 +34,7 @@ final class GetRunHandlerTest extends TestCase
         $run = new Run(
             '<?php echo "hi";',
             ['foo' => true],
-            '    ',
+            new Indent('    '),
             LineEnding::fromVisible('\n')
         );
 
@@ -112,7 +113,7 @@ final class GetRunHandlerTest extends TestCase
         $run = new Run(
             '<?php echo "hi";',
             ['foo' => true],
-            '    ',
+            new Indent('    '),
             LineEnding::fromVisible('\n')
         );
 

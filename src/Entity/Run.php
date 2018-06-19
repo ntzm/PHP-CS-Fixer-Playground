@@ -6,6 +6,7 @@ namespace PhpCsFixerPlayground\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use PhpCsFixerPlayground\ConfigFile;
+use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\LineEnding;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -51,13 +52,13 @@ final class Run
     public function __construct(
         string $code,
         array $rules,
-        string $indent,
+        Indent $indent,
         LineEnding $lineEnding
     ) {
         $this->id = Uuid::uuid4()->toString();
         $this->code = $code;
         $this->rules = $rules;
-        $this->indent = $indent;
+        $this->indent = (string) $indent;
         $this->lineEnding = $lineEnding->getReal();
     }
 
@@ -76,9 +77,9 @@ final class Run
         return $this->rules;
     }
 
-    public function getIndent(): string
+    public function getIndent(): Indent
     {
-        return $this->indent;
+        return new Indent($this->indent);
     }
 
     public function getLineEnding(): LineEnding

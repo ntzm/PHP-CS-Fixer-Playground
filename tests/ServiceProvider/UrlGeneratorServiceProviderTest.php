@@ -7,6 +7,7 @@ namespace PhpCsFixerPlayground\Tests\ServiceProvider;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
 use PhpCsFixerPlayground\Entity\Run;
+use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\LineEnding;
 use PhpCsFixerPlayground\ServiceProvider\UrlGeneratorServiceProvider;
 use PhpCsFixerPlayground\UrlGenerator;
@@ -39,7 +40,12 @@ final class UrlGeneratorServiceProviderTest extends TestCase
 
         $this->assertInstanceOf(UrlGenerator::class, $urlGenerator);
 
-        $run = new Run('<?php echo "hi";', [], '    ', LineEnding::fromVisible('\n'));
+        $run = new Run(
+            '<?php echo "hi";',
+            [],
+            new Indent('    '),
+            LineEnding::fromVisible('\n')
+        );
 
         $this->assertSame(
             "https://foo.com/bar/run/{$run->getId()->toString()}",

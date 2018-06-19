@@ -27,7 +27,7 @@ final class IndexHandlerTest extends TestCase
                 $this->callback(function (Run $run): bool {
                     return $run->getCode() === "<?php\n\n"
                         && $run->getRules() === []
-                        && $run->getIndent() === '    '
+                        && (string) $run->getIndent() === '    '
                         && $run->getLineEnding()->getVisible() === '\n';
                 }),
                 "<?php\n\n",

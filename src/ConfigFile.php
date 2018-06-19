@@ -11,7 +11,7 @@ final class ConfigFile
     /** @var array */
     private $rules;
 
-    /** @var string */
+    /** @var Indent */
     private $indent;
 
     /** @var LineEnding */
@@ -19,7 +19,7 @@ final class ConfigFile
 
     public function __construct(
         array $rules,
-        string $indent,
+        Indent $indent,
         LineEnding $lineEnding
     ) {
         $this->rules = $rules;
@@ -49,7 +49,7 @@ CONFIG;
 
     private function getIndent(): string
     {
-        if ($this->indent === "\t") {
+        if ((string) $this->indent === "\t") {
             return '"\t"';
         }
 

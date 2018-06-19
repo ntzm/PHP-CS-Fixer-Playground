@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Tests;
 
 use PhpCsFixerPlayground\ConfigFile;
+use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\LineEnding;
 use PHPUnit\Framework\TestCase;
@@ -70,7 +71,7 @@ ISSUE;
 
         $configFile = new ConfigFile(
             ['foo' => true],
-            '    ',
+            new Indent('    '),
             LineEnding::fromVisible('\n')
         );
 
