@@ -8,6 +8,7 @@ use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\LineEnding;
+use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersion;
 use PhpCsFixerPlayground\PhpVersion\PhpVersion;
 use PHPUnit\Framework\TestCase;
 
@@ -28,7 +29,7 @@ When reporting an issue (bug) please provide the following information:
 => 7.2.6
 
 #### PHP CS Fixer version you are using (`$ php-cs-fixer -V`):
-=> 2.12.1
+=> 2.12.1 Long Journey
 
 #### The command you use to run PHP CS Fixer:
 => https://foo.com/bar
@@ -82,7 +83,7 @@ ISSUE;
             "<?php echo 'hi';",
             $configFile,
             new PhpVersion('7.2.6'),
-            '2.12.1'
+            new PhpCsFixerVersion('2.12.1', 'Long Journey')
         );
 
         $this->assertSame($expected, $issue->__toString());

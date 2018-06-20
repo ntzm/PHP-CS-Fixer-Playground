@@ -14,6 +14,8 @@ use PhpCsFixerPlayground\Handler\GetRunHandler;
 use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\LineEnding;
+use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersion;
+use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersionFactoryInterface;
 use PhpCsFixerPlayground\PhpVersion\PhpVersion;
 use PhpCsFixerPlayground\PhpVersion\PhpVersionFactoryInterface;
 use PhpCsFixerPlayground\Run\RunNotFoundException;
@@ -109,7 +111,15 @@ final class GetRunHandlerTest extends TestCase
             ->willReturn(new PhpVersion('7.2.6'))
         ;
 
-        $handler = new GetRunHandler($runs, $viewFactory, $fix, $urlGenerator, $phpVersionFactory);
+        /** @var PhpCsFixerVersionFactoryInterface|MockObject $phpCsVersionFactory */
+        $phpCsVersionFactory = $this->createMock(PhpCsFixerVersionFactoryInterface::class);
+        $phpCsVersionFactory
+            ->expects($this->once())
+            ->method('make')
+            ->willReturn(new PhpCsFixerVersion('2.12.1', 'Long Journey'))
+        ;
+
+        $handler = new GetRunHandler($runs, $viewFactory, $fix, $urlGenerator, $phpVersionFactory, $phpCsVersionFactory);
 
         $response = $handler->__invoke(['uuid' => $runUuid]);
 
@@ -187,7 +197,15 @@ final class GetRunHandlerTest extends TestCase
             ->willReturn(new PhpVersion('7.2.6'))
         ;
 
-        $handler = new GetRunHandler($runs, $viewFactory, $fixer, $urlGenerator, $phpVersionFactory);
+        /** @var PhpCsFixerVersionFactoryInterface|MockObject $phpCsVersionFactory */
+        $phpCsVersionFactory = $this->createMock(PhpCsFixerVersionFactoryInterface::class);
+        $phpCsVersionFactory
+            ->expects($this->once())
+            ->method('make')
+            ->willReturn(new PhpCsFixerVersion('2.12.1', 'Long Journey'))
+        ;
+
+        $handler = new GetRunHandler($runs, $viewFactory, $fixer, $urlGenerator, $phpVersionFactory, $phpCsVersionFactory);
 
         $response = $handler->__invoke(['uuid' => $runUuid]);
 
@@ -211,7 +229,10 @@ final class GetRunHandlerTest extends TestCase
         /** @var PhpVersionFactoryInterface|MockObject $phpVersionFactory */
         $phpVersionFactory = $this->createMock(PhpVersionFactoryInterface::class);
 
-        $handler = new GetRunHandler($runs, $viewFactory, $fix, $urlGenerator, $phpVersionFactory);
+        /** @var PhpCsFixerVersionFactoryInterface|MockObject $phpCsVersionFactory */
+        $phpCsVersionFactory = $this->createMock(PhpCsFixerVersionFactoryInterface::class);
+
+        $handler = new GetRunHandler($runs, $viewFactory, $fix, $urlGenerator, $phpVersionFactory, $phpCsVersionFactory);
 
         $this->expectException(RunNotFoundException::class);
 

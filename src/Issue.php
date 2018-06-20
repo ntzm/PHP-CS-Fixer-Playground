@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground;
 
+use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersion;
 use PhpCsFixerPlayground\PhpVersion\PhpVersion;
 
 final class Issue
@@ -23,7 +24,7 @@ final class Issue
     /** @var PhpVersion */
     private $phpVersion;
 
-    /** @var string */
+    /** @var PhpCsFixerVersion */
     private $phpCsFixerVersion;
 
     public function __construct(
@@ -32,7 +33,7 @@ final class Issue
         string $output,
         ConfigFile $configFile,
         PhpVersion $phpVersion,
-        string $phpCsFixerVersion
+        PhpCsFixerVersion $phpCsFixerVersion
     ) {
         $this->runUrl = $runUrl;
         $this->input = $input;

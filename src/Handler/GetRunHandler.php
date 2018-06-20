@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Handler;
 
-use PhpCsFixer\Console\Application;
 use PhpCsFixerPlayground\Fix\FixInterface;
 use PhpCsFixerPlayground\Issue;
+use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersionFactoryInterface;
 use PhpCsFixerPlayground\PhpVersion\PhpVersionFactoryInterface;
 use PhpCsFixerPlayground\Run\RunNotFoundException;
 use PhpCsFixerPlayground\Run\RunRepositoryInterface;
@@ -34,18 +34,23 @@ final class GetRunHandler implements HandlerInterface
     /** @var PhpVersionFactoryInterface */
     private $phpVersionFactory;
 
+    /** @var PhpCsFixerVersionFactoryInterface */
+    private $phpCsFixerVersionFactory;
+
     public function __construct(
         RunRepositoryInterface $runs,
         ViewFactoryInterface $viewFactory,
         FixInterface $fix,
         UrlGeneratorInterface $urlGenerator,
-        PhpVersionFactoryInterface $phpVersionFactory
+        PhpVersionFactoryInterface $phpVersionFactory,
+        PhpCsFixerVersionFactoryInterface $phpCsFixerVersionFactory
     ) {
         $this->runs = $runs;
         $this->viewFactory = $viewFactory;
         $this->fix = $fix;
         $this->urlGenerator = $urlGenerator;
         $this->phpVersionFactory = $phpVersionFactory;
+        $this->phpCsFixerVersionFactory = $phpCsFixerVersionFactory;
     }
 
     public function __invoke(array $vars): Response
@@ -83,7 +88,7 @@ final class GetRunHandler implements HandlerInterface
             $result,
             $configFile,
             $this->phpVersionFactory->make(),
-            Application::VERSION.' '.Application::VERSION_CODENAME
+            $this->phpCsFixerVersionFactory->make()
         );
 
         return new Response(
