@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\ServiceProvider;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersionFactoryInterface;
 use PhpCsFixerPlayground\View\TwigExtension;
 use PhpCsFixerPlayground\View\ViewFactory;
 use PhpCsFixerPlayground\View\ViewFactoryInterface;
@@ -43,6 +44,7 @@ final class ViewServiceProvider extends AbstractServiceProvider
             ->withArgument(Environment::class)
             ->withArgument(Differ::class)
             ->withArgument(FixerCollectionFactoryInterface::class)
+            ->withArgument(PhpCsFixerVersionFactoryInterface::class)
         ;
     }
 }

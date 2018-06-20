@@ -19,6 +19,8 @@ final class PhpCsFixerVersionTest extends TestCase
         $version = new PhpCsFixerVersion($number, $name);
 
         $this->assertSame("$number $name", (string) $version);
+        $this->assertSame($number, $version->getNumber());
+        $this->assertSame($name, $version->getName());
     }
 
     public function provideValidPhpCsFixerVersions(): array

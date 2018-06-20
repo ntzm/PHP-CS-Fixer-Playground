@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\View;
 
-use PhpCsFixer\Console\Application;
 use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\Issue;
+use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersionFactoryInterface;
 use PhpCsFixerPlayground\Wrapper\FixerCollectionFactoryInterface;
 use SebastianBergmann\Diff\Differ;
 use Twig\Environment;
@@ -23,14 +23,19 @@ final class ViewFactory implements ViewFactoryInterface
     /** @var FixerCollectionFactoryInterface */
     private $fixerCollectionFactory;
 
+    /** @var PhpCsFixerVersionFactoryInterface */
+    private $phpCsFixerVersionFactory;
+
     public function __construct(
         Environment $twig,
         Differ $differ,
-        FixerCollectionFactoryInterface $fixerCollectionFactory
+        FixerCollectionFactoryInterface $fixerCollectionFactory,
+        PhpCsFixerVersionFactoryInterface $phpCsFixerVersionFactory
     ) {
         $this->twig = $twig;
         $this->differ = $differ;
         $this->fixerCollectionFactory = $fixerCollectionFactory;
+        $this->phpCsFixerVersionFactory = $phpCsFixerVersionFactory;
     }
 
     public function make(
@@ -54,7 +59,7 @@ final class ViewFactory implements ViewFactoryInterface
                 'configFile' => $configFile,
                 'issue' => $issue,
                 'availableFixers' => $this->fixerCollectionFactory->all(),
-                'phpCsFixerVersion' => Application::VERSION,
+                'phpCsFixerVersion' => $this->phpCsFixerVersionFactory->make(),
                 'diff' => $this->differ->diff($run->getCode(), $result),
             ]
         );

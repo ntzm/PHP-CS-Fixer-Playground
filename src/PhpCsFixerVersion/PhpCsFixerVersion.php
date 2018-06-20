@@ -28,4 +28,14 @@ final class PhpCsFixerVersion
     {
         return $this->number.' '.$this->name;
     }
+
+    public function getNumber(): string
+    {
+        return $this->number;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }
