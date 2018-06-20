@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\ServiceProvider;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\View\TwigExtension;
 use PhpCsFixerPlayground\View\ViewFactory;
 use PhpCsFixerPlayground\View\ViewFactoryInterface;
+use PhpCsFixerPlayground\Wrapper\FixerCollectionFactoryInterface;
 use SebastianBergmann\Diff\Differ;
 use Twig\Cache\FilesystemCache;
 use Twig\Environment;
@@ -42,7 +42,7 @@ final class ViewServiceProvider extends AbstractServiceProvider
             ->add(ViewFactoryInterface::class, ViewFactory::class)
             ->withArgument(Environment::class)
             ->withArgument(Differ::class)
-            ->withArgument(FixerFactory::class)
+            ->withArgument(FixerCollectionFactoryInterface::class)
         ;
     }
 }

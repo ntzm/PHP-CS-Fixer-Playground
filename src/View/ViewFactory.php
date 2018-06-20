@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\View;
 
 use PhpCsFixer\Console\Application;
-use PhpCsFixer\Fixer\FixerInterface;
-use PhpCsFixer\FixerFactory;
 use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\Issue;
-use PhpCsFixerPlayground\Wrapper\FixerWrapper;
+use PhpCsFixerPlayground\Wrapper\FixerCollectionFactoryInterface;
 use SebastianBergmann\Diff\Differ;
 use Twig\Environment;
 
@@ -22,17 +20,17 @@ final class ViewFactory implements ViewFactoryInterface
     /** @var Differ */
     private $differ;
 
-    /** @var FixerFactory */
-    private $fixerFactory;
+    /** @var FixerCollectionFactoryInterface */
+    private $fixerCollectionFactory;
 
     public function __construct(
         Environment $twig,
         Differ $differ,
-        FixerFactory $fixerFactory
+        FixerCollectionFactoryInterface $fixerCollectionFactory
     ) {
         $this->twig = $twig;
         $this->differ = $differ;
-        $this->fixerFactory = $fixerFactory;
+        $this->fixerCollectionFactory = $fixerCollectionFactory;
     }
 
     public function make(
@@ -43,13 +41,6 @@ final class ViewFactory implements ViewFactoryInterface
         ConfigFile $configFile,
         Issue $issue = null
     ): string {
-        $availableFixers = array_map(
-            function (FixerInterface $fixer): FixerWrapper {
-                return new FixerWrapper($fixer);
-            },
-            $this->fixerFactory->registerBuiltInFixers()->getFixers()
-        );
-
         return $this->twig->render(
             'index.twig',
             [
@@ -62,7 +53,7 @@ final class ViewFactory implements ViewFactoryInterface
                 'deprecationMessages' => $deprecationMessages,
                 'configFile' => $configFile,
                 'issue' => $issue,
-                'availableFixers' => $availableFixers,
+                'availableFixers' => $this->fixerCollectionFactory->all(),
                 'phpCsFixerVersion' => Application::VERSION,
                 'diff' => $this->differ->diff($run->getCode(), $result),
             ]

@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Fix;
 
-use PhpCsFixer\Fixer\FixerInterface;
-use PhpCsFixer\FixerFactory;
 use PhpCsFixer\RuleSet;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
 use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\LineEnding;
+use PhpCsFixerPlayground\Wrapper\FixerCollectionFactoryInterface;
 use Symfony\Component\Finder\Tests\Iterator\MockSplFileInfo;
 
 final class Fix implements FixInterface
 {
-    /** @var FixerFactory */
-    private $fixerFactory;
+    /** @var FixerCollectionFactoryInterface */
+    private $fixerCollectionFactory;
 
-    public function __construct(FixerFactory $fixerFactory)
-    {
-        $this->fixerFactory = $fixerFactory;
+    public function __construct(
+        FixerCollectionFactoryInterface $fixerCollectionFactory
+    ) {
+        $this->fixerCollectionFactory = $fixerCollectionFactory;
     }
 
     public function __invoke(
@@ -41,7 +41,12 @@ final class Fix implements FixInterface
 
         $tokens = Tokens::fromCode($code);
 
-        $fixers = $this->getFixers($rules, $indent, $lineEnding);
+        $fixers = $this->fixerCollectionFactory
+            ->fromRuleSet(new RuleSet($rules))
+            ->withWhitespaceConfig(
+                new WhitespacesFixerConfig((string) $indent, $lineEnding->getReal())
+            )
+        ;
 
         $appliedFixers = [];
 
@@ -63,24 +68,5 @@ final class Fix implements FixInterface
         restore_error_handler();
 
         return new FixReport($tokens->generateCode(), $appliedFixers, $deprecationMessages);
-    }
-
-    /** @return FixerInterface[] */
-    private function getFixers(
-        array $rules,
-        Indent $indent,
-        LineEnding $lineEnding
-    ): array {
-        return $this->fixerFactory
-            ->registerBuiltInFixers()
-            ->setWhitespacesConfig(
-                new WhitespacesFixerConfig(
-                    (string) $indent,
-                    $lineEnding->getReal()
-                )
-            )
-            ->useRuleSet(new RuleSet($rules))
-            ->getFixers()
-        ;
     }
 }

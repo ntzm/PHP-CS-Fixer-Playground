@@ -8,8 +8,10 @@ use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
+use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\WhitespacesFixerConfig;
 use RuntimeException;
 use SplFileInfo;
 
@@ -92,5 +94,19 @@ final class FixerWrapper implements FixerInterface
             $this->fixer->getConfigurationDefinition(),
             $this
         );
+    }
+
+    public function isAwareOfWhitespaceConfig(): bool
+    {
+        return $this->fixer instanceof WhitespacesAwareFixerInterface;
+    }
+
+    public function setWhitespacesConfig(WhitespacesFixerConfig $config): void
+    {
+        if (!$this->fixer instanceof WhitespacesAwareFixerInterface) {
+            throw new RuntimeException('Fixer not aware of whitespace config');
+        }
+
+        $this->fixer->setWhitespacesConfig($config);
     }
 }
