@@ -29,7 +29,7 @@ final class EntityManagerServiceProvider extends AbstractServiceProvider
     {
         $config = Setup::createAnnotationMetadataConfiguration(
             [__DIR__.'/Entity'],
-            true,
+            false,
             null,
             new FilesystemCache(__DIR__.'/../../data/cache/doctrine'),
             false
