@@ -2,9 +2,15 @@
 
 declare(strict_types=1);
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use PhpCsFixerPlayground\ResolveEntityManager;
+use PhpCsFixerPlayground\Container;
 
 require_once __DIR__.'/vendor/autoload.php';
 
-return ConsoleRunner::createHelperSet((new ResolveEntityManager())());
+$container = new Container();
+
+/** @var EntityManagerInterface $entityManager */
+$entityManager = $container->get(EntityManagerInterface::class);
+
+return ConsoleRunner::createHelperSet($entityManager);
