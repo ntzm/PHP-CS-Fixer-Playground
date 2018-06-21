@@ -8,9 +8,11 @@ use PhpCsFixer\Fixer\ConfigurationDefinitionFixerInterface;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
+use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use PhpCsFixer\WhitespacesFixerConfig;
 use PhpCsFixerPlayground\Wrapper\FixerConfigurationResolverWrapper;
 use PhpCsFixerPlayground\Wrapper\FixerWrapper;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -168,5 +170,39 @@ final class FixerWrapperTest extends TestCase
         $this->expectExceptionMessage('Fixer not defined');
 
         $wrapper->getDefinition();
+    }
+
+    public function testWhitespaceAware(): void
+    {
+        $config = new WhitespacesFixerConfig();
+
+        /** @var WhitespacesAwareFixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(WhitespacesAwareFixerInterface::class);
+        $fixer
+            ->expects($this->once())
+            ->method('setWhitespacesConfig')
+            ->with($config)
+        ;
+
+        $wrapper = new FixerWrapper($fixer);
+
+        $this->assertTrue($wrapper->isAwareOfWhitespaceConfig());
+
+        $wrapper->setWhitespacesConfig($config);
+    }
+
+    public function testNotWhitespaceAware(): void
+    {
+        /** @var FixerInterface|MockObject $fixer */
+        $fixer = $this->createMock(FixerInterface::class);
+
+        $wrapper = new FixerWrapper($fixer);
+
+        $this->assertFalse($wrapper->isAwareOfWhitespaceConfig());
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Fixer not aware of whitespace config');
+
+        $wrapper->setWhitespacesConfig(new WhitespacesFixerConfig());
     }
 }
