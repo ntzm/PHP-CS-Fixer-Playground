@@ -11,6 +11,7 @@
     ],
     "require": {
         "php": "^7.2",
+        "ext-pcre": "*",
         "doctrine/migrations": "2.0.x-dev",
         "doctrine/orm": "^2.6",
         "friendsofphp/php-cs-fixer": "^2.11",
