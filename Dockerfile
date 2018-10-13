@@ -13,7 +13,9 @@ FROM php:7.2-apache
 
 WORKDIR /var/www/
 
-EXPOSE 8000
+ENV PORT 80
+
+EXPOSE $PORT
 
 RUN apt-get update \
  && apt-get install -y \
