@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 use PhpCsFixerPlayground\ConfigFile;
 use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\LineEnding;
@@ -17,6 +18,8 @@ use Ramsey\Uuid\UuidInterface;
  */
 final class Run
 {
+    private const MAX_CODE_SIZE = 50000;
+
     /**
      * @var string
      * @ORM\Id
@@ -55,6 +58,12 @@ final class Run
         Indent $indent,
         LineEnding $lineEnding
     ) {
+        if (\strlen($code) > self::MAX_CODE_SIZE) {
+            throw new InvalidArgumentException(
+                'Code is over '.self::MAX_CODE_SIZE.' characters long'
+            );
+        }
+
         $this->id = Uuid::uuid4()->toString();
         $this->code = $code;
         $this->rules = $rules;

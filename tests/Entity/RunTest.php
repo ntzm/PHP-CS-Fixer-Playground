@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\Tests\Entity;
 
+use InvalidArgumentException;
 use PhpCsFixerPlayground\Entity\Run;
 use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\LineEnding;
@@ -101,5 +102,18 @@ return Config::create()
 EOD;
 
         $this->assertSame($expected, (string) $run->getConfigFile());
+    }
+
+    public function testCodeTooLong(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Code is over 50000 characters long');
+
+        new Run(
+            str_repeat(' ', 50001),
+            [],
+            new Indent('    '),
+            LineEnding::fromVisible('\n')
+        );
     }
 }
