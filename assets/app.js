@@ -18,7 +18,7 @@
         }
     });
 
-    $query.addEventListener('keyup', () => filterFixers($query.value));
+    $query.addEventListener('keyup', () => filterFixers($query.value.trim()));
 
     function addRemoveEventListener($removeOption) {
         $removeOption.addEventListener('click', (event) => {
