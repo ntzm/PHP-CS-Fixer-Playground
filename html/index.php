@@ -9,13 +9,13 @@ use PhpCsFixerPlayground\Handler\GetRunHandler;
 use PhpCsFixerPlayground\Handler\IndexHandler;
 use PhpCsFixerPlayground\HandleRoute;
 use Symfony\Component\HttpFoundation\Request;
-use function FastRoute\simpleDispatcher;
+use function FastRoute\cachedDispatcher;
 
 require __DIR__.'/../vendor/autoload.php';
 
 $container = new Container();
 
-$dispatcher = simpleDispatcher(function (RouteCollector $r) use ($container): void {
+$dispatcher = cachedDispatcher(function (RouteCollector $r) use ($container): void {
     $r->get('/', function () use ($container): IndexHandler {
         return $container->get(IndexHandler::class);
     });
@@ -27,7 +27,7 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) use ($container): vo
     $r->get('/run/{uuid:[a-f0-9-]+}', function () use ($container): GetRunHandler {
         return $container->get(GetRunHandler::class);
     });
-});
+}, ['cacheFile' => __DIR__.'/../data/cache/route.cache']);
 
 /** @var Request $request */
 $request = $container->get(Request::class);

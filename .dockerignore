@@ -1,4 +1,4 @@
-/data/
+/data/cache/*
 /html/app.js
 /html/style.css
 /node_modules/
