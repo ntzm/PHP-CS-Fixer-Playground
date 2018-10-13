@@ -10,6 +10,7 @@ use PhpCsFixerPlayground\ParseRulesFromRequestInterface;
 use PhpCsFixerPlayground\Run\RunRepositoryInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,7 +54,7 @@ final class CreateRunHandlerTest extends TestCase
             ->willReturn(['bar' => true])
         ;
 
-        $handler = new CreateRunHandler($runs, $request, $parseRulesFromRequest);
+        $handler = new CreateRunHandler($runs, $request, $parseRulesFromRequest, new NullLogger());
 
         /** @var RedirectResponse $response */
         $response = $handler->__invoke([]);

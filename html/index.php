@@ -15,24 +15,16 @@ require __DIR__.'/../vendor/autoload.php';
 
 $container = new Container();
 
-$dispatcher = cachedDispatcher(function (RouteCollector $r) use ($container): void {
-    $r->get('/', function () use ($container): IndexHandler {
-        return $container->get(IndexHandler::class);
-    });
-
-    $r->post('/run', function () use ($container): CreateRunHandler {
-        return $container->get(CreateRunHandler::class);
-    });
-
-    $r->get('/run/{uuid:[a-f0-9-]+}', function () use ($container): GetRunHandler {
-        return $container->get(GetRunHandler::class);
-    });
+$dispatcher = cachedDispatcher(function (RouteCollector $r): void {
+    $r->get('/', IndexHandler::class);
+    $r->post('/run', CreateRunHandler::class);
+    $r->get('/run/{uuid:[a-f0-9-]+}', GetRunHandler::class);
 }, ['cacheFile' => __DIR__.'/../data/cache/route.cache']);
 
 /** @var Request $request */
 $request = $container->get(Request::class);
 
-$response = (new HandleRoute())->__invoke(
+$response = (new HandleRoute($container))->__invoke(
     $dispatcher->dispatch($request->getMethod(), $request->getPathInfo())
 );
 

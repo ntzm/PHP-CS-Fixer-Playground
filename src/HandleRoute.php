@@ -9,6 +9,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class HandleRoute
 {
+    /** @var Container */
+    private $container;
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
+
     public function __invoke(array $routeInfo): Response
     {
         $status = $routeInfo[0];
@@ -22,7 +30,7 @@ final class HandleRoute
         }
 
         /** @var Handler\HandlerInterface $handler */
-        $handler = $routeInfo[1]();
+        $handler = $this->container->get($routeInfo[1]);
 
         /** @var array $vars */
         $vars = $routeInfo[2];
