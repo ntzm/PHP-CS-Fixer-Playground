@@ -16,7 +16,7 @@ use Ramsey\Uuid\UuidInterface;
  * @ORM\Entity
  * @ORM\Table(name="runs")
  */
-final class Run
+class Run
 {
     private const MAX_CODE_SIZE = 50000;
 
