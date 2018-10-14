@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Tests;
 
 use PhpCsFixerPlayground\ConfigFile;
+use PhpCsFixerPlayground\Entity\PhpCsFixerVersion;
 use PhpCsFixerPlayground\Indent;
 use PhpCsFixerPlayground\Issue;
 use PhpCsFixerPlayground\LineEnding;
-use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersion;
 use PhpCsFixerPlayground\PhpVersion\PhpVersion;
 use PHPUnit\Framework\TestCase;
 

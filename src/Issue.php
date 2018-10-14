@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground;
 
-use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersion;
+use PhpCsFixerPlayground\Entity\PhpCsFixerVersion;
 use PhpCsFixerPlayground\PhpVersion\PhpVersion;
 
 final class Issue

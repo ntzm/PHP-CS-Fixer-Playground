@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Tests\PhpCsFixerVersion;
 
 use InvalidArgumentException;
-use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersion;
+use PhpCsFixerPlayground\Entity\PhpCsFixerVersion;
 use PHPUnit\Framework\TestCase;
 
 /**

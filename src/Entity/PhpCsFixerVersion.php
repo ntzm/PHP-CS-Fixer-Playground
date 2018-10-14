@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpCsFixerPlayground\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 /**
  * @ORM\Entity
@@ -27,6 +28,10 @@ class PhpCsFixerVersion
 
     public function __construct(string $number, string $name)
     {
+        if (preg_match('/^\d+\.\d+\.\d+$/', $number) !== 1) {
+            throw new InvalidArgumentException("Invalid PHP-CS-Fixer version $number");
+        }
+
         $this->number = $number;
         $this->name = $name;
     }
@@ -39,5 +44,10 @@ class PhpCsFixerVersion
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function __toString(): string
+    {
+        return "{$this->number} {$this->name}";
     }
 }
