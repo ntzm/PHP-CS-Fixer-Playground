@@ -8,10 +8,14 @@ use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Setup;
+use League\Container\Container;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 final class EntityManagerServiceProvider extends AbstractServiceProvider
 {
+    /** @var Container */
+    protected $container;
+
     /** @var string[] */
     protected $provides = [
         EntityManagerInterface::class,

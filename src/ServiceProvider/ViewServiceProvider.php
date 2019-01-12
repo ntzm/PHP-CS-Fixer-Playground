@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\ServiceProvider;
 
+use League\Container\Container;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersionFactoryInterface;
 use PhpCsFixerPlayground\View\TwigExtension;
@@ -17,6 +18,9 @@ use Twig\Loader\FilesystemLoader;
 
 final class ViewServiceProvider extends AbstractServiceProvider
 {
+    /** @var Container */
+    protected $container;
+
     /** @var string[] */
     protected $provides = [
         ViewFactoryInterface::class,
@@ -41,10 +45,10 @@ final class ViewServiceProvider extends AbstractServiceProvider
 
         $this->container
             ->add(ViewFactoryInterface::class, ViewFactory::class)
-            ->withArgument(Environment::class)
-            ->withArgument(Differ::class)
-            ->withArgument(FixerCollectionFactoryInterface::class)
-            ->withArgument(PhpCsFixerVersionFactoryInterface::class)
+            ->addArgument(Environment::class)
+            ->addArgument(Differ::class)
+            ->addArgument(FixerCollectionFactoryInterface::class)
+            ->addArgument(PhpCsFixerVersionFactoryInterface::class)
         ;
     }
 }

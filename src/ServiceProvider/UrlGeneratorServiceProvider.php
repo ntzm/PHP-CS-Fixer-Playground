@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\ServiceProvider;
 
+use League\Container\Container;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use PhpCsFixerPlayground\UrlGenerator;
 use PhpCsFixerPlayground\UrlGeneratorInterface;
 
 final class UrlGeneratorServiceProvider extends AbstractServiceProvider
 {
+    /** @var Container */
+    protected $container;
+
     /** @var string[] */
     protected $provides = [
         UrlGeneratorInterface::class,
@@ -19,7 +23,7 @@ final class UrlGeneratorServiceProvider extends AbstractServiceProvider
     {
         $this->container
             ->add(UrlGeneratorInterface::class, UrlGenerator::class)
-            ->withArgument(getenv('APP_URL'))
+            ->addArgument(getenv('APP_URL'))
         ;
     }
 }
