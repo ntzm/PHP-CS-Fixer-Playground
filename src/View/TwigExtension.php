@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground\View;
 
+use RuntimeException;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -28,7 +29,13 @@ final class TwigExtension extends AbstractExtension
 
     public function formatFilter(string $string): string
     {
-        return preg_replace('/`(.+?)`/', '<code>$1</code>', $string);
+        $formatted = preg_replace('/`(.+?)`/', '<code>$1</code>', $string);
+
+        if ($formatted === null) {
+            throw new RuntimeException('Format filter regex failed: '.preg_last_error());
+        }
+
+        return $formatted;
     }
 
     public function linkRulesFilter(array $rules): string

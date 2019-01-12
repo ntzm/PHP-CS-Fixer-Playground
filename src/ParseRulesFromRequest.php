@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PhpCsFixerPlayground;
 
+use RuntimeException;
+
 final class ParseRulesFromRequest implements ParseRulesFromRequestInterface
 {
     private const ENABLED = '_enabled';
@@ -86,6 +88,12 @@ final class ParseRulesFromRequest implements ParseRulesFromRequestInterface
 
     private function parseAssociativeArrayOption(array $option): array
     {
-        return array_combine($option[self::KEYS], $option[self::VALUES]);
+        $option = array_combine($option[self::KEYS], $option[self::VALUES]);
+
+        if ($option === false) {
+            throw new RuntimeException('Key value mismatch');
+        }
+
+        return $option;
     }
 }

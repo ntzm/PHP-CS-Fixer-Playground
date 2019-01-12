@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpCsFixerPlayground\Tests\PhpCsFixerVersion;
+namespace PhpCsFixerPlayground\Tests\Entity;
 
 use InvalidArgumentException;
 use PhpCsFixerPlayground\Entity\PhpCsFixerVersion;
