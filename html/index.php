@@ -30,6 +30,18 @@ $response = (new HandleRoute($container))->__invoke(
 
 $response->headers->add([
     'Content-Security-Policy' => "default-src 'self'",
+    'X-Frame-Options' => 'SAMEORIGIN',
+    'X-XSS-Protection' => '1; mode=block',
+    'X-Content-Type-Options' => 'nosniff',
+    'Referrer-Policy' => 'no-referrer',
 ]);
+
+$appUrl = getenv('APP_URL');
+
+if (strpos($appUrl, 'https://') === 0) {
+    $response->headers->add([
+        'Strict-Transport-Security' => 'max-age=31536000; includeSubDomains',
+    ]);
+}
 
 $response->send();
