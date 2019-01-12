@@ -32,8 +32,8 @@ final class Indent
             sprintf(
                 'Invalid indent %s, must be one of "%s"',
                 $indent,
-                implode('", "', self::ALLOWED_INDENTS)
-            )
+                implode('", "', self::ALLOWED_INDENTS),
+            ),
         );
     }
 

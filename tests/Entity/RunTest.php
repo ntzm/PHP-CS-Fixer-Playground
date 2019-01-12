@@ -21,7 +21,7 @@ final class RunTest extends TestCase
             '<?php echo "hi";',
             [],
             new Indent('    '),
-            LineEnding::fromVisible('\n')
+            LineEnding::fromVisible('\n'),
         );
 
         $this->assertSame(4, $run->getId()->getVersion());
@@ -33,7 +33,7 @@ final class RunTest extends TestCase
             '<?php echo "hi";',
             [],
             new Indent('    '),
-            LineEnding::fromVisible('\n')
+            LineEnding::fromVisible('\n'),
         );
 
         $this->assertSame('<?php echo "hi";', $run->getCode());
@@ -44,7 +44,7 @@ final class RunTest extends TestCase
         $run = new Run(
             '<?php echo "hi";', ['single_quote'],
             new Indent('    '),
-            LineEnding::fromVisible('\n')
+            LineEnding::fromVisible('\n'),
         );
 
         $this->assertSame(['single_quote'], $run->getRules());
@@ -56,7 +56,7 @@ final class RunTest extends TestCase
             '<?php echo "hi";',
             [],
             new Indent('    '),
-            LineEnding::fromVisible('\n')
+            LineEnding::fromVisible('\n'),
         );
 
         $this->assertSame('    ', (string) $run->getIndent());
@@ -68,7 +68,7 @@ final class RunTest extends TestCase
             '<?php echo "hi";',
             [],
             new Indent('    '),
-            LineEnding::fromVisible('\n')
+            LineEnding::fromVisible('\n'),
         );
 
         $this->assertSame('\n', $run->getLineEnding()->getVisible());
@@ -81,25 +81,25 @@ final class RunTest extends TestCase
             '<?php echo "hi";',
             [],
             new Indent('    '),
-            LineEnding::fromVisible('\n')
+            LineEnding::fromVisible('\n'),
         );
 
         $expected = <<<'EOD'
-<?php
+        <?php
 
-use PhpCsFixer\Config;
-use PhpCsFixer\Finder;
+        use PhpCsFixer\Config;
+        use PhpCsFixer\Finder;
 
-return Config::create()
-    ->setRiskyAllowed(true)
-    ->setIndent('    ')
-    ->setLineEnding("\n")
-    ->setRules([])
-    ->setFinder(
-        Finder::create()->in(__DIR__)
-    )
-;
-EOD;
+        return Config::create()
+            ->setRiskyAllowed(true)
+            ->setIndent('    ')
+            ->setLineEnding("\n")
+            ->setRules([])
+            ->setFinder(
+                Finder::create()->in(__DIR__)
+            )
+        ;
+        EOD;
 
         $this->assertSame($expected, (string) $run->getConfigFile());
     }
@@ -113,7 +113,7 @@ EOD;
             str_repeat(' ', 50001),
             [],
             new Indent('    '),
-            LineEnding::fromVisible('\n')
+            LineEnding::fromVisible('\n'),
         );
     }
 }

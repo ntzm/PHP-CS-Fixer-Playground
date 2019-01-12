@@ -23,7 +23,7 @@ final class PhpCsFixerVersionServiceProvider extends AbstractServiceProvider
     {
         $this->container->add(
             PhpCsFixerVersionFactoryInterface::class,
-            PhpCsFixerVersionFactory::class
+            PhpCsFixerVersionFactory::class,
         );
     }
 }

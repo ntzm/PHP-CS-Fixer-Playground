@@ -21,14 +21,14 @@ final class UrlGeneratorTest extends TestCase
             '<?php echo "hi";',
             [],
             new Indent('    '),
-            LineEnding::fromVisible('\n')
+            LineEnding::fromVisible('\n'),
         );
 
         $urlGenerator = new UrlGenerator('https://foobar.com/baz');
 
         $this->assertSame(
             "https://foobar.com/baz/run/{$run->getId()->toString()}",
-            $urlGenerator->generateUrlForRun($run)
+            $urlGenerator->generateUrlForRun($run),
         );
     }
 }

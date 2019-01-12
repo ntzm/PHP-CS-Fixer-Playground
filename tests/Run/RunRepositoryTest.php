@@ -25,7 +25,7 @@ final class RunRepositoryTest extends TestCase
             '<?php echo "hi";',
             ['single_quote' => true],
             new Indent('    '),
-            LineEnding::fromVisible('\n')
+            LineEnding::fromVisible('\n'),
         );
 
         /** @var EntityManagerInterface|MockObject $entityManager */
@@ -67,7 +67,7 @@ final class RunRepositoryTest extends TestCase
             '<?php echo "hi";',
             ['single_quote' => true],
             new Indent('    '),
-            LineEnding::fromVisible('\n')
+            LineEnding::fromVisible('\n'),
         );
 
         /** @var EntityManagerInterface|MockObject $entityManager */

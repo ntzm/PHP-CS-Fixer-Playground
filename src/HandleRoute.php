@@ -46,7 +46,7 @@ final class HandleRoute
     {
         return new Response(
             'Not Found',
-            Response::HTTP_NOT_FOUND
+            Response::HTTP_NOT_FOUND,
         );
     }
 
@@ -54,7 +54,7 @@ final class HandleRoute
     {
         return new Response(
             'Method Not Allowed',
-            Response::HTTP_METHOD_NOT_ALLOWED
+            Response::HTTP_METHOD_NOT_ALLOWED,
         );
     }
 }

@@ -68,7 +68,7 @@ final class GetRunHandler implements HandlerInterface
                 $run->getCode(),
                 $run->getRules(),
                 $run->getIndent(),
-                $run->getLineEnding()
+                $run->getLineEnding(),
             );
 
             $result = $report->getResult();
@@ -88,7 +88,7 @@ final class GetRunHandler implements HandlerInterface
             $result,
             $configFile,
             $this->phpVersionFactory->make(),
-            $this->phpCsFixerVersionFactory->make()
+            $this->phpCsFixerVersionFactory->make(),
         );
 
         return new Response(
@@ -98,7 +98,7 @@ final class GetRunHandler implements HandlerInterface
                 $appliedFixers,
                 $deprecationMessages,
                 $configFile,
-                $issue
+                $issue,
             )
         );
     }

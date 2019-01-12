@@ -32,7 +32,7 @@ final class IndexHandler implements HandlerInterface
         $run = new Run($code, [], $indent, $lineEnding);
 
         return new Response(
-            $this->viewFactory->make($run, $code, [], [], $configFile)
+            $this->viewFactory->make($run, $code, [], [], $configFile),
         );
     }
 }

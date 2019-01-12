@@ -17,12 +17,12 @@ final class TwigExtension extends AbstractExtension
             new TwigFilter(
                 'format',
                 [$this, 'formatFilter'],
-                ['pre_escape' => 'html', 'is_safe' => ['html']]
+                ['pre_escape' => 'html', 'is_safe' => ['html']],
             ),
             new TwigFilter(
                 'link_rules',
                 [$this, 'linkRulesFilter'],
-                ['pre_escape' => 'html', 'is_safe' => ['html']]
+                ['pre_escape' => 'html', 'is_safe' => ['html']],
             ),
         ];
     }

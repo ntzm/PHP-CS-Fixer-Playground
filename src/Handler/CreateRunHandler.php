@@ -50,7 +50,7 @@ final class CreateRunHandler implements HandlerInterface
             $query->get('code'),
             $this->parseRulesFromRequest->__invoke($query->get('fixers')),
             new Indent($query->get('indent')),
-            LineEnding::fromVisible($query->get('line_ending'))
+            LineEnding::fromVisible($query->get('line_ending')),
         );
 
         $this->runs->save($run);

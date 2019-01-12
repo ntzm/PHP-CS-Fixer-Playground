@@ -39,7 +39,7 @@ final class GetRunHandlerTest extends TestCase
             '<?php echo "hi";',
             ['foo' => true],
             new Indent('    '),
-            LineEnding::fromVisible('\n')
+            LineEnding::fromVisible('\n'),
         );
 
         /** @var PhpCsFixerFixerInterface|MockObject $fooFixer */
@@ -48,7 +48,7 @@ final class GetRunHandlerTest extends TestCase
         $fixReport = new FixReport(
             "<?php echo 'hi';",
             [$fooFixer],
-            ['do not use this function']
+            ['do not use this function'],
         );
 
         /** @var RunRepositoryInterface|MockObject $runs */
@@ -73,7 +73,7 @@ final class GetRunHandlerTest extends TestCase
                 [$fooFixer],
                 ['do not use this function'],
                 $this->isInstanceOf(ConfigFile::class),
-                $this->isInstanceOf(Issue::class)
+                $this->isInstanceOf(Issue::class),
             )
             ->willReturn('foo')
         ;
@@ -89,7 +89,7 @@ final class GetRunHandlerTest extends TestCase
                 '    ',
                 $this->callback(function (LineEnding $lineEnding): bool {
                     return $lineEnding->getVisible() === '\n';
-                })
+                }),
             )
             ->willReturn($fixReport)
         ;
@@ -134,7 +134,7 @@ final class GetRunHandlerTest extends TestCase
             '<?php echo "hi";',
             ['foo' => true],
             new Indent('    '),
-            LineEnding::fromVisible('\n')
+            LineEnding::fromVisible('\n'),
         );
 
         /** @var RunRepositoryInterface|MockObject $runs */
@@ -159,7 +159,7 @@ final class GetRunHandlerTest extends TestCase
                 [],
                 [],
                 $this->isInstanceOf(ConfigFile::class),
-                $this->isInstanceOf(Issue::class)
+                $this->isInstanceOf(Issue::class),
             )
             ->willReturn('foo')
         ;
@@ -175,7 +175,7 @@ final class GetRunHandlerTest extends TestCase
                 '    ',
                 $this->callback(function (LineEnding $lineEnding): bool {
                     return $lineEnding->getVisible() === '\n';
-                })
+                }),
             )
             ->willThrowException(new Exception('bar'))
         ;

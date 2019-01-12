@@ -31,7 +31,7 @@ final class Container
         /** @var SplFileInfo $file */
         foreach ((new Finder())->in(__DIR__.'/ServiceProvider') as $file) {
             $this->container->addServiceProvider(
-                "PhpCsFixerPlayground\\ServiceProvider\\{$file->getBasename('.php')}"
+                "PhpCsFixerPlayground\\ServiceProvider\\{$file->getBasename('.php')}",
             );
         }
     }

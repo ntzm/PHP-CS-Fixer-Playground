@@ -44,7 +44,7 @@ final class Fix implements FixInterface
         $fixers = $this->fixerCollectionFactory
             ->fromRuleSet(new RuleSet($rules))
             ->withWhitespaceConfig(
-                new WhitespacesFixerConfig((string) $indent, $lineEnding->getReal())
+                new WhitespacesFixerConfig((string) $indent, $lineEnding->getReal()),
             )
         ;
 

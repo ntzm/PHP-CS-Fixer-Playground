@@ -44,12 +44,12 @@ final class UrlGeneratorServiceProviderTest extends TestCase
             '<?php echo "hi";',
             [],
             new Indent('    '),
-            LineEnding::fromVisible('\n')
+            LineEnding::fromVisible('\n'),
         );
 
         $this->assertSame(
             "https://foo.com/bar/run/{$run->getId()->toString()}",
-            $urlGenerator->generateUrlForRun($run)
+            $urlGenerator->generateUrlForRun($run),
         );
     }
 }

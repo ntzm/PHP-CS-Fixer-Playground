@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.3",
         "ext-pcre": "*",
         "doctrine/migrations": "^2.0",
         "doctrine/orm": "^2.6",
@@ -34,7 +34,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.2"
+            "php": "7.3"
         },
         "sort-packages": true
     },

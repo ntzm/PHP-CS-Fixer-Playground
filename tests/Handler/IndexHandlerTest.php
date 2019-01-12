@@ -33,7 +33,7 @@ final class IndexHandlerTest extends TestCase
                 "<?php\n\n",
                 [],
                 [],
-                $this->isInstanceOf(ConfigFile::class)
+                $this->isInstanceOf(ConfigFile::class),
             )
             ->willReturn('foo')
         ;

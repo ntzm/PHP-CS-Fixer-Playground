@@ -37,7 +37,7 @@ final class Version20180616072518Test extends TestCase
                 ['code', Type::TEXT],
                 ['rules', Type::JSON],
                 ['indent', Type::STRING, ['length' => 4]],
-                ['line_ending', Type::STRING, ['length' => 2]]
+                ['line_ending', Type::STRING, ['length' => 2]],
             )
         ;
         $table

@@ -23,7 +23,7 @@ final class PhpVersionServiceProvider extends AbstractServiceProvider
     {
         $this->container->add(
             PhpVersionFactoryInterface::class,
-            PhpVersionFactory::class
+            PhpVersionFactory::class,
         );
     }
 }

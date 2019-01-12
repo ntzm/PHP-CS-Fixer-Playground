@@ -25,7 +25,7 @@ final class EntityManagerServiceProvider extends AbstractServiceProvider
     {
         $this->container->add(
             EntityManagerInterface::class,
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -36,7 +36,7 @@ final class EntityManagerServiceProvider extends AbstractServiceProvider
             false,
             null,
             new FilesystemCache(__DIR__.'/../../data/cache/doctrine'),
-            false
+            false,
         );
 
         $connection = [

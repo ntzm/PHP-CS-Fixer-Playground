@@ -23,7 +23,7 @@ final class FixerCollectionFactoryServiceProvider extends AbstractServiceProvide
     {
         $this->container->add(
             FixerCollectionFactoryInterface::class,
-            FixerCollectionFactory::class
+            FixerCollectionFactory::class,
         );
     }
 }

@@ -30,21 +30,21 @@ final class ConfigFile
     public function __toString(): string
     {
         return <<<CONFIG
-<?php
+        <?php
 
-use PhpCsFixer\Config;
-use PhpCsFixer\Finder;
+        use PhpCsFixer\Config;
+        use PhpCsFixer\Finder;
 
-return Config::create()
-    ->setRiskyAllowed(true)
-    ->setIndent({$this->getIndent()})
-    ->setLineEnding({$this->getLineEnding()})
-    ->setRules({$this->getRules()})
-    ->setFinder(
-        Finder::create()->in(__DIR__)
-    )
-;
-CONFIG;
+        return Config::create()
+            ->setRiskyAllowed(true)
+            ->setIndent({$this->getIndent()})
+            ->setLineEnding({$this->getLineEnding()})
+            ->setRules({$this->getRules()})
+            ->setFinder(
+                Finder::create()->in(__DIR__)
+            )
+        ;
+        CONFIG;
     }
 
     private function getIndent(): string
@@ -69,7 +69,7 @@ CONFIG;
 
         $generator = new ValueGenerator(
             $this->rules,
-            ValueGenerator::TYPE_ARRAY_SHORT
+            ValueGenerator::TYPE_ARRAY_SHORT,
         );
 
         $generator->setIndentation('    ');
@@ -85,9 +85,9 @@ CONFIG;
                     function (string $line): string {
                         return "    $line";
                     },
-                    explode("\n", $lines)
-                )
-            )
+                    explode("\n", $lines),
+                ),
+            ),
         );
     }
 }

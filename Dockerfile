@@ -9,7 +9,7 @@ COPY assets assets
 
 RUN node_modules/.bin/gulp
 
-FROM php:7.2-apache
+FROM php:7.3-apache
 
 WORKDIR /var/www/
 

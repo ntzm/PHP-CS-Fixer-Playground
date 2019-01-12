@@ -61,7 +61,7 @@ final class ViewFactory implements ViewFactoryInterface
                 'availableFixers' => $this->fixerCollectionFactory->all(),
                 'phpCsFixerVersion' => $this->phpCsFixerVersionFactory->make(),
                 'diff' => $this->differ->diff($run->getCode(), $result),
-            ]
+            ],
         );
     }
 }

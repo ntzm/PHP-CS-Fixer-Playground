@@ -15,7 +15,7 @@ final class FixerCollectionFactory implements FixerCollectionFactoryInterface
         return $this->wrap(
             (new FixerFactory())
                 ->registerBuiltInFixers()
-                ->getFixers()
+                ->getFixers(),
         );
     }
 
@@ -25,7 +25,7 @@ final class FixerCollectionFactory implements FixerCollectionFactoryInterface
             (new FixerFactory())
                 ->registerBuiltInFixers()
                 ->useRuleSet($ruleSet)
-                ->getFixers()
+                ->getFixers(),
         );
     }
 

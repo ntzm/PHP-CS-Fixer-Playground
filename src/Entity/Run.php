@@ -60,7 +60,7 @@ class Run
     ) {
         if (\strlen($code) > self::MAX_CODE_SIZE) {
             throw new InvalidArgumentException(
-                'Code is over '.self::MAX_CODE_SIZE.' characters long'
+                'Code is over '.self::MAX_CODE_SIZE.' characters long',
             );
         }
 

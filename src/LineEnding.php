@@ -55,8 +55,8 @@ final class LineEnding
             sprintf(
                 'Invalid line ending %s, must be one of %s',
                 $lineEnding,
-                implode(', ', array_keys(self::MAP))
-            )
+                implode(', ', array_keys(self::MAP)),
+            ),
         );
     }
 }

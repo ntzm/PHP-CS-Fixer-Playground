@@ -23,7 +23,7 @@ final class ParseRulesFromRequestServiceProvider extends AbstractServiceProvider
     {
         $this->container->add(
             ParseRulesFromRequestInterface::class,
-            ParseRulesFromRequest::class
+            ParseRulesFromRequest::class,
         );
     }
 }
