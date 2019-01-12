@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use function FastRoute\cachedDispatcher;
 use FastRoute\RouteCollector;
 use PhpCsFixerPlayground\Container;
 use PhpCsFixerPlayground\Handler\CreateRunHandler;
@@ -9,7 +10,6 @@ use PhpCsFixerPlayground\Handler\GetRunHandler;
 use PhpCsFixerPlayground\Handler\IndexHandler;
 use PhpCsFixerPlayground\HandleRoute;
 use Symfony\Component\HttpFoundation\Request;
-use function FastRoute\cachedDispatcher;
 
 require __DIR__.'/../vendor/autoload.php';
 
