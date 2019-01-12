@@ -38,6 +38,10 @@ $response->headers->add([
 
 $appUrl = getenv('APP_URL');
 
+if ($appUrl === false) {
+    throw new RuntimeException('APP_URL missing');
+}
+
 if (strpos($appUrl, 'https://') === 0) {
     $response->headers->add([
         'Strict-Transport-Security' => 'max-age=31536000; includeSubDomains',
