@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
@@ -17,6 +19,6 @@ return Config::create()
         'yoda_style' => false,
     ])
     ->setFinder(
-        Finder::create()->in(__DIR__)->notPath('data')
+        Finder::create()->in(__DIR__)->notPath('data'),
     )
 ;
