@@ -9,7 +9,7 @@ use PhpCsFixerPlayground\Entity\PhpCsFixerVersion;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \PhpCsFixerPlayground\PhpCsFixerVersion\PhpCsFixerVersion
+ * @covers \PhpCsFixerPlayground\Entity\PhpCsFixerVersion
  */
 final class PhpCsFixerVersionTest extends TestCase
 {
