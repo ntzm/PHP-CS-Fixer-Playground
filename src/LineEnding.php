@@ -27,7 +27,7 @@ final class LineEnding
 
     public static function fromVisible(string $visibleLineEnding): self
     {
-        if (!array_key_exists($visibleLineEnding, self::MAP)) {
+        if (!\array_key_exists($visibleLineEnding, self::MAP)) {
             throw self::invalidLineEnding($visibleLineEnding);
         }
 

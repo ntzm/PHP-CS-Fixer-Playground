@@ -65,7 +65,7 @@ final class ParseRulesFromRequest implements ParseRulesFromRequestInterface
             return $this->parseArrayOption($option);
         }
 
-        if (array_key_exists($option, self::TYPE_MAP)) {
+        if (\array_key_exists($option, self::TYPE_MAP)) {
             return self::TYPE_MAP[$option];
         }
 
