@@ -4,3 +4,4 @@
 /vendor/
 /database.sqlite
 /.php_cs.cache
+/.phpunit.result.cache
